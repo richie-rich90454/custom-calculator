@@ -1,7 +1,7 @@
 .keypad {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .functionArea {
@@ -17,71 +17,67 @@
 }
 
 .functionKey {
-  min-height: 42px;
-  padding: var(--space-2) 0;
+  min-height: 38px;
+  padding: var(--space-1) 0;
   background-color: var(--color-key-function);
-  border-color: var(--color-key-edge);
+  border-color: var(--color-border-strong);
   color: var(--color-key-function-text);
   font-size: 0.78rem;
 }
 
 .digitKey {
-  min-height: 52px;
-  background-color: var(--color-key-number);
-  border-color: var(--color-key-edge);
-  color: var(--color-key-number-text);
-  font-size: 1.2rem;
+  min-height: 46px;
+  background-color: var(--color-key-digit);
+  border-color: var(--color-border-strong);
+  color: var(--color-key-digit-text);
+  font-size: 1.15rem;
   font-weight: 600;
 }
 
 .operatorKey {
-  min-height: 52px;
+  min-height: 46px;
   background-color: var(--color-key-operator);
-  border-color: var(--color-key-edge);
+  border-color: var(--color-border-strong);
   color: var(--color-key-operator-text);
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 600;
 }
 
 .symbolKey {
-  min-height: 52px;
+  min-height: 46px;
   background-color: var(--color-key-utility);
-  border-color: var(--color-key-edge);
+  border-color: var(--color-border-strong);
   color: var(--color-key-utility-text);
   font-size: 1rem;
 }
 
 .utilityKey {
-  min-height: 52px;
+  min-height: 46px;
   background-color: var(--color-key-danger);
-  border-color: var(--color-key-edge);
+  border-color: var(--color-border-strong);
   color: var(--color-key-danger-text);
   font-size: 0.9rem;
   font-weight: 600;
 }
 
 .equalsKey {
-  min-height: 52px;
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-accent-contrast);
+  min-height: 46px;
+  background-color: var(--color-key-accent);
+  border-color: var(--color-key-accent);
+  color: var(--color-key-accent-text);
   font-size: 1.3rem;
   font-weight: 700;
 }
 
 .keypad button {
-  border-bottom-width: 3px;
-  border-radius: 10px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 2px 0 rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 0 var(--color-border-strong);
 }
 
 .keypad button[data-pressed="true"] {
-  border-bottom-width: 1px;
-  transform: translateY(2px);
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
-  filter: brightness(0.88);
+  transform: translateY(1px);
+  box-shadow: none;
+  filter: brightness(0.94);
 }
 
 .keypad button:focus-visible {
@@ -101,7 +97,7 @@
 
   .functionKey {
     font-size: 0.7rem;
-    min-height: 38px;
+    min-height: 36px;
   }
 
   .digitKey,
@@ -109,6 +105,6 @@
   .symbolKey,
   .utilityKey,
   .equalsKey {
-    min-height: 48px;
+    min-height: 44px;
   }
 }
