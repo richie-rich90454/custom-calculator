@@ -5,49 +5,48 @@ description: The component inventory of the calculator and how components are or
 
 # Components
 
-Components live in `src/presentation/components` and are split into shells,
-primitives, and feature components.
+Components live in `src/presentation/components` and are split into shells, primitives, and feature components.
 
 ## Shell components
 
-| Component | Role |
-| --------- | ---- |
-| `CalculatorShellComponent` | Top-level layout |
-| `CalculatorDisplayComponent` | Expression editor, result, and error lines |
-| `CalculatorKeypadComponent` | Keypad regions and dispatch |
-| `CalculatorStatusBarComponent` | Mode indicators and panel access |
+| Component                      | Role                                       |
+| ------------------------------ | ------------------------------------------ |
+| `CalculatorShellComponent`     | Top-level layout                           |
+| `CalculatorDisplayComponent`   | Expression editor, result, and error lines |
+| `CalculatorKeypadComponent`    | Keypad regions and dispatch                |
+| `CalculatorStatusBarComponent` | Mode indicators and panel access           |
 
 ## Expression components
 
-| Component | Role |
-| --------- | ---- |
-| `CalculatorExpressionEditorComponent` | The primary input |
-| `CalculatorResultLineComponent` | Result presentation |
-| `CalculatorErrorLineComponent` | Error presentation |
-| `CalculatorCaretIndicatorComponent` | Synthetic caret indicator |
+| Component                             | Role                      |
+| ------------------------------------- | ------------------------- |
+| `CalculatorExpressionEditorComponent` | The primary input         |
+| `CalculatorResultLineComponent`       | Result presentation       |
+| `CalculatorErrorLineComponent`        | Error presentation        |
+| `CalculatorCaretIndicatorComponent`   | Synthetic caret indicator |
 
 ## Keypad components
 
-| Component | Role |
-| --------- | ---- |
-| `CalculatorCorePadComponent` | Digits, operators, equals |
-| `CalculatorScientificFunctionPadComponent` | Scientific functions |
-| `CalculatorCasControlPadComponent` | CAS operations |
-| `CalculatorCalculusControlPadComponent` | Calculus operations |
-| `CalculatorKeypadGridSectionComponent` | Grid section shell |
-| `CalculatorKeyComponent` | Single key |
+| Component                                  | Role                      |
+| ------------------------------------------ | ------------------------- |
+| `CalculatorCorePadComponent`               | Digits, operators, equals |
+| `CalculatorScientificFunctionPadComponent` | Scientific functions      |
+| `CalculatorCasControlPadComponent`         | CAS operations            |
+| `CalculatorCalculusControlPadComponent`    | Calculus operations       |
+| `CalculatorKeypadGridSectionComponent`     | Grid section shell        |
+| `CalculatorKeyComponent`                   | Single key                |
 
 ## Panel components
 
-| Component | Role |
-| --------- | ---- |
-| `HistoryPanelComponent` | History list |
-| `ConstantsPanelComponent` | Constant catalog |
-| `VariablesPanelComponent` | Saved variables |
-| `MemoryPanelComponent` | Memory register |
-| `SettingsPanelComponent` | Settings controls |
-| `CasPanelComponent` | CAS help and actions |
-| `CalculusPanelComponent` | Calculus help and actions |
+| Component                 | Role                      |
+| ------------------------- | ------------------------- |
+| `HistoryPanelComponent`   | History list              |
+| `ConstantsPanelComponent` | Constant catalog          |
+| `VariablesPanelComponent` | Saved variables           |
+| `MemoryPanelComponent`    | Memory register           |
+| `SettingsPanelComponent`  | Settings controls         |
+| `CasPanelComponent`       | CAS help and actions      |
+| `CalculusPanelComponent`  | Calculus help and actions |
 
 ## Primitives
 
