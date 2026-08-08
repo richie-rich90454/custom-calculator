@@ -26,6 +26,7 @@ import type { BrowserFeatureDetectionService } from "../infrastructure/featurede
 import { DefaultMathJsInstanceProvider } from "../infrastructure/mathjs/DefaultMathJsInstanceProvider";
 import type { MathJsInstanceProvider } from "../infrastructure/mathjs/MathJsInstanceProvider";
 import { MathJsConstantScopeBuilder } from "../infrastructure/mathjs/MathJsConstantScopeBuilder";
+import { DefaultMathJsFractionValueFactory } from "../infrastructure/mathjs/MathJsFractionValueFactory";
 import { MathJsExpressionEvaluationGateway } from "../infrastructure/mathjs/MathJsExpressionEvaluationGateway";
 import { MathJsFunctionWhitelist } from "../infrastructure/mathjs/MathJsFunctionWhitelist";
 import { CalculatorDexieDatabase } from "../infrastructure/persistence/CalculatorDexieDatabase";
@@ -90,7 +91,10 @@ export class CalculatorCompositionRoot {
     this.mathJsInstanceProvider = new DefaultMathJsInstanceProvider();
     this.expressionEvaluationGateway = new MathJsExpressionEvaluationGateway(
       this.mathJsInstanceProvider,
-      new MathJsConstantScopeBuilder(this.constantCatalogService),
+      new MathJsConstantScopeBuilder(
+        this.constantCatalogService,
+        new DefaultMathJsFractionValueFactory()
+      ),
       new MathJsFunctionWhitelist(
         this.functionCatalogService.getFunctionNames()
       ),
