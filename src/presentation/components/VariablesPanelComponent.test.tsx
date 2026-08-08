@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { NumericMode } from "../../domain/model/NumericMode";
 import { createCalculatorTestHarness, renderWithCalculatorContext } from "../../test/calculatorTestHarness";
 import { VariablesPanelComponent } from "./VariablesPanelComponent";
+
+
 
 describe("VariablesPanelComponent", () => {
   it("shows an empty state when no variables are saved", () => {
@@ -42,7 +45,7 @@ describe("VariablesPanelComponent", () => {
         {
           name: "x",
           valueText: "4",
-          numericMode: "STANDARD",
+          numericMode: NumericMode.STANDARD,
           updatedAt: "2026-01-01T00:00:00.000Z",
         },
       ],
@@ -67,7 +70,7 @@ describe("VariablesPanelComponent", () => {
         {
           name: "x",
           valueText: "4",
-          numericMode: "STANDARD",
+          numericMode: NumericMode.STANDARD,
           updatedAt: "2026-01-01T00:00:00.000Z",
         },
       ],
