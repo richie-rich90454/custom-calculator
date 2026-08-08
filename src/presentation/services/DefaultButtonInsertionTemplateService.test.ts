@@ -101,6 +101,6 @@ describe("DefaultButtonInsertionTemplateService", () => {
     const template = service.resolveFunctionTemplate("unknownFunction");
 
     expect(template.text).toBe("unknownFunction(");
-    expect(template.cursorOffset).toBe(15);
+    expect(template.cursorOffset).toBe(16);
   });
 });
