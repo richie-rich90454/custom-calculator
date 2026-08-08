@@ -5,8 +5,7 @@ description: How the calculator handles untrusted input, the math engine boundar
 
 # Security Policy
 
-The calculator treats user input as untrusted and confines evaluation to a
-controlled math engine boundary.
+The calculator treats user input as untrusted and confines evaluation to a controlled math engine boundary.
 
 ## No arbitrary code execution
 
@@ -19,15 +18,13 @@ controlled math engine boundary.
 All math.js usage is confined to `src/infrastructure/mathjs`.
 
 - `MathJsExpressionEvaluationGateway` is the only evaluation entry point.
-- `MathJsFunctionWhitelist` limits which functions the engine may call to the
-  registered function catalog.
+- `MathJsFunctionWhitelist` limits which functions the engine may call to the registered function catalog.
 - `MathJsConstantScopeBuilder` builds a controlled evaluation scope.
 - `MathJsCalculationErrorMapper` converts engine errors to typed errors.
 
 ## Controlled scope
 
-The evaluation scope contains only the constants and variables the calculator
-manages. Untrusted names cannot reach global objects.
+The evaluation scope contains only the constants and variables the calculator manages. Untrusted names cannot reach global objects.
 
 ## Rendering safety
 
