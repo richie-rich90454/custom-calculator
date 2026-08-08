@@ -5,8 +5,7 @@ description: How the backspace key deletes intelligently by groups, tokens, and 
 
 # Smart Backspace
 
-The `Backspace` key does not simply delete one character. It follows a set of
-context-aware rules so that deleting feels natural and predictable.
+The `Backspace` key does not simply delete one character. It follows a set of context-aware rules so that deleting feels natural and predictable.
 
 ## Rules
 
@@ -30,8 +29,7 @@ If the cursor follows a digit of a number, one digit is deleted.
 
 ### Delete a complete function group
 
-If the cursor follows the opening parenthesis of a function call, the whole
-function group is deleted.
+If the cursor follows the opening parenthesis of a function call, the whole function group is deleted.
 
 ```
 sin(|  ->  |
@@ -43,8 +41,7 @@ For a non-empty call, delete inside first:
 sin(30|  ->  sin(|  ->  |
 ```
 
-Template blocks such as `derivative(, x)` are deleted as a complete group in
-the same way.
+Template blocks such as `derivative(, x)` are deleted as a complete group in the same way.
 
 ### Delete a paired empty parenthesis group
 
@@ -72,8 +69,7 @@ If no other rule applies, a single character is deleted.
 
 ## Forward delete
 
-The `Delete` key deletes forward using a mirrored set of rules: identifier
-tokens and empty parenthesis groups are deleted as units.
+The `Delete` key deletes forward using a mirrored set of rules: identifier tokens and empty parenthesis groups are deleted as units.
 
 ## Delete a word backward
 
@@ -87,8 +83,7 @@ tokens and empty parenthesis groups are deleted as units.
 The smart rules are designed to be predictable:
 
 - Deleting inside a number always removes one digit, never the whole number.
-- Deleting after a function always removes the function group, never a partial
-  token.
+- Deleting after a function always removes the function group, never a partial token.
 - Deleting after a constant always removes the constant token.
 
 ## Next steps
