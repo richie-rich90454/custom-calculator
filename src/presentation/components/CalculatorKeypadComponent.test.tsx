@@ -128,4 +128,79 @@ describe("CalculatorKeypadComponent", () => {
 
     expect(harness.store.getState().expressionText).toBe("7");
   });
+
+  it("moves focus to the next key with the right arrow", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    const sevenButton = screen.getByRole("button", { name: "Digit seven" });
+    const eightButton = screen.getByRole("button", { name: "Digit eight" });
+
+    sevenButton.focus();
+    await user.keyboard("{ArrowRight}");
+
+    expect(eightButton).toHaveFocus();
+  });
+
+  it("moves focus down a row with the down arrow", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    const sevenButton = screen.getByRole("button", { name: "Digit seven" });
+    const fourButton = screen.getByRole("button", { name: "Digit four" });
+
+    sevenButton.focus();
+    await user.keyboard("{ArrowDown}");
+
+    expect(fourButton).toHaveFocus();
+  });
+
+  it("keeps focus on the grid edge when moving left of the first column", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    const clearButton = screen.getByRole("button", {
+      name: "Clear expression",
+    });
+
+    clearButton.focus();
+    await user.keyboard("{ArrowLeft}");
+
+    expect(clearButton).toHaveFocus();
+  });
+
+  it("exposes exactly one tab stop per keypad grid", () => {
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    const grid = screen.getByRole("grid", { name: "Calculator keypad" });
+    const buttonsInCoreGrid = Array.from(
+      grid.querySelectorAll("button")
+    ) as HTMLButtonElement[];
+
+    const tabStops = buttonsInCoreGrid.filter(
+      (button) => button.tabIndex === 0
+    );
+
+    expect(tabStops).toHaveLength(1);
+  });
 });
