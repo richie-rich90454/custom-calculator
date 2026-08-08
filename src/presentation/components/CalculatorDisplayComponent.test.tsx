@@ -134,9 +134,9 @@ describe("CalculatorDisplayComponent caret behavior", () => {
 
     input.focus();
 
-    const indicators = document.querySelectorAll('[aria-hidden="true"]');
-
-    expect(indicators).toHaveLength(0);
+    expect(
+      document.querySelectorAll('[data-testid="caret-indicator"]')
+    ).toHaveLength(0);
   });
 
   it("renders a single synthetic caret after the editor loses focus", async () => {
@@ -153,9 +153,31 @@ describe("CalculatorDisplayComponent caret behavior", () => {
     await user.click(input);
     await user.tab();
 
-    const indicators = document.querySelectorAll('[aria-hidden="true"]');
+    expect(
+      document.querySelectorAll('[data-testid="caret-indicator"]')
+    ).toHaveLength(1);
+  });
 
-    expect(indicators).toHaveLength(1);
+  it("renders the synthetic caret after a function insertion while the editor is blurred", async () => {
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    input.focus();
+    input.blur();
+
+    harness.store.getState().onFunctionPressed("sin");
+
+    expect(
+      document.querySelectorAll('[data-testid="caret-indicator"]')
+    ).toHaveLength(1);
+    expect(harness.store.getState().cursorPosition).toBe(4);
+    expect(harness.store.getState().expressionText).toBe("sin(");
   });
 });
 
