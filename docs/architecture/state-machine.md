@@ -5,8 +5,7 @@ description: How session state transitions flow through commands.
 
 # State Machine
 
-The calculator's session state is an immutable snapshot that transitions
-through commands. Every command takes a state and returns a new state.
+The calculator's session state is an immutable snapshot that transitions through commands. Every command takes a state and returns a new state.
 
 ## State shape
 
@@ -45,13 +44,11 @@ Each transition is performed by a command:
 
 ## Immutability
 
-`copyWith` produces a new state with selected fields overridden. The previous
-state is never mutated, which keeps transitions easy to reason about and test.
+`copyWith` produces a new state with selected fields overridden. The previous state is never mutated, which keeps transitions easy to reason about and test.
 
 ## UI state mapping
 
-The Zustand store maps session state to UI state and back through
-`CalculatorViewModelMapper`. The store never holds domain logic.
+The Zustand store maps session state to UI state and back through `CalculatorViewModelMapper`. The store never holds domain logic.
 
 ## Next steps
 
