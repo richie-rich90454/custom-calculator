@@ -1,7 +1,7 @@
 export interface BrowserFeatureSnapshot {
-  readonly bigIntSupported: boolean;
+    readonly bigIntSupported: boolean;
 }
 
 export interface BrowserFeatureDetectionService {
-  detectBrowserFeatures(): BrowserFeatureSnapshot;
+    detectBrowserFeatures(): BrowserFeatureSnapshot;
 }
