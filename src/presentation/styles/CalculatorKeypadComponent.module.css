@@ -1,0 +1,86 @@
+.keypad {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.functionArea {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-1);
+}
+
+.coreArea {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-1);
+}
+
+.functionKey {
+  min-height: 40px;
+  padding: var(--space-2) 0;
+  background-color: var(--color-key-function);
+  border-color: var(--color-border);
+  color: var(--color-key-function-text);
+  font-size: 0.8rem;
+}
+
+.digitKey {
+  min-height: 48px;
+  background-color: var(--color-key-number);
+  border-color: var(--color-border);
+  color: var(--color-key-number-text);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.operatorKey {
+  min-height: 48px;
+  background-color: var(--color-key-operator);
+  border-color: var(--color-border);
+  color: var(--color-key-operator-text);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.symbolKey {
+  min-height: 48px;
+  background-color: var(--color-key-utility);
+  border-color: var(--color-border);
+  color: var(--color-key-utility-text);
+  font-size: 1rem;
+}
+
+.utilityKey {
+  min-height: 48px;
+  background-color: var(--color-key-utility);
+  border-color: var(--color-border);
+  color: var(--color-key-utility-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.equalsKey {
+  min-height: 48px;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.equalsKey[data-pressed="true"] {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 420px) {
+  .functionArea {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .functionKey {
+    font-size: 0.75rem;
+  }
+}
