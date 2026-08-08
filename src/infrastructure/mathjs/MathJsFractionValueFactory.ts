@@ -38,10 +38,10 @@ export class DefaultMathJsFractionValueFactory
       return valueText;
     }
 
-    const sign = match[1] ?? "";
-    const integerPart = match[2] ?? "";
+    const sign = match[1]!;
+    const integerPart = match[2]!;
     const fractionalPart = match[3] ?? "";
-    const exponent = Number.parseInt(match[4] ?? "0", 10);
+    const exponent = Number.parseInt(match[4]!, 10);
 
     const digits = integerPart + fractionalPart;
     const decimalPointIndex = integerPart.length + exponent;
