@@ -7,9 +7,9 @@
  * position inside the inserted text).
  */
 export interface CalculatorButtonTemplate {
-  readonly text: string;
-  readonly cursorOffset: number;
-  readonly wrapsSelection: boolean;
-  readonly wrapOpenText: string;
-  readonly wrapCloseText: string;
+    readonly text: string;
+    readonly cursorOffset: number;
+    readonly wrapsSelection: boolean;
+    readonly wrapOpenText: string;
+    readonly wrapCloseText: string;
 }
