@@ -55,3 +55,12 @@ export class DefaultFocusPreservationService
     }
   }
 }
+
+/**
+ * Shared focus preservation service instance.
+ *
+ * The expression editor registers its focus handle here and the keypad asks
+ * this instance to restore focus after pointer activations, so both sides of
+ * the interaction share one focus policy.
+ */
+export const defaultFocusPreservationService = new DefaultFocusPreservationService();
