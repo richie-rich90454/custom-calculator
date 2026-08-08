@@ -1,6 +1,6 @@
 export interface ExpressionEditorCaretRenderingState {
-  readonly showIndicator: boolean;
-  readonly offsetX: number;
+    readonly showIndicator: boolean;
+    readonly offsetX: number;
 }
 
 /**
@@ -12,8 +12,5 @@ export interface ExpressionEditorCaretRenderingState {
  * user always sees exactly one caret at the correct logical position.
  */
 export interface ExpressionEditorCaretRenderingService {
-  getCaretRenderingState(
-    hasFocus: boolean,
-    offsetX: number
-  ): ExpressionEditorCaretRenderingState;
+    getCaretRenderingState(hasFocus: boolean, offsetX: number): ExpressionEditorCaretRenderingState;
 }
