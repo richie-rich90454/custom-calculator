@@ -17,6 +17,7 @@ const PANEL_BUTTONS: readonly PanelButtonDefinition[] = [
   { panelName: "MEMORY", label: "Memory", ariaLabel: "Open memory panel" },
   { panelName: "SETTINGS", label: "Settings", ariaLabel: "Open settings panel" },
   { panelName: "CAS", label: "CAS", ariaLabel: "Open CAS panel" },
+  { panelName: "CALCULUS", label: "Calculus", ariaLabel: "Open calculus panel" },
 ];
 
 export function CalculatorStatusBarComponent() {
