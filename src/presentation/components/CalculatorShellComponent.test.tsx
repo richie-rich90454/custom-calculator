@@ -116,6 +116,27 @@ describe("CalculatorShellComponent", () => {
     expect(screen.getByRole("button", { name: "Simplify" })).toBeInTheDocument();
   });
 
+  it("renders the calculus panel when opened", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorShellComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "Open calculus panel" })
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Calculus" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "∫" })
+    ).toBeInTheDocument();
+  });
+
   it("renders the variables panel when opened", async () => {
     const user = userEvent.setup();
     const harness = createCalculatorTestHarness();
