@@ -34,13 +34,8 @@ export function CalculatorExpressionEditorComponent(
     props;
 
   useEffect(() => {
-    const input = inputRef.current;
-
-    if (input === null) {
-      return;
-    }
-
-    input.setSelectionRange(selectionStart, selectionEnd);
+    // The input is mounted before effects run, so the ref is always set.
+    inputRef.current!.setSelectionRange(selectionStart, selectionEnd);
   }, [selectionStart, selectionEnd, expressionText]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -55,11 +50,7 @@ export function CalculatorExpressionEditorComponent(
   };
 
   const handleInputSelect = (): void => {
-    const input = inputRef.current;
-
-    if (input === null) {
-      return;
-    }
+    const input = inputRef.current!;
 
     const start = input.selectionStart ?? input.value.length;
     const end = input.selectionEnd ?? input.value.length;
@@ -94,7 +85,7 @@ export function CalculatorExpressionEditorComponent(
     setHasFocus(false);
   };
 
-  const caretState = caretService.getCaretState(expressionText, hasFocus);
+  const caretState = caretService.getCaretState(hasFocus);
 
   return (
     <TextField className={cssClass(styles.textField)}>
