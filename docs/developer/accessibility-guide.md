@@ -5,8 +5,7 @@ description: The accessibility standards and patterns used in the calculator.
 
 # Accessibility Guide
 
-The calculator is keyboard-first and screen reader friendly. This page
-documents the accessibility patterns.
+The calculator is keyboard-first and screen reader friendly. This page documents the accessibility patterns.
 
 ## React Aria primitives
 
@@ -42,19 +41,15 @@ These provide keyboard interaction, focus management, and accessible names.
 
 ## Accessible names
 
-Every keypad key declares an `ariaLabel` such as "Sine function". Tests assert
-accessible names and roles.
+Every keypad key declares an `ariaLabel` such as "Sine function". Tests assert accessible names and roles.
 
 ## The caret
 
-The editor always shows a visible caret, including a synthetic indicator when
-focus moves to a button. This ensures the cursor state is never hidden. See
-[Cursor management](/architecture/cursor-management).
+The editor always shows a visible caret, including a synthetic indicator when focus moves to a button. This ensures the cursor state is never hidden. See [Cursor management](/architecture/cursor-management).
 
 ## Testing accessibility
 
-Accessibility is verified through component tests that assert labels, roles,
-and focus behavior. See [Testing guide](/developer/testing-guide).
+Accessibility is verified through component tests that assert labels, roles, and focus behavior. See [Testing guide](/developer/testing-guide).
 
 ## Next steps
 
