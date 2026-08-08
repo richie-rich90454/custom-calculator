@@ -8,6 +8,7 @@ import { CalculatorStatusBarComponent } from "./CalculatorStatusBarComponent";
 import { CalculatorDisplayComponent } from "./CalculatorDisplayComponent";
 import { CalculatorKeypadComponent } from "./CalculatorKeypadComponent";
 import { CasPanelComponent } from "./CasPanelComponent";
+import { CalculusPanelComponent } from "./CalculusPanelComponent";
 import { ConstantsPanelComponent } from "./ConstantsPanelComponent";
 import { HistoryPanelComponent } from "./HistoryPanelComponent";
 import { MemoryPanelComponent } from "./MemoryPanelComponent";
@@ -69,6 +70,8 @@ function resolvePanelDescriptor(
       return { title: "Settings", content: <SettingsPanelComponent /> };
     case CalculatorPanelName.CAS:
       return { title: "CAS", content: <CasPanelComponent /> };
+    case CalculatorPanelName.CALCULUS:
+      return { title: "Calculus", content: <CalculusPanelComponent /> };
     default:
       return { title: "Panel", content: null };
   }
