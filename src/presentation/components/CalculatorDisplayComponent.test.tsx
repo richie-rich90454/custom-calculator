@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createCalculatorTestHarness, renderWithCalculatorContext } from "../../test/calculatorTestHarness";
 import { CalculatorDisplayComponent } from "./CalculatorDisplayComponent";
@@ -118,5 +118,127 @@ describe("CalculatorDisplayComponent", () => {
     const resultOutput = screen.getByText("= 6");
 
     expect(resultOutput).toHaveAttribute("aria-live", "polite");
+  });
+});
+
+describe("CalculatorDisplayComponent caret behavior", () => {
+  it("does not render a synthetic caret while the editor is focused", () => {
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    input.focus();
+
+    const indicators = document.querySelectorAll('[aria-hidden="true"]');
+
+    expect(indicators).toHaveLength(0);
+  });
+
+  it("renders a single synthetic caret after the editor loses focus", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    await user.click(input);
+    await user.tab();
+
+    const indicators = document.querySelectorAll('[aria-hidden="true"]');
+
+    expect(indicators).toHaveLength(1);
+  });
+});
+
+describe("CalculatorDisplayComponent keyboard input", () => {
+  it("accepts digits, letters, and symbols", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    await user.type(input, "2+3sin(30)*x");
+
+    expect(harness.store.getState().expressionText).toBe("2+3sin(30)*x");
+  });
+
+  it("accepts spaces and percent signs", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    await user.type(input, "5 % 2");
+
+    expect(harness.store.getState().expressionText).toBe("5 % 2");
+  });
+
+  it("moves the caret with arrow keys and types at the start", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    await user.type(input, "42{ArrowLeft}{ArrowLeft}9");
+
+    expect(harness.store.getState().expressionText).toBe("942");
+  });
+
+  it("moves the caret with arrow keys and deletes forward with Delete", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    await user.type(input, "123{ArrowLeft}{ArrowLeft}{Delete}");
+
+    expect(harness.store.getState().expressionText).toBe("13");
+  });
+
+  it("deletes a selected range with the Delete key", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    await user.type(input, "1234");
+    await user.keyboard("{Control>}{a}{/Control}");
+    await user.keyboard("{Delete}");
+
+    expect(harness.store.getState().expressionText).toBe("");
   });
 });
