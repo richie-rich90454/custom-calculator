@@ -1,0 +1,46 @@
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.track {
+  width: 44px;
+  height: 26px;
+  border-radius: 13px;
+  background-color: var(--color-border);
+  position: relative;
+  transition: background-color 120ms ease;
+  flex-shrink: 0;
+}
+
+.thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--color-text-primary);
+  transition: transform 120ms ease, background-color 120ms ease;
+}
+
+.switch[data-selected="true"] .track {
+  background-color: var(--color-accent);
+}
+
+.switch[data-selected="true"] .thumb {
+  transform: translateX(18px);
+  background-color: var(--color-accent-contrast);
+}
+
+.switch:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.label {
+  font-size: 0.95rem;
+}
