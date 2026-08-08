@@ -32,10 +32,6 @@ export function CalculatorShellComponent() {
   return (
     <div className={cssClass(styles.shell)}>
       <div className={cssClass(styles.calculator)}>
-        <header className={cssClass(styles.header)}>
-          <h1 className={cssClass(styles.title)}>Scientific Calculator</h1>
-        </header>
-
         <CalculatorStatusBarComponent />
 
         <div className={cssClass(styles.main)}>
