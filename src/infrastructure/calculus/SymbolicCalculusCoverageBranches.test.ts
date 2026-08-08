@@ -14,197 +14,188 @@ import { DefaultSymbolicIntegrationService } from "./DefaultSymbolicIntegrationS
 import { DefaultTaylorSeriesService } from "./DefaultTaylorSeriesService";
 
 function providerWith(overrides: {
-  readonly simplify?: unknown;
-  readonly derivative?: unknown;
-  readonly format?: unknown;
-  readonly parse?: unknown;
-  readonly evaluate?: unknown;
+    readonly simplify?: unknown;
+    readonly derivative?: unknown;
+    readonly format?: unknown;
+    readonly parse?: unknown;
+    readonly evaluate?: unknown;
 }): MathJsInstanceProvider {
-  const realProvider = new DefaultMathJsInstanceProvider();
-  const instance = realProvider.getInstance();
+    const realProvider = new DefaultMathJsInstanceProvider();
+    const instance = realProvider.getInstance();
 
-  const wrapped = Object.create(instance);
+    const wrapped = Object.create(instance);
 
-  for (const [methodName, implementation] of Object.entries(overrides)) {
-    Object.defineProperty(wrapped, methodName, {
-      value: implementation as never,
-      configurable: true,
-    });
-  }
+    for (const [methodName, implementation] of Object.entries(overrides)) {
+        Object.defineProperty(wrapped, methodName, {
+            value: implementation as never,
+            configurable: true,
+        });
+    }
 
-  return { getInstance: () => wrapped as MathJsInstance };
+    return { getInstance: () => wrapped as MathJsInstance };
 }
 
 describe("DefaultSymbolicDifferentiationService defensive branches", () => {
-  const angleModePolicyService = new DefaultCalculusAngleModePolicyService();
-  const resultFormattingService = new DefaultResultFormattingService();
+    const angleModePolicyService = new DefaultCalculusAngleModePolicyService();
+    const resultFormattingService = new DefaultResultFormattingService();
 
-  it("falls back to the unsimplified node when simplification fails", () => {
-    const provider = providerWith({
-      simplify: vi.fn(() => {
-        throw new Error("simplify exploded");
-      }),
+    it("falls back to the unsimplified node when simplification fails", () => {
+        const provider = providerWith({
+            simplify: vi.fn(() => {
+                throw new Error("simplify exploded");
+            }),
+        });
+        const service = new DefaultSymbolicDifferentiationService(
+            provider,
+            angleModePolicyService,
+            resultFormattingService,
+        );
+
+        const result = service.differentiateSymbolically(
+            "x^2",
+            "x",
+            AngleMode.RAD,
+            CalculusAngleModePolicy.RADIANS_ONLY,
+        );
+
+        expect(result).toBe("2*x");
     });
-    const service = new DefaultSymbolicDifferentiationService(
-      provider,
-      angleModePolicyService,
-      resultFormattingService
-    );
 
-    const result = service.differentiateSymbolically(
-      "x^2",
-      "x",
-      AngleMode.RAD,
-      CalculusAngleModePolicy.RADIANS_ONLY
-    );
+    it("passes an existing calculation error through unchanged", () => {
+        const existingError = new CalculationError(
+            CalculationErrorCode.EVALUATION_FAILED,
+            "original failure",
+        );
+        const provider = providerWith({
+            derivative: vi.fn(() => {
+                throw existingError;
+            }),
+        });
+        const service = new DefaultSymbolicDifferentiationService(
+            provider,
+            angleModePolicyService,
+            resultFormattingService,
+        );
 
-    expect(result).toBe("2*x");
-  });
-
-  it("passes an existing calculation error through unchanged", () => {
-    const existingError = new CalculationError(
-      CalculationErrorCode.EVALUATION_FAILED,
-      "original failure"
-    );
-    const provider = providerWith({
-      derivative: vi.fn(() => {
-        throw existingError;
-      }),
+        expect(() =>
+            service.differentiateSymbolically(
+                "x^2",
+                "x",
+                AngleMode.RAD,
+                CalculusAngleModePolicy.RADIANS_ONLY,
+            ),
+        ).toThrow(existingError);
     });
-    const service = new DefaultSymbolicDifferentiationService(
-      provider,
-      angleModePolicyService,
-      resultFormattingService
-    );
 
-    expect(() =>
-      service.differentiateSymbolically(
-        "x^2",
-        "x",
-        AngleMode.RAD,
-        CalculusAngleModePolicy.RADIANS_ONLY
-      )
-    ).toThrow(existingError);
-  });
+    it("stringifies a non error thrown value", () => {
+        const provider = providerWith({
+            derivative: vi.fn(() => {
+                throw "raw failure";
+            }),
+        });
+        const service = new DefaultSymbolicDifferentiationService(
+            provider,
+            angleModePolicyService,
+            resultFormattingService,
+        );
 
-  it("stringifies a non error thrown value", () => {
-    const provider = providerWith({
-      derivative: vi.fn(() => {
-        throw "raw failure";
-      }),
+        expect(() =>
+            service.differentiateSymbolically(
+                "x^2",
+                "x",
+                AngleMode.RAD,
+                CalculusAngleModePolicy.RADIANS_ONLY,
+            ),
+        ).toThrow(/raw failure/);
     });
-    const service = new DefaultSymbolicDifferentiationService(
-      provider,
-      angleModePolicyService,
-      resultFormattingService
-    );
-
-    expect(() =>
-      service.differentiateSymbolically(
-        "x^2",
-        "x",
-        AngleMode.RAD,
-        CalculusAngleModePolicy.RADIANS_ONLY
-      )
-    ).toThrow(/raw failure/);
-  });
 });
 
 describe("DefaultSymbolicIntegrationService error path", () => {
-  it("maps a non unsupported integration failure", () => {
-    const provider = providerWith({
-      format: vi.fn(() => {
-        throw new Error("formatting exploded");
-      }),
+    it("maps a non unsupported integration failure", () => {
+        const provider = providerWith({
+            format: vi.fn(() => {
+                throw new Error("formatting exploded");
+            }),
+        });
+        const service = new DefaultSymbolicIntegrationService(
+            provider,
+            new DefaultResultFormattingService(),
+        );
+
+        expect(() => service.integrateSymbolically("x", "x")).toThrow(
+            /Symbolic integration failed/,
+        );
     });
-    const service = new DefaultSymbolicIntegrationService(
-      provider,
-      new DefaultResultFormattingService()
-    );
 
-    expect(() =>
-      service.integrateSymbolically("x", "x")
-    ).toThrow(/Symbolic integration failed/);
-  });
+    it("maps a parse failure", () => {
+        const provider = providerWith({
+            parse: vi.fn(() => {
+                throw new Error("parse exploded");
+            }),
+        });
+        const service = new DefaultSymbolicIntegrationService(
+            provider,
+            new DefaultResultFormattingService(),
+        );
 
-  it("maps a parse failure", () => {
-    const provider = providerWith({
-      parse: vi.fn(() => {
-        throw new Error("parse exploded");
-      }),
+        expect(() => service.integrateSymbolically("x", "x")).toThrow(
+            /Symbolic integration failed/,
+        );
     });
-    const service = new DefaultSymbolicIntegrationService(
-      provider,
-      new DefaultResultFormattingService()
-    );
 
-    expect(() =>
-      service.integrateSymbolically("x", "x")
-    ).toThrow(/Symbolic integration failed/);
-  });
+    it("falls back to the unsimplified node when simplification fails", () => {
+        const provider = providerWith({
+            simplify: vi.fn(() => {
+                throw new Error("simplify exploded");
+            }),
+        });
+        const service = new DefaultSymbolicIntegrationService(
+            provider,
+            new DefaultResultFormattingService(),
+        );
 
-  it("falls back to the unsimplified node when simplification fails", () => {
-    const provider = providerWith({
-      simplify: vi.fn(() => {
-        throw new Error("simplify exploded");
-      }),
+        const result = service.integrateSymbolically("x", "x");
+
+        expect(result).toBe("x^2/2");
     });
-    const service = new DefaultSymbolicIntegrationService(
-      provider,
-      new DefaultResultFormattingService()
-    );
 
-    const result = service.integrateSymbolically("x", "x");
+    it("stringifies a non error thrown value", () => {
+        const provider = providerWith({
+            format: vi.fn(() => {
+                throw "raw failure";
+            }),
+        });
+        const service = new DefaultSymbolicIntegrationService(
+            provider,
+            new DefaultResultFormattingService(),
+        );
 
-    expect(result).toBe("x^2/2");
-  });
-
-  it("stringifies a non error thrown value", () => {
-    const provider = providerWith({
-      format: vi.fn(() => {
-        throw "raw failure";
-      }),
+        expect(() => service.integrateSymbolically("x", "x")).toThrow(/raw failure/);
     });
-    const service = new DefaultSymbolicIntegrationService(
-      provider,
-      new DefaultResultFormattingService()
-    );
-
-    expect(() =>
-      service.integrateSymbolically("x", "x")
-    ).toThrow(/raw failure/);
-  });
 });
 
 describe("DefaultTaylorSeriesService error handling", () => {
-  const differentiationService = new DefaultSymbolicDifferentiationService(
-    new DefaultMathJsInstanceProvider(),
-    new DefaultCalculusAngleModePolicyService(),
-    new DefaultResultFormattingService()
-  );
-
-  it("stringifies a non error thrown value from the evaluator", () => {
-    const evaluator: CalculusExpressionEvaluator = {
-      evaluate: () => {
-        throw "raw failure";
-      },
-    };
-    const service = new DefaultTaylorSeriesService(
-      new DefaultMathJsInstanceProvider(),
-      differentiationService,
-      evaluator,
-      new DefaultResultFormattingService()
+    const differentiationService = new DefaultSymbolicDifferentiationService(
+        new DefaultMathJsInstanceProvider(),
+        new DefaultCalculusAngleModePolicyService(),
+        new DefaultResultFormattingService(),
     );
 
-    expect(() =>
-      service.expand(
-        "1/x",
-        "x",
-        0,
-        3,
-        AngleMode.RAD,
-        CalculusAngleModePolicy.RADIANS_ONLY
-      )
-    ).toThrow(/raw failure/);
-  });
+    it("stringifies a non error thrown value from the evaluator", () => {
+        const evaluator: CalculusExpressionEvaluator = {
+            evaluate: () => {
+                throw "raw failure";
+            },
+        };
+        const service = new DefaultTaylorSeriesService(
+            new DefaultMathJsInstanceProvider(),
+            differentiationService,
+            evaluator,
+            new DefaultResultFormattingService(),
+        );
+
+        expect(() =>
+            service.expand("1/x", "x", 0, 3, AngleMode.RAD, CalculusAngleModePolicy.RADIANS_ONLY),
+        ).toThrow(/raw failure/);
+    });
 });
