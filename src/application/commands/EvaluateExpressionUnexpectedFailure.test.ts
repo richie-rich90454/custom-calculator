@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { CalculatorCompositionRoot } from "../../app/CalculatorCompositionRoot";
 import { DefaultCasBlockParser } from "../cas/DefaultCasBlockParser";
 import { DefaultCasExpressionRouterService } from "../cas/DefaultCasExpressionRouterService";
+import { DefaultCalculusBlockParser } from "../calculus/DefaultCalculusBlockParser";
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
 import type { ExpressionEvaluationGateway } from "../../domain/services/ExpressionEvaluationGateway";
 import { EvaluateExpressionCalculatorCommand } from "./EvaluateExpressionCalculatorCommand";
@@ -21,7 +22,9 @@ describe("EvaluateExpressionCalculatorCommand unexpected failure", () => {
       gateway,
       new DefaultCasBlockParser(),
       new DefaultCasExpressionRouterService(),
-      root.casService
+      root.casService,
+      new DefaultCalculusBlockParser(),
+      root.calculusExpressionRouterService
     );
 
     const nextState = command.execute(
