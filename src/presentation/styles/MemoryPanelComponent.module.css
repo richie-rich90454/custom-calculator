@@ -1,9 +1,3 @@
-.panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
 .valueBox {
   padding: var(--space-4);
   border: 1px solid var(--color-border);
@@ -21,11 +15,6 @@
   font-size: 1.2rem;
   color: var(--color-text-primary);
   word-break: break-all;
-}
-
-.emptyValue {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
 }
 
 .buttonGrid {
