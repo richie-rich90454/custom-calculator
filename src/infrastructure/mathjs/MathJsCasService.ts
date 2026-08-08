@@ -58,7 +58,7 @@ export class MathJsCasService implements CasService {
     }
   }
 
-  private mapError(error: unknown): CalculationError {
+  public mapError(error: unknown): CalculationError {
     if (error instanceof CalculationError) {
       return error;
     }
