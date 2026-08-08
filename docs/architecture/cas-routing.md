@@ -5,8 +5,7 @@ description: How cas(...) blocks are parsed and routed to the symbolic engine.
 
 # CAS Routing
 
-CAS blocks are recognized at the top level of an expression and routed to the
-symbolic engine before numeric evaluation.
+CAS blocks are recognized at the top level of an expression and routed to the symbolic engine before numeric evaluation.
 
 ## Flow diagram
 
@@ -33,8 +32,7 @@ flowchart LR
 /^(cas|casSimplify|casExpand|casDerivative)\s*\((.*)\)$/s
 ```
 
-It produces a `CasBlockDescriptor` carrying the operation kind, the inner
-expression text, and an optional derivative variable.
+It produces a `CasBlockDescriptor` carrying the operation kind, the inner expression text, and an optional derivative variable.
 
 ## Router
 
@@ -46,18 +44,15 @@ expression text, and an optional derivative variable.
 
 ## Service
 
-`MathJsCasService` implements `CasService` using the math.js instance. It is
-the only place that touches symbolic operations.
+`MathJsCasService` implements `CasService` using the math.js instance. It is the only place that touches symbolic operations.
 
 ## Why routing matters
 
-Routing keeps symbolic expressions out of the numeric gateway and keeps the
-numeric engine from choking on symbolic input.
+Routing keeps symbolic expressions out of the numeric gateway and keeps the numeric engine from choking on symbolic input.
 
 ## CAS enabled flag
 
-Routing consults the `casEnabled` flag. When CAS is disabled, `cas(...)` blocks
-are not treated as symbolic and fail with an error.
+Routing consults the `casEnabled` flag. When CAS is disabled, `cas(...)` blocks are not treated as symbolic and fail with an error.
 
 ## Next steps
 
