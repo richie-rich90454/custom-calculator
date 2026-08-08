@@ -1,6 +1,6 @@
 import Dexie, { type Table } from "dexie";
-import type { HistoryEntry } from "../../domain/model/HistoryEntry";
-import type { VariableAssignment } from "../../domain/model/VariableAssignment";
+import { HistoryEntry } from "../../domain/model/HistoryEntry";
+import { VariableAssignment } from "../../domain/model/VariableAssignment";
 
 export interface HistoryEntryRecord {
   readonly id: string;
