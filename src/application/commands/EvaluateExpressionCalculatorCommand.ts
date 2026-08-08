@@ -1,5 +1,8 @@
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
 import { CalculationError } from "../../domain/model/CalculationError";
+import type { CasBlockParser } from "../cas/CasBlockParser";
+import type { CasExpressionRouterService } from "../cas/CasExpressionRouterService";
+import type { CasService } from "../../domain/services/CasService";
 import type { ExpressionEditingService } from "../../domain/services/ExpressionEditingService";
 import type { ExpressionEvaluationGateway } from "../../domain/services/ExpressionEvaluationGateway";
 import type { ExpressionValidationService } from "../../domain/services/ExpressionValidationService";
@@ -9,7 +12,10 @@ export class EvaluateExpressionCalculatorCommand extends AbstractCalculatorComma
   public constructor(
     private readonly expressionEditingService: ExpressionEditingService,
     private readonly expressionValidationService: ExpressionValidationService,
-    private readonly expressionEvaluationGateway: ExpressionEvaluationGateway
+    private readonly expressionEvaluationGateway: ExpressionEvaluationGateway,
+    private readonly casBlockParser: CasBlockParser,
+    private readonly casExpressionRouterService: CasExpressionRouterService,
+    private readonly casService: CasService
   ) {
     super();
   }
@@ -35,6 +41,12 @@ export class EvaluateExpressionCalculatorCommand extends AbstractCalculatorComma
       selectionStart: autoClosedExpression.length,
       selectionEnd: autoClosedExpression.length,
     });
+
+    const casBlockDescriptor = this.casBlockParser.parseBlock(autoClosedExpression);
+
+    if (casBlockDescriptor !== null) {
+      return this.routeCasBlock(evaluationState, casBlockDescriptor);
+    }
 
     const validationError =
       this.expressionValidationService.validateExpression(evaluationState);
@@ -69,5 +81,30 @@ export class EvaluateExpressionCalculatorCommand extends AbstractCalculatorComma
         errorText: "Evaluation failed unexpectedly.",
       });
     }
+  }
+
+  private routeCasBlock(
+    evaluationState: CalculatorSessionState,
+    casBlockDescriptor: CasBlockDescriptor
+  ): CalculatorSessionState {
+    const resolution = this.casExpressionRouterService.routeBlock(
+      casBlockDescriptor,
+      evaluationState.casEnabled,
+      this.casService
+    );
+
+    if (resolution.errorText !== null) {
+      return evaluationState.copyWith({
+        resultText: null,
+        errorText: resolution.errorText,
+      });
+    }
+
+    return evaluationState.copyWith({
+      resultText: resolution.resultText,
+      lastResultText: resolution.resultText,
+      lastResultValue: null,
+      errorText: null,
+    });
   }
 }
