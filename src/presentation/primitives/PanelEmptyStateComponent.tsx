@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { cssClass } from "../utils/classNames";
 import styles from "../styles/PanelPrimitives.module.css";
 
