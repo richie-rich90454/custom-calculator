@@ -4,27 +4,24 @@ import type { NumericModePolicyService } from "../../domain/services/NumericMode
 import { AbstractCalculatorCommand } from "./AbstractCalculatorCommand";
 
 export class ChangeNumericModeCalculatorCommand extends AbstractCalculatorCommand {
-  public constructor(
-    private readonly numericModePolicyService: NumericModePolicyService,
-    private readonly requestedNumericMode: NumericMode
-  ) {
-    super();
-  }
+    public constructor(
+        private readonly numericModePolicyService: NumericModePolicyService,
+        private readonly requestedNumericMode: NumericMode,
+    ) {
+        super();
+    }
 
-  public override execute(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    const effectiveNumericMode =
-      this.numericModePolicyService.resolveEffectiveNumericMode(
-        this.requestedNumericMode
-      );
+    public override execute(currentState: CalculatorSessionState): CalculatorSessionState {
+        const effectiveNumericMode = this.numericModePolicyService.resolveEffectiveNumericMode(
+            this.requestedNumericMode,
+        );
 
-    return currentState.copyWith({
-      numericMode: effectiveNumericMode,
-      resultText: null,
-      errorText: null,
-      lastResultValue: null,
-      lastResultText: null,
-    });
-  }
+        return currentState.copyWith({
+            numericMode: effectiveNumericMode,
+            resultText: null,
+            errorText: null,
+            lastResultValue: null,
+            lastResultText: null,
+        });
+    }
 }
