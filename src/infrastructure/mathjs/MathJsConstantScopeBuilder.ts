@@ -1,4 +1,10 @@
-import type { MathJsInstance, MathType } from "mathjs";
+import type {
+  MathJsInstance,
+  MathType,
+  Unit,
+  Complex,
+  BigNumber,
+} from "mathjs";
 import { AngleMode } from "../../domain/model/AngleMode";
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
 import type { ConstantCatalogService } from "../../domain/services/ConstantCatalogService";
@@ -65,15 +71,31 @@ export class MathJsConstantScopeBuilder
     const fromRadians = (value: MathType): MathType =>
       math.divide(value, radiansPerUnit);
 
-    scope["sin"] = (value: MathType): MathType => math.sin(toRadians(value));
-    scope["cos"] = (value: MathType): MathType => math.cos(toRadians(value));
-    scope["tan"] = (value: MathType): MathType => math.tan(toRadians(value));
-    scope["asin"] = (value: MathType): MathType =>
-      fromRadians(math.asin(value));
-    scope["acos"] = (value: MathType): MathType =>
-      fromRadians(math.acos(value));
-    scope["atan"] = (value: MathType): MathType =>
-      fromRadians(math.atan(value));
+    type TrigArgument = number | Unit | Complex | BigNumber;
+    type InverseTrigArgument = number | Complex | BigNumber;
+
+    const sinValue = (value: unknown): MathType =>
+      math.sin(value as never);
+    const cosValue = (value: unknown): MathType =>
+      math.cos(value as never);
+    const tanValue = (value: unknown): MathType =>
+      math.tan(value as never);
+    const asinValue = (value: unknown): MathType =>
+      math.asin(value as never);
+    const acosValue = (value: unknown): MathType =>
+      math.acos(value as never);
+    const atanValue = (value: unknown): MathType =>
+      math.atan(value as never);
+
+    scope["sin"] = (value: TrigArgument): MathType => sinValue(toRadians(value));
+    scope["cos"] = (value: TrigArgument): MathType => cosValue(toRadians(value));
+    scope["tan"] = (value: TrigArgument): MathType => tanValue(toRadians(value));
+    scope["asin"] = (value: InverseTrigArgument): MathType =>
+      fromRadians(asinValue(value));
+    scope["acos"] = (value: InverseTrigArgument): MathType =>
+      fromRadians(acosValue(value));
+    scope["atan"] = (value: InverseTrigArgument): MathType =>
+      fromRadians(atanValue(value));
   }
 
   private populatePreviousAnswer(
