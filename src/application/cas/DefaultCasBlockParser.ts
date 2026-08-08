@@ -24,8 +24,8 @@ export class DefaultCasBlockParser implements CasBlockParser {
       return null;
     }
 
-    const functionName = match[1];
-    const argumentsText = match[2].trim();
+    const functionName = match[1] ?? "";
+    const argumentsText = (match[2] ?? "").trim();
 
     if (argumentsText.length === 0) {
       return null;
