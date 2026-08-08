@@ -5,9 +5,7 @@ description: How the calculator is tested and how to write tests that match the 
 
 # Testing Guide
 
-The calculator is tested with Vitest and Testing Library. The test suite runs
-with strict 100 percent coverage thresholds across statements, branches,
-functions, and lines.
+The calculator is tested with Vitest and Testing Library. The test suite runs with strict 100 percent coverage thresholds across statements, branches, functions, and lines.
 
 ## Commands
 
@@ -18,9 +16,7 @@ npm run test:watch    # watch mode
 
 ## Test structure
 
-Tests live next to the code they cover, named with a `.test.ts` or `.test.tsx`
-suffix. Vitest is configured in `vite.config.ts` to include
-`src/**/*.test.{ts,tsx}`.
+Tests live next to the code they cover, named with a `.test.ts` or `.test.tsx` suffix. Vitest is configured in `vite.config.ts` to include `src/**/*.test.{ts,tsx}`.
 
 ## The harness
 
@@ -31,8 +27,7 @@ const harness = createCalculatorTestHarness();
 renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 ```
 
-The harness builds a real composition root, bootstrap, and store. See
-`src/test/calculatorTestHarness.tsx`.
+The harness builds a real composition root, bootstrap, and store. See `src/test/calculatorTestHarness.tsx`.
 
 ## Domain tests
 
@@ -56,18 +51,15 @@ expect(harness.store.getState().expressionText).toBe("sin(");
 
 ## Property tests
 
-Some domain services are covered with `fast-check` property tests, asserting
-invariants hold across many random inputs.
+Some domain services are covered with `fast-check` property tests, asserting invariants hold across many random inputs.
 
 ## Coverage policy
 
-The project enforces 100 percent coverage. Every new branch must be covered.
-See [Coverage policy](/developer/coverage-policy).
+The project enforces 100 percent coverage. Every new branch must be covered. See [Coverage policy](/developer/coverage-policy).
 
 ## Accessibility testing
 
-Tests assert accessible names and roles so the interface stays usable. See
-[Accessibility guide](/developer/accessibility-guide).
+Tests assert accessible names and roles so the interface stays usable. See [Accessibility guide](/developer/accessibility-guide).
 
 ## Next steps
 
