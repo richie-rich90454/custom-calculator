@@ -8,5 +8,5 @@ import type { CalculatorButtonInsertionBehavior } from "./CalculatorButtonInsert
  * predictable regardless of which keypad region the key belongs to.
  */
 export interface CalculatorButtonDefinition extends CalculatorKeyDefinition {
-  readonly behavior: CalculatorButtonInsertionBehavior;
+    readonly behavior: CalculatorButtonInsertionBehavior;
 }
