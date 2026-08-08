@@ -29,7 +29,7 @@ describe("CalculusPanelComponent", () => {
 
     await user.click(insertButtons[0]!);
 
-    expect(harness.store.getState().expressionText).toBe("derivative(");
+    expect(harness.store.getState().expressionText).toBe("derivative(, x)");
   });
 
   it("inserts the integral invocation into the expression", async () => {
@@ -45,6 +45,6 @@ describe("CalculusPanelComponent", () => {
 
     await user.click(insertButtons[2]!);
 
-    expect(harness.store.getState().expressionText).toBe("integral(");
+    expect(harness.store.getState().expressionText).toBe("integral(, x, a, b)");
   });
 });
