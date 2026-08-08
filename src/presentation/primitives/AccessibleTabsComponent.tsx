@@ -6,6 +6,7 @@ import {
   TabPanel,
   type TabsProps,
 } from "react-aria-components";
+import { cssClass } from "../utils/classNames";
 import styles from "../styles/AccessibleTabsComponent.module.css";
 
 export interface AccessibleTabDefinition {
@@ -25,15 +26,15 @@ export function AccessibleTabsComponent(
   const { tabs, children, ...tabsProperties } = props;
 
   return (
-    <Tabs {...tabsProperties} className={styles.tabs}>
-      <TabList className={styles.tabList}>
+    <Tabs {...tabsProperties} className={cssClass(styles.tabs)}>
+      <TabList className={cssClass(styles.tabList)}>
         {tabs.map((tab) => (
-          <Tab key={tab.id} id={tab.id} className={styles.tab}>
+          <Tab key={tab.id} id={tab.id} className={cssClass(styles.tab)}>
             {tab.label}
           </Tab>
         ))}
       </TabList>
-      <TabPanel className={styles.tabPanel}>{children}</TabPanel>
+      <TabPanel className={cssClass(styles.tabPanel)}>{children}</TabPanel>
     </Tabs>
   );
 }
