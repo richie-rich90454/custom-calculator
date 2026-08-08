@@ -39,8 +39,21 @@ export class MathJsConstantScopeBuilder
     scope: Record<string, unknown>,
     math: MathJsInstance
   ): void {
-    for (const constant of this.constantCatalogService.getAllConstants()) {
-      scope[constant.id] = math.evaluate(constant.value);
+    const parsedValues: ReadonlyArray<readonly [string, number]> =
+      this.evaluateValueTextsAsNumbers(
+        math,
+        this.constantCatalogService.getAllConstants().map((constant) => [
+          constant.id,
+          constant.value,
+        ])
+      );
+
+    for (const [identifier, value] of parsedValues) {
+      if (Number.isNaN(value)) {
+        continue;
+      }
+
+      scope[identifier] = this.convertToConfiguredType(math, value);
     }
   }
 
@@ -49,9 +62,71 @@ export class MathJsConstantScopeBuilder
     math: MathJsInstance,
     sessionState: CalculatorSessionState
   ): void {
-    for (const variable of sessionState.variables) {
-      scope[variable.name] = math.evaluate(variable.valueText);
+    const parsedValues: ReadonlyArray<readonly [string, number]> =
+      this.evaluateValueTextsAsNumbers(
+        math,
+        sessionState.variables.map((variable) => [
+          variable.name,
+          variable.valueText,
+        ])
+      );
+
+    for (const [identifier, value] of parsedValues) {
+      if (Number.isNaN(value)) {
+        continue;
+      }
+
+      scope[identifier] = this.convertToConfiguredType(math, value);
     }
+  }
+
+  private evaluateValueTextsAsNumbers(
+    math: MathJsInstance,
+    valueTexts: ReadonlyArray<readonly [string, string]>
+  ): ReadonlyArray<readonly [string, number]> {
+    const originalNumberType = math.config({}).number ?? "number";
+
+    math.config({ number: "number" });
+
+    const parsedValues: Array<readonly [string, number]> = [];
+
+    for (const [identifier, valueText] of valueTexts) {
+      try {
+        const numericValue = math.evaluate(valueText) as number;
+        parsedValues.push([identifier, numericValue]);
+      } catch {
+        parsedValues.push([identifier, Number.NaN]);
+      }
+    }
+
+    math.config({ number: originalNumberType });
+
+    return parsedValues;
+  }
+
+  private convertToConfiguredType(
+    math: MathJsInstance,
+    numericValue: number
+  ): unknown {
+    const numberType = math.config({}).number ?? "number";
+
+    if (numberType === "BigNumber") {
+      return math.bignumber(numericValue);
+    }
+
+    if (numberType === "Fraction") {
+      return math.fraction(numericValue);
+    }
+
+    if (numberType === "bigint") {
+      if (Number.isInteger(numericValue)) {
+        return globalThis.BigInt(numericValue);
+      }
+
+      return numericValue;
+    }
+
+    return numericValue;
   }
 
   private populateTrigonometricWrappers(

@@ -122,6 +122,10 @@ export class MathJsExpressionEvaluationGateway
         const symbolNode = child as unknown as { name: string };
         const symbolName = symbolNode.name;
 
+        if (this.functionWhitelist.isFunctionAllowed(symbolName)) {
+          return;
+        }
+
         if (!(symbolName in scope)) {
           throw new CalculationError(
             CalculationErrorCode.UNKNOWN_VARIABLE,
