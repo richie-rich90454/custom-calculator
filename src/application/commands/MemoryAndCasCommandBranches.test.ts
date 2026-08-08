@@ -56,6 +56,15 @@ describe("MemorySubtractCalculatorCommand", () => {
     expect(command.execute(state)).toBe(state);
   });
 
+  it("returns the state unchanged when evaluation fails", () => {
+    const command = new MemorySubtractCalculatorCommand(buildThrowingGateway());
+    const state = CalculatorSessionState.createInitial().copyWith({
+      resultText: "5",
+    });
+
+    expect(command.execute(state)).toBe(state);
+  });
+
   it("evaluates memory minus the current result", () => {
     const command = new MemorySubtractCalculatorCommand(buildWorkingGateway("2"));
     const state = CalculatorSessionState.createInitial().copyWith({
@@ -139,6 +148,26 @@ describe("SimplifyExpressionCalculatorCommand", () => {
 
     expect(nextState.resultText).toBeNull();
     expect(nextState.errorText).toContain("boom");
+  });
+
+  it("stringifies a non error thrown value", () => {
+    const casService: CasService = {
+      simplifyExpression: vi.fn(() => {
+        throw "raw failure";
+      }),
+      expandExpression: vi.fn(() => ""),
+      differentiateExpression: vi.fn(() => ""),
+    };
+    const command = new SimplifyExpressionCalculatorCommand(casService);
+    const state = CalculatorSessionState.createInitial().copyWith({
+      casEnabled: true,
+      expressionText: "x+x",
+    });
+
+    const nextState = command.execute(state);
+
+    expect(nextState.resultText).toBeNull();
+    expect(nextState.errorText).toContain("raw failure");
   });
 });
 
