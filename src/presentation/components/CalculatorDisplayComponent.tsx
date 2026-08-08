@@ -109,6 +109,7 @@ export function CalculatorDisplayComponent() {
           inputMode="text"
           autoComplete="off"
           spellCheck={false}
+          /* eslint-disable-next-line jsx-a11y/no-autofocus -- Keyboard-first calculator: land focus in the editor on load. */
           autoFocus
           {...(viewModel.errorText !== null
             ? { "aria-describedby": "error-text" }
