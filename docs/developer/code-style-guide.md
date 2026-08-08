@@ -5,8 +5,7 @@ description: The formatting, linting, and coding standards of the repository.
 
 # Code Style Guide
 
-The repository uses Prettier and ESLint to enforce a consistent style. Rules
-are configured in `.prettierrc.json` and `eslint.config.js`.
+The repository uses Prettier and ESLint to enforce a consistent style. Rules are configured in `.prettierrc.json` and `eslint.config.js`.
 
 ## Commands
 
@@ -59,8 +58,7 @@ Notable overrides:
 
 ## General rules
 
-- Java-flavored TypeScript: long explicit names, interfaces, abstract classes,
-  concrete default implementations.
+- Java-flavored TypeScript: long explicit names, interfaces, abstract classes, concrete default implementations.
 - No comments unless the "why" is non-obvious.
 - No `eval`, no `new Function`, no arbitrary code execution.
 - No Tailwind.
