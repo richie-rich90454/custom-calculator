@@ -8,32 +8,32 @@ import type { ExpressionEvaluationGateway } from "../../domain/services/Expressi
 import { EvaluateExpressionCalculatorCommand } from "./EvaluateExpressionCalculatorCommand";
 
 describe("EvaluateExpressionCalculatorCommand unexpected failure", () => {
-  it("reports a generic failure when the gateway throws a non calculation error", () => {
-    const root = new CalculatorCompositionRoot();
-    const gateway: ExpressionEvaluationGateway = {
-      evaluateExpression: vi.fn(() => {
-        throw new Error("raw gateway failure");
-      }),
-    };
+    it("reports a generic failure when the gateway throws a non calculation error", () => {
+        const root = new CalculatorCompositionRoot();
+        const gateway: ExpressionEvaluationGateway = {
+            evaluateExpression: vi.fn(() => {
+                throw new Error("raw gateway failure");
+            }),
+        };
 
-    const command = new EvaluateExpressionCalculatorCommand(
-      root.expressionEditingService,
-      root.expressionValidationService,
-      gateway,
-      new DefaultCasBlockParser(),
-      new DefaultCasExpressionRouterService(),
-      root.casService,
-      new DefaultCalculusBlockParser(),
-      root.calculusExpressionRouterService
-    );
+        const command = new EvaluateExpressionCalculatorCommand(
+            root.expressionEditingService,
+            root.expressionValidationService,
+            gateway,
+            new DefaultCasBlockParser(),
+            new DefaultCasExpressionRouterService(),
+            root.casService,
+            new DefaultCalculusBlockParser(),
+            root.calculusExpressionRouterService,
+        );
 
-    const nextState = command.execute(
-      CalculatorSessionState.createInitial().copyWith({
-        expressionText: "2+3",
-      })
-    );
+        const nextState = command.execute(
+            CalculatorSessionState.createInitial().copyWith({
+                expressionText: "2+3",
+            }),
+        );
 
-    expect(nextState.resultText).toBeNull();
-    expect(nextState.errorText).toBe("Evaluation failed unexpectedly.");
-  });
+        expect(nextState.resultText).toBeNull();
+        expect(nextState.errorText).toBe("Evaluation failed unexpectedly.");
+    });
 });
