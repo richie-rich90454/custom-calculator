@@ -4,162 +4,132 @@ import type { CalculatorKeyboardShortcutTarget } from "./CalculatorKeyboardShort
 import { CalculatorKeyboardShortcutRegistry } from "./CalculatorKeyboardShortcutRegistry";
 
 function buildTarget(
-  overrides: Partial<CalculatorKeyboardShortcutTarget> = {}
+    overrides: Partial<CalculatorKeyboardShortcutTarget> = {},
 ): CalculatorKeyboardShortcutTarget {
-  return {
-    activePanel: CalculatorPanelName.NONE,
-    isTypingContext: false,
-    onPanelOpened: vi.fn(),
-    onClearPressed: vi.fn(),
-    onEvaluatePressed: vi.fn(),
-    onAngleModeTogglePressed: vi.fn(),
-    ...overrides,
-  };
+    return {
+        activePanel: CalculatorPanelName.NONE,
+        isTypingContext: false,
+        onPanelOpened: vi.fn(),
+        onClearPressed: vi.fn(),
+        onEvaluatePressed: vi.fn(),
+        onAngleModeTogglePressed: vi.fn(),
+        ...overrides,
+    };
 }
 
 describe("CalculatorKeyboardShortcutRegistry", () => {
-  const registry = new CalculatorKeyboardShortcutRegistry();
+    const registry = new CalculatorKeyboardShortcutRegistry();
 
-  it("closes the active panel on Escape", () => {
-    const target = buildTarget({
-      activePanel: CalculatorPanelName.HISTORY,
-      onPanelOpened: vi.fn(),
+    it("closes the active panel on Escape", () => {
+        const target = buildTarget({
+            activePanel: CalculatorPanelName.HISTORY,
+            onPanelOpened: vi.fn(),
+        });
+
+        const resolution = registry.resolveKeyDown(
+            { key: "Escape", ctrlKey: false, metaKey: false },
+            target,
+        );
+
+        expect(resolution.handled).toBe(true);
+        expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.HISTORY);
     });
 
-    const resolution = registry.resolveKeyDown(
-      { key: "Escape", ctrlKey: false, metaKey: false },
-      target
-    );
+    it("clears the expression on Escape when no panel is open and not typing", () => {
+        const target = buildTarget({ onClearPressed: vi.fn() });
 
-    expect(resolution.handled).toBe(true);
-    expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.HISTORY);
-  });
+        registry.resolveKeyDown({ key: "Escape", ctrlKey: false, metaKey: false }, target);
 
-  it("clears the expression on Escape when no panel is open and not typing", () => {
-    const target = buildTarget({ onClearPressed: vi.fn() });
-
-    registry.resolveKeyDown(
-      { key: "Escape", ctrlKey: false, metaKey: false },
-      target
-    );
-
-    expect(target.onClearPressed).toHaveBeenCalledOnce();
-  });
-
-  it("does not clear the expression on Escape while typing", () => {
-    const target = buildTarget({
-      isTypingContext: true,
-      onClearPressed: vi.fn(),
+        expect(target.onClearPressed).toHaveBeenCalledOnce();
     });
 
-    registry.resolveKeyDown(
-      { key: "Escape", ctrlKey: false, metaKey: false },
-      target
-    );
+    it("does not clear the expression on Escape while typing", () => {
+        const target = buildTarget({
+            isTypingContext: true,
+            onClearPressed: vi.fn(),
+        });
 
-    expect(target.onClearPressed).not.toHaveBeenCalled();
-  });
+        registry.resolveKeyDown({ key: "Escape", ctrlKey: false, metaKey: false }, target);
 
-  it("evaluates on Enter outside a typing context", () => {
-    const target = buildTarget({ onEvaluatePressed: vi.fn() });
-
-    registry.resolveKeyDown(
-      { key: "Enter", ctrlKey: false, metaKey: false },
-      target
-    );
-
-    expect(target.onEvaluatePressed).toHaveBeenCalledOnce();
-  });
-
-  it("ignores Enter inside a typing context", () => {
-    const target = buildTarget({
-      isTypingContext: true,
-      onEvaluatePressed: vi.fn(),
+        expect(target.onClearPressed).not.toHaveBeenCalled();
     });
 
-    registry.resolveKeyDown(
-      { key: "Enter", ctrlKey: false, metaKey: false },
-      target
-    );
+    it("evaluates on Enter outside a typing context", () => {
+        const target = buildTarget({ onEvaluatePressed: vi.fn() });
 
-    expect(target.onEvaluatePressed).not.toHaveBeenCalled();
-  });
+        registry.resolveKeyDown({ key: "Enter", ctrlKey: false, metaKey: false }, target);
 
-  it("toggles the angle mode with Control+D", () => {
-    const target = buildTarget({ onAngleModeTogglePressed: vi.fn() });
+        expect(target.onEvaluatePressed).toHaveBeenCalledOnce();
+    });
 
-    registry.resolveKeyDown(
-      { key: "d", ctrlKey: true, metaKey: false },
-      target
-    );
+    it("ignores Enter inside a typing context", () => {
+        const target = buildTarget({
+            isTypingContext: true,
+            onEvaluatePressed: vi.fn(),
+        });
 
-    expect(target.onAngleModeTogglePressed).toHaveBeenCalledOnce();
-  });
+        registry.resolveKeyDown({ key: "Enter", ctrlKey: false, metaKey: false }, target);
 
-  it("opens the history panel with Control+H", () => {
-    const target = buildTarget({ onPanelOpened: vi.fn() });
+        expect(target.onEvaluatePressed).not.toHaveBeenCalled();
+    });
 
-    registry.resolveKeyDown(
-      { key: "h", ctrlKey: true, metaKey: false },
-      target
-    );
+    it("toggles the angle mode with Control+D", () => {
+        const target = buildTarget({ onAngleModeTogglePressed: vi.fn() });
 
-    expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.HISTORY);
-  });
+        registry.resolveKeyDown({ key: "d", ctrlKey: true, metaKey: false }, target);
 
-  it("opens the memory panel with Control+M", () => {
-    const target = buildTarget({ onPanelOpened: vi.fn() });
+        expect(target.onAngleModeTogglePressed).toHaveBeenCalledOnce();
+    });
 
-    registry.resolveKeyDown(
-      { key: "m", ctrlKey: true, metaKey: false },
-      target
-    );
+    it("opens the history panel with Control+H", () => {
+        const target = buildTarget({ onPanelOpened: vi.fn() });
 
-    expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.MEMORY);
-  });
+        registry.resolveKeyDown({ key: "h", ctrlKey: true, metaKey: false }, target);
 
-  it("opens the constants panel with Control+E", () => {
-    const target = buildTarget({ onPanelOpened: vi.fn() });
+        expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.HISTORY);
+    });
 
-    registry.resolveKeyDown(
-      { key: "e", ctrlKey: true, metaKey: false },
-      target
-    );
+    it("opens the memory panel with Control+M", () => {
+        const target = buildTarget({ onPanelOpened: vi.fn() });
 
-    expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.CONSTANTS);
-  });
+        registry.resolveKeyDown({ key: "m", ctrlKey: true, metaKey: false }, target);
 
-  it("opens the settings panel with Control+comma", () => {
-    const target = buildTarget({ onPanelOpened: vi.fn() });
+        expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.MEMORY);
+    });
 
-    registry.resolveKeyDown(
-      { key: ",", ctrlKey: true, metaKey: false },
-      target
-    );
+    it("opens the constants panel with Control+E", () => {
+        const target = buildTarget({ onPanelOpened: vi.fn() });
 
-    expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.SETTINGS);
-  });
+        registry.resolveKeyDown({ key: "e", ctrlKey: true, metaKey: false }, target);
 
-  it("opens the calculus panel with Control+L", () => {
-    const target = buildTarget({ onPanelOpened: vi.fn() });
+        expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.CONSTANTS);
+    });
 
-    registry.resolveKeyDown(
-      { key: "l", ctrlKey: true, metaKey: false },
-      target
-    );
+    it("opens the settings panel with Control+comma", () => {
+        const target = buildTarget({ onPanelOpened: vi.fn() });
 
-    expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.CALCULUS);
-  });
+        registry.resolveKeyDown({ key: ",", ctrlKey: true, metaKey: false }, target);
 
-  it("leaves unrelated keys unhandled", () => {
-    const target = buildTarget({ onPanelOpened: vi.fn() });
+        expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.SETTINGS);
+    });
 
-    const resolution = registry.resolveKeyDown(
-      { key: "ArrowLeft", ctrlKey: false, metaKey: false },
-      target
-    );
+    it("opens the calculus panel with Control+L", () => {
+        const target = buildTarget({ onPanelOpened: vi.fn() });
 
-    expect(resolution.handled).toBe(false);
-    expect(target.onPanelOpened).not.toHaveBeenCalled();
-  });
+        registry.resolveKeyDown({ key: "l", ctrlKey: true, metaKey: false }, target);
+
+        expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.CALCULUS);
+    });
+
+    it("leaves unrelated keys unhandled", () => {
+        const target = buildTarget({ onPanelOpened: vi.fn() });
+
+        const resolution = registry.resolveKeyDown(
+            { key: "ArrowLeft", ctrlKey: false, metaKey: false },
+            target,
+        );
+
+        expect(resolution.handled).toBe(false);
+        expect(target.onPanelOpened).not.toHaveBeenCalled();
+    });
 });
