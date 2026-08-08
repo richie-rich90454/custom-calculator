@@ -1,15 +1,15 @@
 .resultRow {
-  min-height: 1.7rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+    min-height: 1.7rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .result {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  word-break: break-all;
-  text-align: left;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    word-break: break-all;
+    text-align: left;
 }
