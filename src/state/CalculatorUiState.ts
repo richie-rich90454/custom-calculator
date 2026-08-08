@@ -12,6 +12,7 @@ export enum CalculatorPanelName {
   MEMORY = "MEMORY",
   SETTINGS = "SETTINGS",
   CAS = "CAS",
+  CALCULUS = "CALCULUS",
 }
 
 export interface CalculatorUiState {
