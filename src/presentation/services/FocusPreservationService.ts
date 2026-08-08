@@ -1,10 +1,10 @@
 export enum ButtonActivationKind {
-  POINTER = "POINTER",
-  KEYBOARD = "KEYBOARD",
+    POINTER = "POINTER",
+    KEYBOARD = "KEYBOARD",
 }
 
 export interface ExpressionEditorFocusHandle {
-  focus(): void;
+    focus(): void;
 }
 
 /**
@@ -15,11 +15,11 @@ export interface ExpressionEditorFocusHandle {
  * arrow-key grid navigation continues uninterrupted.
  */
 export interface FocusPreservationService {
-  resolveActivationKind(pointerType: string): ButtonActivationKind;
+    resolveActivationKind(pointerType: string): ButtonActivationKind;
 
-  registerEditor(handle: ExpressionEditorFocusHandle): void;
+    registerEditor(handle: ExpressionEditorFocusHandle): void;
 
-  unregisterEditor(): void;
+    unregisterEditor(): void;
 
-  restoreFocusAfterButtonPress(activationKind: ButtonActivationKind): void;
+    restoreFocusAfterButtonPress(activationKind: ButtonActivationKind): void;
 }
