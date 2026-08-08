@@ -1,0 +1,148 @@
+import { ScientificConstant } from "../../domain/model/ScientificConstant";
+import { ScientificConstantCategory } from "../../domain/model/ScientificConstantCategory";
+
+export const physicsConstants: readonly ScientificConstant[] = [
+  new ScientificConstant(
+    "speedOfLight",
+    "c",
+    "Speed of light in vacuum",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "299792458",
+    "m/s",
+    "The exact speed of light in a vacuum.",
+    "CODATA 2018",
+    []
+  ),
+  new ScientificConstant(
+    "planckConstant",
+    "h",
+    "Planck constant",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "6.62607015e-34",
+    "J·s",
+    "The proportionality constant between energy and frequency of a photon.",
+    "CODATA 2018",
+    []
+  ),
+  new ScientificConstant(
+    "reducedPlanckConstant",
+    "ħ",
+    "Reduced Planck constant",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "1.054571817e-34",
+    "J·s",
+    "The Planck constant divided by two pi.",
+    "CODATA 2018",
+    []
+  ),
+  new ScientificConstant(
+    "gravitationalConstant",
+    "G",
+    "Newtonian gravitational constant",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "6.6743e-11",
+    "N·m²/kg²",
+    "The constant of proportionality in Newton's law of universal gravitation.",
+    "CODATA 2018",
+    []
+  ),
+  new ScientificConstant(
+    "standardGravity",
+    "g₀",
+    "Standard acceleration due to gravity",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "9.80665",
+    "m/s²",
+    "The nominal gravitational acceleration of the Earth at sea level.",
+    "BIPM SI Brochure",
+    []
+  ),
+  new ScientificConstant(
+    "elementaryCharge",
+    "e",
+    "Elementary charge",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "1.602176634e-19",
+    "C",
+    "The magnitude of the electric charge carried by a single proton.",
+    "CODATA 2018",
+    []
+  ),
+  new ScientificConstant(
+    "avogadroConstant",
+    "N_A",
+    "Avogadro constant",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "6.02214076e23",
+    "mol⁻¹",
+    "The number of constituent particles in one mole of a substance.",
+    "CODATA 2018",
+    ["NA"]
+  ),
+  new ScientificConstant(
+    "boltzmannConstant",
+    "k_B",
+    "Boltzmann constant",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "1.380649e-23",
+    "J/K",
+    "The proportionality constant relating the average kinetic energy of particles to temperature.",
+    "CODATA 2018",
+    ["kB"]
+  ),
+  new ScientificConstant(
+    "molarGasConstant",
+    "R",
+    "Molar gas constant",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "8.31446261815324",
+    "J/(mol·K)",
+    "The gas constant in the ideal gas law.",
+    "CODATA 2018",
+    []
+  ),
+  new ScientificConstant(
+    "faradayConstant",
+    "F",
+    "Faraday constant",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "96485.3321233100184",
+    "C/mol",
+    "The magnitude of electric charge per mole of electrons.",
+    "CODATA 2018",
+    []
+  ),
+  new ScientificConstant(
+    "stefanBoltzmannConstant",
+    "σ",
+    "Stefan-Boltzmann constant",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "5.670374419e-8",
+    "W/(m²·K⁴)",
+    "The constant in the Stefan-Boltzmann law for black-body radiation.",
+    "CODATA 2018",
+    []
+  ),
+  new ScientificConstant(
+    "vacuumPermittivity",
+    "ε₀",
+    "Vacuum electric permittivity",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "8.8541878128e-12",
+    "F/m",
+    "The absolute permittivity of free space.",
+    "CODATA 2018",
+    ["eps0"]
+  ),
+  new ScientificConstant(
+    "vacuumPermeability",
+    "μ₀",
+    "Vacuum magnetic permeability",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "1.25663706212e-6",
+    "N/A²",
+    "The magnetic permeability of free space.",
+    "CODATA 2018",
+    ["mu0"]
+  ),
+];
