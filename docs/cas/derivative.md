@@ -5,8 +5,7 @@ description: How the CAS symbolic derivative operation works.
 
 # Derivative
 
-The CAS derivative operation differentiates a symbolic expression with respect
-to a variable.
+The CAS derivative operation differentiates a symbolic expression with respect to a variable.
 
 ## Syntax
 
@@ -19,12 +18,12 @@ If the variable is omitted, `x` is used.
 
 ## Examples
 
-| Expression | Result |
-| ---------- | ------ |
-| `casDerivative(x^2)` | `2 * x` |
-| `casDerivative(sin(x))` | `cos(x)` |
+| Expression                 | Result        |
+| -------------------------- | ------------- |
+| `casDerivative(x^2)`       | `2 * x`       |
+| `casDerivative(sin(x))`    | `cos(x)`      |
 | `casDerivative(x^3 + 2*x)` | `3 * x^2 + 2` |
-| `casDerivative(x*y, y)` | `x` |
+| `casDerivative(x*y, y)`    | `x`           |
 
 ## Inserting a derivative block
 
@@ -38,10 +37,7 @@ Type the expression inside the parentheses.
 
 ## Relationship to calculus
 
-This operation is part of the CAS engine. The calculus engine provides its own
-`derivative(...)` operation with a radians-only angle policy. See
-[Derivatives](/calculus/derivatives) and
-[Angle mode policy](/calculus/angle-mode-policy).
+This operation is part of the CAS engine. The calculus engine provides its own `derivative(...)` operation with a radians-only angle policy. See [Derivatives](/calculus/derivatives) and [Angle mode policy](/calculus/angle-mode-policy).
 
 ## Related pages
 
