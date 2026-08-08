@@ -38,4 +38,60 @@ describe("MathJsCalculusExpressionEvaluator", () => {
       "evaluation failed"
     );
   });
+
+  it("returns the input unchanged under radian mode", () => {
+    expect(evaluator.evaluate("sin(x)", "x", 0, AngleMode.RAD)).toBeCloseTo(0);
+  });
+
+  it("applies the inverse sine conversion", () => {
+    expect(evaluator.evaluate("asin(x)", "x", 1, AngleMode.DEG)).toBeCloseTo(90);
+  });
+
+  it("applies the inverse cosine conversion", () => {
+    expect(evaluator.evaluate("acos(x)", "x", 0, AngleMode.DEG)).toBeCloseTo(90);
+  });
+
+  it("applies the inverse tangent conversion", () => {
+    expect(evaluator.evaluate("atan(x)", "x", 1, AngleMode.DEG)).toBeCloseTo(45);
+  });
+
+  it("applies the inverse sine conversion in gons", () => {
+    expect(evaluator.evaluate("asin(x)", "x", 1, AngleMode.GON)).toBeCloseTo(100);
+  });
+
+  it("applies the tangent conversion", () => {
+    expect(evaluator.evaluate("tan(x)", "x", 45, AngleMode.DEG)).toBeCloseTo(1);
+  });
+
+  it("applies the inverse cosine conversion in gons", () => {
+    expect(evaluator.evaluate("acos(x)", "x", 0, AngleMode.GON)).toBeCloseTo(100);
+  });
+
+  it("applies the inverse tangent conversion in gons", () => {
+    expect(evaluator.evaluate("atan(x)", "x", 1, AngleMode.GON)).toBeCloseTo(50);
+  });
+
+  it("stringifies a non error thrown value", () => {
+    const throwingEvaluator = new MathJsCalculusExpressionEvaluator({
+      getInstance: () => {
+        const math = new DefaultMathJsInstanceProvider().getInstance();
+
+        return new Proxy(math, {
+          get(target, property) {
+            if (property === "evaluate") {
+              return () => {
+                throw "raw failure";
+              };
+            }
+
+            return Reflect.get(target, property);
+          },
+        }) as never;
+      },
+    });
+
+    expect(() =>
+      throwingEvaluator.evaluate("x", "x", 1, AngleMode.RAD)
+    ).toThrow("raw failure");
+  });
 });
