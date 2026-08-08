@@ -1,0 +1,74 @@
+.statusBar {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.modes {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.angleButton {
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.8rem;
+  font-weight: 700;
+  background-color: var(--color-key-operator);
+  border-color: var(--color-border);
+  color: var(--color-key-operator-text);
+}
+
+.modeLabel {
+  font-size: 0.75rem;
+  font-family: var(--font-family-mono);
+  color: var(--color-text-secondary);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.memoryIndicator {
+  font-size: 0.75rem;
+  font-family: var(--font-family-mono);
+  font-weight: 700;
+  color: var(--color-warning);
+}
+
+.panelButtons {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.panelButton {
+  min-height: 36px;
+  padding: var(--space-1) var(--space-2);
+  font-size: 0.75rem;
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-secondary);
+}
+
+.panelButton:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-hover);
+}
+
+.panelButtonActive {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.statusMessage {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-warning);
+}
