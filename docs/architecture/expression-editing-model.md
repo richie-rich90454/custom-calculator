@@ -5,8 +5,7 @@ description: The domain model behind insertion, deletion, and smart editing.
 
 # Expression Editing Model
 
-The expression editing model is the domain layer's contract for editing text:
-insertion, deletion, and auto-closing parentheses.
+The expression editing model is the domain layer's contract for editing text: insertion, deletion, and auto-closing parentheses.
 
 ## The edit result
 
@@ -14,10 +13,10 @@ Every editing operation returns an `ExpressionTextEdit`:
 
 ```ts
 export interface ExpressionTextEdit {
-  readonly text: string;
-  readonly cursorPosition: number;
-  readonly selectionStart: number;
-  readonly selectionEnd: number;
+    readonly text: string;
+    readonly cursorPosition: number;
+    readonly selectionStart: number;
+    readonly selectionEnd: number;
 }
 ```
 
@@ -33,8 +32,7 @@ export interface ExpressionTextEdit {
 
 ## Insertion model
 
-Insertion replaces the selection with the inserted text and places the cursor
-after the inserted text:
+Insertion replaces the selection with the inserted text and places the cursor after the inserted text:
 
 ```mermaid
 flowchart LR
@@ -62,8 +60,7 @@ flowchart TB
 
 ## Auto-close model
 
-`autoCloseParentheses` counts unbalanced opening parentheses and appends the
-matching closing parentheses:
+`autoCloseParentheses` counts unbalanced opening parentheses and appends the matching closing parentheses:
 
 ```mermaid
 flowchart LR
@@ -75,8 +72,7 @@ flowchart LR
 
 ## Cursor placement rules
 
-The presentation layer enforces the cursor placement rules on top of this
-model:
+The presentation layer enforces the cursor placement rules on top of this model:
 
 - Digit: cursor after the digit.
 - Operator: cursor after the operator.
