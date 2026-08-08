@@ -5,8 +5,7 @@ description: How calculation history works, including persistence, reusing, and 
 
 # History
 
-Every successful evaluation is recorded in the history list. History persists
-across sessions.
+Every successful evaluation is recorded in the history list. History persists across sessions.
 
 ## Opening history
 
@@ -25,8 +24,7 @@ Each history entry records:
 
 ## Reusing a history entry
 
-Selecting a history entry restores its expression into the editor. The cursor
-is placed at the end of the expression, ready for editing. The panel closes.
+Selecting a history entry restores its expression into the editor. The cursor is placed at the end of the expression, ready for editing. The panel closes.
 
 ## Deleting entries
 
@@ -35,13 +33,11 @@ is placed at the end of the expression, ready for editing. The panel closes.
 
 ## Persistence
 
-History is stored in the browser through IndexedDB. See
-[Persistence](/architecture/persistence) for implementation details.
+History is stored in the browser through IndexedDB. See [Persistence](/architecture/persistence) for implementation details.
 
 ## History and evaluation
 
-History is recorded only for successful evaluations with a result. Failed
-evaluations are not recorded.
+History is recorded only for successful evaluations with a result. Failed evaluations are not recorded.
 
 ## Next steps
 
