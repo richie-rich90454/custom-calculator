@@ -42,6 +42,10 @@ describe("DefaultMathJsFractionValueFactory", () => {
     );
   });
 
+  it("expands an exponent that shifts the decimal point into the mantissa", () => {
+    expect(buildFactory().expandExponentNotation("12.34e-1")).toBe("1.234");
+  });
+
   it("leaves plain decimal text unchanged", () => {
     expect(buildFactory().expandExponentNotation("0.5")).toBe("0.5");
   });
