@@ -56,4 +56,80 @@ describe("CalculatorShellComponent", () => {
       screen.getByRole("heading", { name: "History" })
     ).toBeInTheDocument();
   });
+
+  it("renders the constants panel with search when opened", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorShellComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "Open constants panel" })
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Constants" })
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText("Search constants")).toBeInTheDocument();
+  });
+
+  it("renders the settings panel when opened", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorShellComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "Open settings panel" })
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Settings" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("switch", { name: "Enable CAS-style symbolic operations" })
+    ).toBeInTheDocument();
+  });
+
+  it("renders the CAS panel when opened", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorShellComponent />
+    );
+
+    await user.click(screen.getByRole("button", { name: "Open CAS panel" }));
+
+    expect(
+      screen.getByRole("heading", { name: "CAS" })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Simplify" })).toBeInTheDocument();
+  });
+
+  it("renders the variables panel when opened", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorShellComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "Open variables panel" })
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Variables" })
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText("Variable name")).toBeInTheDocument();
+  });
 });
