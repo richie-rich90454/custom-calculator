@@ -2,15 +2,13 @@ import { CalculatorSessionState } from "../../domain/model/CalculatorSessionStat
 import { AbstractCalculatorCommand } from "./AbstractCalculatorCommand";
 
 export class ToggleComplexNumbersCalculatorCommand extends AbstractCalculatorCommand {
-  public override execute(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return currentState.copyWith({
-      complexNumbersEnabled: !currentState.complexNumbersEnabled,
-      resultText: null,
-      errorText: null,
-      lastResultValue: null,
-      lastResultText: null,
-    });
-  }
+    public override execute(currentState: CalculatorSessionState): CalculatorSessionState {
+        return currentState.copyWith({
+            complexNumbersEnabled: !currentState.complexNumbersEnabled,
+            resultText: null,
+            errorText: null,
+            lastResultValue: null,
+            lastResultText: null,
+        });
+    }
 }
