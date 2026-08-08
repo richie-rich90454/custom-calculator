@@ -5,6 +5,7 @@ import {
   TextField,
   type TextFieldProps,
 } from "react-aria-components";
+import { cssClass, joinClassNames } from "../utils/classNames";
 import styles from "../styles/AccessibleTextFieldComponent.module.css";
 
 export interface AccessibleTextFieldComponentProperties
@@ -18,15 +19,16 @@ export function AccessibleTextFieldComponent(
 ) {
   const { label, inputClassName, ...textFieldProperties } = props;
 
-  const mergedInputClassName = [styles.input, inputClassName]
-    .filter(Boolean)
-    .join(" ");
+  const mergedInputClassName = joinClassNames(
+    styles.input,
+    inputClassName
+  );
 
   return (
-    <TextField {...textFieldProperties} className={styles.textField}>
-      <Label className={styles.label}>{label}</Label>
+    <TextField {...textFieldProperties} className={cssClass(styles.textField)}>
+      <Label className={cssClass(styles.label)}>{label}</Label>
       <Input className={mergedInputClassName} />
-      <FieldError className={styles.fieldError} />
+      <FieldError className={cssClass(styles.fieldError)} />
     </TextField>
   );
 }
