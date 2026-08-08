@@ -78,11 +78,32 @@ describe("DefaultButtonInsertionTemplateService", () => {
       service.resolveTemplate(createButton(CalculatorButtonInsertionBehavior.INSERT_CHARACTER, "7")).text
     ).toBe("7");
     expect(
+      service.resolveTemplate(createButton(CalculatorButtonInsertionBehavior.INSERT_OPERATOR, "+")).text
+    ).toBe("+");
+    expect(
       service.resolveTemplate(createButton(CalculatorButtonInsertionBehavior.INSERT_FUNCTION, "cos")).text
     ).toBe("cos(");
     expect(
+      service.resolveTemplate(createButton(CalculatorButtonInsertionBehavior.INSERT_WRAPPED_SELECTION, "tan")).text
+    ).toBe("tan(");
+    expect(
+      service.resolveTemplate(createButton(CalculatorButtonInsertionBehavior.INSERT_CONSTANT, "pi")).text
+    ).toBe("pi");
+    expect(
+      service.resolveTemplate(createButton(CalculatorButtonInsertionBehavior.INSERT_VARIABLE, "ans")).text
+    ).toBe("ans");
+    expect(
       service.resolveTemplate(createButton(CalculatorButtonInsertionBehavior.INSERT_TEMPLATE, "sum")).text
     ).toBe("sum(, n, 1, 10)");
+  });
+
+  it("resolves a fallback template for an unknown template function name", () => {
+    const template = service.resolveTemplate(
+      createButton(CalculatorButtonInsertionBehavior.INSERT_TEMPLATE, "mystery")
+    );
+
+    expect(template.text).toBe("mystery(");
+    expect(template.cursorOffset).toBe(8);
   });
 
   it("falls back to a character template for an unknown behavior", () => {
