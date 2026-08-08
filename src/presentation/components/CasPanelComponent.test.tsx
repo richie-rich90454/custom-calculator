@@ -99,4 +99,24 @@ describe("CasPanelComponent", () => {
 
     expect(harness.store.getState().resultText).toBe("3*x^2");
   });
+
+  it("defaults the derivative variable to x when the field is cleared", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness({ casEnabled: true });
+
+    harness.store.getState().onExpressionTextChanged("x^3", 3, 3, 3);
+
+    renderWithCalculatorContext(
+      harness,
+      <CasPanelComponent />
+    );
+
+    const variableField = screen.getByLabelText("Derivative variable");
+
+    await user.clear(variableField);
+    await user.tab();
+    await user.keyboard("{Enter}");
+
+    expect(harness.store.getState().resultText).toBe("3*x^2");
+  });
 });
