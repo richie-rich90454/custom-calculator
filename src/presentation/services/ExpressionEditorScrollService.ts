@@ -1,7 +1,7 @@
 export interface ExpressionEditorScrollInput {
-  readonly input: HTMLInputElement;
-  readonly caretOffsetX: number;
-  readonly scrollPadding: number;
+    readonly input: HTMLInputElement;
+    readonly caretOffsetX: number;
+    readonly scrollPadding: number;
 }
 
 /**
@@ -11,5 +11,5 @@ export interface ExpressionEditorScrollInput {
  * cursor, so the scroll logic only needs the visible width of the input.
  */
 export interface ExpressionEditorScrollService {
-  scrollCaretIntoView(scrollInput: ExpressionEditorScrollInput): void;
+    scrollCaretIntoView(scrollInput: ExpressionEditorScrollInput): void;
 }
