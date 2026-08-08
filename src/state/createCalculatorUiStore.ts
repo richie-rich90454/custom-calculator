@@ -232,6 +232,18 @@ export function createCalculatorUiStore(
       selectionStart,
       selectionEnd
     ) => {
+      const currentState = get();
+
+      const isUnchanged =
+        currentState.expressionText === expressionText &&
+        currentState.cursorPosition === cursorPosition &&
+        currentState.selectionStart === selectionStart &&
+        currentState.selectionEnd === selectionEnd;
+
+      if (isUnchanged) {
+        return;
+      }
+
       set({
         expressionText: expressionText,
         cursorPosition: cursorPosition,
