@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ListBox, ListBoxItem } from "react-aria-components";
+import { cssClass } from "../utils/classNames";
 import styles from "../styles/AccessibleListBoxComponent.module.css";
 
 export interface AccessibleListBoxEntry {
@@ -21,7 +22,7 @@ export function AccessibleListBoxComponent(
   return (
     <ListBox
       aria-label={props.label}
-      className={styles.listBox}
+      className={cssClass(styles.listBox)}
       selectionMode="single"
       onAction={(key) => {
         props.onEntrySelected(String(key));
@@ -32,12 +33,14 @@ export function AccessibleListBoxComponent(
           key={entry.id}
           id={entry.id}
           textValue={entry.primaryText}
-          className={styles.item}
+          className={cssClass(styles.item)}
         >
-          <div className={styles.itemContent}>
-            <span className={styles.primaryText}>{entry.primaryText}</span>
+          <div className={cssClass(styles.itemContent)}>
+            <span className={cssClass(styles.primaryText)}>
+              {entry.primaryText}
+            </span>
             {entry.secondaryText !== undefined ? (
-              <span className={styles.secondaryText}>
+              <span className={cssClass(styles.secondaryText)}>
                 {entry.secondaryText}
               </span>
             ) : null}
