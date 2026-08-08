@@ -1,19 +1,15 @@
 import type {
-  BrowserFeatureDetectionService,
-  BrowserFeatureSnapshot,
+    BrowserFeatureDetectionService,
+    BrowserFeatureSnapshot,
 } from "./BrowserFeatureDetectionService";
 import type { BigIntSupportDetector } from "./BigIntSupportDetector";
 
-export class DefaultBrowserFeatureDetectionService
-  implements BrowserFeatureDetectionService
-{
-  public constructor(
-    private readonly bigIntSupportDetector: BigIntSupportDetector
-  ) {}
+export class DefaultBrowserFeatureDetectionService implements BrowserFeatureDetectionService {
+    public constructor(private readonly bigIntSupportDetector: BigIntSupportDetector) {}
 
-  public detectBrowserFeatures(): BrowserFeatureSnapshot {
-    return {
-      bigIntSupported: this.bigIntSupportDetector.isBigIntSupported(),
-    };
-  }
+    public detectBrowserFeatures(): BrowserFeatureSnapshot {
+        return {
+            bigIntSupported: this.bigIntSupportDetector.isBigIntSupported(),
+        };
+    }
 }
