@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { DefaultCasOperationCatalogService } from "../../application/cas/DefaultCasOperationCatalogService";
+import { DefaultCalculusOperationCatalogService } from "../../application/calculus/DefaultCalculusOperationCatalogService";
 import { CalculatorKeyKind } from "./CalculatorKeyDefinition";
 import { DefaultKeypadDefinitionRepository } from "./DefaultKeypadDefinitionRepository";
 
 function buildRepository(): DefaultKeypadDefinitionRepository {
   return new DefaultKeypadDefinitionRepository(
-    new DefaultCasOperationCatalogService()
+    new DefaultCasOperationCatalogService(),
+    new DefaultCalculusOperationCatalogService()
   );
 }
 
@@ -41,6 +43,26 @@ describe("DefaultKeypadDefinitionRepository", () => {
       "casSimplify",
       "casExpand",
       "casDerivative",
+    ]);
+  });
+
+  it("exposes calculus operation keys derived from the catalog", () => {
+    const repository = buildRepository();
+    const keys = repository.getCalculusOperationKeys();
+
+    expect(keys).toHaveLength(8);
+    expect(
+      keys.every((key) => key.kind === CalculatorKeyKind.CALCULUS_OPERATION)
+    ).toBe(true);
+    expect(keys.map((key) => key.value)).toEqual([
+      "derivative",
+      "numericDerivative",
+      "integral",
+      "integrate",
+      "limit",
+      "taylor",
+      "sum",
+      "product",
     ]);
   });
 });
