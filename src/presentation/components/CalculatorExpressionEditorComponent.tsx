@@ -10,6 +10,7 @@ import { Input, Label, TextField } from "react-aria-components";
 import type { CalculatorUiActions } from "../../state/CalculatorUiActions";
 import { ExpressionEditorCaretService } from "../services/ExpressionEditorCaretService";
 import { ExpressionEditorKeyboardService } from "../services/ExpressionEditorKeyboardService";
+import { ExpressionEditorSelectionService } from "../services/ExpressionEditorSelectionService";
 import { CalculatorCaretIndicatorComponent } from "./CalculatorCaretIndicatorComponent";
 import { cssClass } from "../utils/classNames";
 import styles from "../styles/CalculatorExpressionEditorComponent.module.css";
@@ -24,6 +25,7 @@ interface CalculatorExpressionEditorComponentProperties {
 
 const caretService = new ExpressionEditorCaretService();
 const keyboardService = new ExpressionEditorKeyboardService();
+const selectionService = new ExpressionEditorSelectionService();
 
 export function CalculatorExpressionEditorComponent(
   props: CalculatorExpressionEditorComponentProperties
@@ -40,26 +42,25 @@ export function CalculatorExpressionEditorComponent(
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const input = event.currentTarget;
+    const selection = selectionService.resolveSelection(input);
 
     actions.onExpressionTextChanged(
       input.value,
-      input.selectionStart ?? input.value.length,
-      input.selectionStart ?? input.value.length,
-      input.selectionEnd ?? input.value.length
+      selection.start,
+      selection.start,
+      selection.end
     );
   };
 
   const handleInputSelect = (): void => {
     const input = inputRef.current!;
+    const selection = selectionService.resolveSelection(input);
 
-    const start = input.selectionStart ?? input.value.length;
-    const end = input.selectionEnd ?? input.value.length;
-
-    if (start === selectionStart && end === selectionEnd) {
+    if (selection.start === selectionStart && selection.end === selectionEnd) {
       return;
     }
 
-    actions.onExpressionTextChanged(input.value, end, start, end);
+    actions.onExpressionTextChanged(input.value, selection.end, selection.start, selection.end);
   };
 
   const handleInputKeyDown = (
@@ -74,11 +75,10 @@ export function CalculatorExpressionEditorComponent(
 
   const handleInputFocus = (event: FocusEvent<HTMLInputElement>): void => {
     const input = event.currentTarget;
-    const start = input.selectionStart ?? input.value.length;
-    const end = input.selectionEnd ?? input.value.length;
+    const selection = selectionService.resolveSelection(input);
 
     setHasFocus(true);
-    actions.onExpressionTextChanged(input.value, end, start, end);
+    actions.onExpressionTextChanged(input.value, selection.end, selection.start, selection.end);
   };
 
   const handleInputBlur = (): void => {
