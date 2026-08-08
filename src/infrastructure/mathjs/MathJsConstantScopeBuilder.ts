@@ -41,7 +41,7 @@ export class MathJsConstantScopeBuilder
     scope: Record<string, unknown>,
     math: MathJsInstance
   ): void {
-    const numberType = math.config({}).number ?? "number";
+    const numberType = math.config({}).number!;
 
     for (const constant of this.constantCatalogService.getAllConstants()) {
       const value = this.createConfiguredValue(math, constant.value, numberType);
@@ -57,7 +57,7 @@ export class MathJsConstantScopeBuilder
     math: MathJsInstance,
     sessionState: CalculatorSessionState
   ): void {
-    const numberType = math.config({}).number ?? "number";
+    const numberType = math.config({}).number!;
 
     for (const variable of sessionState.variables) {
       const value = this.createConfiguredValue(math, variable.valueText, numberType);
@@ -103,7 +103,7 @@ export class MathJsConstantScopeBuilder
     math: MathJsInstance,
     valueText: string
   ): number {
-    const originalNumberType = math.config({}).number ?? "number";
+    const originalNumberType = math.config({}).number!;
 
     math.config({ number: "number" });
 
