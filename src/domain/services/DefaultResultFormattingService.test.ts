@@ -18,6 +18,10 @@ describe("DefaultResultFormattingService", () => {
     expect(service.formatNumber(42)).toBe("42");
   });
 
+  it("formats zero as a single digit", () => {
+    expect(service.formatNumber(0)).toBe("0");
+  });
+
   it("uses scientific notation for very large values", () => {
     expect(service.formatNumber(1e20)).toBe("1e+20");
   });
