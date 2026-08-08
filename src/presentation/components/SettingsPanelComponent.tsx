@@ -44,9 +44,7 @@ export function SettingsPanelComponent() {
             options={ANGLE_MODE_OPTIONS}
             selectedKey={viewModel.angleMode}
             onSelectionChange={(key) => {
-              if (key !== null) {
-                store.getState().onAngleModeChanged(key as AngleMode);
-              }
+              store.getState().onAngleModeChanged(key as AngleMode);
             }}
           />
         </div>
@@ -57,9 +55,7 @@ export function SettingsPanelComponent() {
             options={numericModeOptions}
             selectedKey={viewModel.numericMode}
             onSelectionChange={(key) => {
-              if (key !== null) {
-                store.getState().onNumericModeChanged(key as NumericMode);
-              }
+              store.getState().onNumericModeChanged(key as NumericMode);
             }}
           />
         </div>
@@ -92,9 +88,7 @@ export function SettingsPanelComponent() {
             options={THEME_OPTIONS}
             selectedKey={viewModel.themePreference}
             onSelectionChange={(key) => {
-              if (key !== null) {
-                store.getState().onThemeChanged(key as ThemePreference);
-              }
+              store.getState().onThemeChanged(key as ThemePreference);
             }}
           />
         </div>
