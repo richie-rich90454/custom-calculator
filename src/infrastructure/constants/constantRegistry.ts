@@ -5,12 +5,12 @@ import { atomicParticleConstants } from "./atomicParticleConstants";
 import { chemistryConstants } from "./chemistryConstants";
 
 export class ScientificConstantRegistry {
-  public static createAllConstants(): readonly ScientificConstant[] {
-    return [
-      ...mathConstants,
-      ...physicsConstants,
-      ...atomicParticleConstants,
-      ...chemistryConstants,
-    ];
-  }
+    public static createAllConstants(): readonly ScientificConstant[] {
+        return [
+            ...mathConstants,
+            ...physicsConstants,
+            ...atomicParticleConstants,
+            ...chemistryConstants,
+        ];
+    }
 }
