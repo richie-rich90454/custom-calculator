@@ -18,6 +18,18 @@ export class CalculatorViewModel {
     return this.uiState.expressionText;
   }
 
+  public get cursorPosition(): number {
+    return this.uiState.cursorPosition;
+  }
+
+  public get selectionStart(): number {
+    return this.uiState.selectionStart;
+  }
+
+  public get selectionEnd(): number {
+    return this.uiState.selectionEnd;
+  }
+
   public get resultText(): string | null {
     return this.uiState.resultText;
   }
