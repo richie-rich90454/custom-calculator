@@ -1,10 +1,7 @@
 import type { MathJsInstance } from "mathjs";
 
 export interface MathJsFractionValueFactory {
-  createFractionFromValueText(
-    math: MathJsInstance,
-    valueText: string
-  ): unknown;
+    createFractionFromValueText(math: MathJsInstance, valueText: string): unknown;
 }
 
 /**
@@ -16,43 +13,37 @@ export interface MathJsFractionValueFactory {
  * string instead is both fast and exact, so this factory expands exponent
  * notation into a plain decimal string before delegating to math.js.
  */
-export class DefaultMathJsFractionValueFactory
-  implements MathJsFractionValueFactory
-{
-  private static readonly EXPONENT_NOTATION_PATTERN =
-    /^([+-]?)(\d*)(?:\.(\d*))?[eE]([+-]?\d+)$/;
+export class DefaultMathJsFractionValueFactory implements MathJsFractionValueFactory {
+    private static readonly EXPONENT_NOTATION_PATTERN = /^([+-]?)(\d*)(?:\.(\d*))?[eE]([+-]?\d+)$/;
 
-  public createFractionFromValueText(
-    math: MathJsInstance,
-    valueText: string
-  ): unknown {
-    return math.fraction(this.expandExponentNotation(valueText));
-  }
-
-  public expandExponentNotation(valueText: string): string {
-    const match = DefaultMathJsFractionValueFactory.EXPONENT_NOTATION_PATTERN.exec(
-      valueText.trim()
-    );
-
-    if (match === null) {
-      return valueText;
+    public createFractionFromValueText(math: MathJsInstance, valueText: string): unknown {
+        return math.fraction(this.expandExponentNotation(valueText));
     }
 
-    const sign = match[1]!;
-    const integerPart = match[2]!;
-    const fractionalPart = match[3] ?? "";
-    const exponent = Number.parseInt(match[4]!, 10);
+    public expandExponentNotation(valueText: string): string {
+        const match = DefaultMathJsFractionValueFactory.EXPONENT_NOTATION_PATTERN.exec(
+            valueText.trim(),
+        );
 
-    const digits = integerPart + fractionalPart;
-    const decimalPointIndex = integerPart.length + exponent;
+        if (match === null) {
+            return valueText;
+        }
 
-    const plainText =
-      decimalPointIndex <= 0
-        ? `0.${"0".repeat(-decimalPointIndex)}${digits}`
-        : decimalPointIndex >= digits.length
-          ? `${digits}${"0".repeat(decimalPointIndex - digits.length)}`
-          : `${digits.slice(0, decimalPointIndex)}.${digits.slice(decimalPointIndex)}`;
+        const sign = match[1]!;
+        const integerPart = match[2]!;
+        const fractionalPart = match[3] ?? "";
+        const exponent = Number.parseInt(match[4]!, 10);
 
-    return `${sign}${plainText}`;
-  }
+        const digits = integerPart + fractionalPart;
+        const decimalPointIndex = integerPart.length + exponent;
+
+        const plainText =
+            decimalPointIndex <= 0
+                ? `0.${"0".repeat(-decimalPointIndex)}${digits}`
+                : decimalPointIndex >= digits.length
+                  ? `${digits}${"0".repeat(decimalPointIndex - digits.length)}`
+                  : `${digits.slice(0, decimalPointIndex)}.${digits.slice(decimalPointIndex)}`;
+
+        return `${sign}${plainText}`;
+    }
 }
