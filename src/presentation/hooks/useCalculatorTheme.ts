@@ -4,27 +4,27 @@ import { CalculatorApplicationBootstrap } from "../../app/CalculatorApplicationB
 import { ThemePreference } from "../../domain/model/ThemePreference";
 
 export function useCalculatorTheme(): void {
-  const { store, compositionRoot } = useCalculatorApplicationContext();
-  const themePreference = store((state) => state.themePreference);
+    const { store, compositionRoot } = useCalculatorApplicationContext();
+    const themePreference = store((state) => state.themePreference);
 
-  useEffect(() => {
-    const bootstrap = new CalculatorApplicationBootstrap(compositionRoot);
+    useEffect(() => {
+        const bootstrap = new CalculatorApplicationBootstrap(compositionRoot);
 
-    bootstrap.applyThemeToDocument(themePreference);
+        bootstrap.applyThemeToDocument(themePreference);
 
-    if (themePreference !== ThemePreference.SYSTEM) {
-      return;
-    }
+        if (themePreference !== ThemePreference.SYSTEM) {
+            return;
+        }
 
-    const mediaQuery = globalThis.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = (): void => {
-      bootstrap.applyThemeToDocument(themePreference);
-    };
+        const mediaQuery = globalThis.matchMedia("(prefers-color-scheme: dark)");
+        const handleChange = (): void => {
+            bootstrap.applyThemeToDocument(themePreference);
+        };
 
-    mediaQuery.addEventListener("change", handleChange);
+        mediaQuery.addEventListener("change", handleChange);
 
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }, [compositionRoot, themePreference]);
+        return () => {
+            mediaQuery.removeEventListener("change", handleChange);
+        };
+    }, [compositionRoot, themePreference]);
 }
