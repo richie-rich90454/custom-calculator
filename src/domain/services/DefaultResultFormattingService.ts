@@ -1,6 +1,6 @@
 import { CalculationError } from "../model/CalculationError";
 import { CalculationErrorCode } from "../model/CalculationErrorCode";
-import { ResultFormattingService } from "./ResultFormattingService";
+import type { ResultFormattingService } from "./ResultFormattingService";
 
 export class DefaultResultFormattingService
   implements ResultFormattingService
