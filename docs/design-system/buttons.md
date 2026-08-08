@@ -5,19 +5,18 @@ description: The button design of the calculator keypad and interface.
 
 # Buttons
 
-Buttons are the primary interactive element. The keypad distinguishes several
-button roles by color and behavior.
+Buttons are the primary interactive element. The keypad distinguishes several button roles by color and behavior.
 
 ## Button roles
 
-| Role | Token | Example |
-| ---- | ----- | ------- |
-| Digit | `--color-key-digit` | `7` |
-| Function | `--color-key-function` | `sin` |
-| Operator | `--color-key-operator` | `+` |
-| Utility | `--color-key-utility` | `MR` |
-| Danger | `--color-key-danger` | `AC` |
-| Accent | `--color-key-accent` | `=` |
+| Role     | Token                  | Example |
+| -------- | ---------------------- | ------- |
+| Digit    | `--color-key-digit`    | `7`     |
+| Function | `--color-key-function` | `sin`   |
+| Operator | `--color-key-operator` | `+`     |
+| Utility  | `--color-key-utility`  | `MR`    |
+| Danger   | `--color-key-danger`   | `AC`    |
+| Accent   | `--color-key-accent`   | `=`     |
 
 ## Interaction states
 
@@ -33,13 +32,11 @@ button roles by color and behavior.
 
 ## Keyboard access
 
-Each keypad grid exposes one tab stop. Arrow keys navigate the grid, and
-`Enter` or `Space` activates the focused button.
+Each keypad grid exposes one tab stop. Arrow keys navigate the grid, and `Enter` or `Space` activates the focused button.
 
 ## No flashy effects
 
-The design avoids glow effects and flashy animations. The interaction stays
-calm and precise.
+The design avoids glow effects and flashy animations. The interaction stays calm and precise.
 
 ## Next steps
 
