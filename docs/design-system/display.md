@@ -1,6 +1,6 @@
 ---
 title: Display
-description: The display region of the calculator: the expression editor, result line, and error line.
+description: "The display region of the calculator: the expression editor, result line, and error line."
 ---
 
 # Display
