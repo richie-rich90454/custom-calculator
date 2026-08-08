@@ -9,11 +9,11 @@ The calculator persists settings, history, and variables in the browser.
 
 ## Storage map
 
-| Data | Storage | Repository |
-| ---- | ------- | ---------- |
-| Settings | Local storage | `LocalStorageSettingsRepository` |
-| History | IndexedDB | `IndexedDbHistoryRepository` |
-| Variables | IndexedDB | `IndexedDbVariablesRepository` |
+| Data      | Storage       | Repository                       |
+| --------- | ------------- | -------------------------------- |
+| Settings  | Local storage | `LocalStorageSettingsRepository` |
+| History   | IndexedDB     | `IndexedDbHistoryRepository`     |
+| Variables | IndexedDB     | `IndexedDbVariablesRepository`   |
 
 ## Flow diagram
 
@@ -71,8 +71,7 @@ flowchart TB
 
 ## Fallbacks
 
-When IndexedDB is unavailable, the composition root selects in-memory
-repositories. See [Composition root](/developer/composition-root).
+When IndexedDB is unavailable, the composition root selects in-memory repositories. See [Composition root](/developer/composition-root).
 
 ## Next steps
 
