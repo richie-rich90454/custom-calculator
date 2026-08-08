@@ -26,9 +26,7 @@ export function ConstantsPanelCategorySelectorComponent(
       options={selectOptions}
       selectedKey={props.selectedCategoryId}
       onSelectionChange={(key) => {
-        if (key !== null) {
-          props.onCategoryChanged(String(key));
-        }
+        props.onCategoryChanged(String(key));
       }}
     />
   );
