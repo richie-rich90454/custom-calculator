@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AngleMode } from "../domain/model/AngleMode";
+import { NumericMode } from "../domain/model/NumericMode";
 import { createCalculatorTestHarness } from "../test/calculatorTestHarness";
 
 describe("calculator UI store", () => {
@@ -80,7 +81,7 @@ describe("calculator UI store", () => {
   it("changes the numeric mode", () => {
     const { store } = createCalculatorTestHarness();
 
-    store.getState().onNumericModeChanged("FRACTION");
+    store.getState().onNumericModeChanged(NumericMode.FRACTION);
 
     expect(store.getState().numericMode).toBe("FRACTION");
   });
