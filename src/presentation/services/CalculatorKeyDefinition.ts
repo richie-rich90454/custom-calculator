@@ -11,6 +11,7 @@ export enum CalculatorKeyKind {
   ANS = "ANS",
   MEMORY_RECALL = "MEMORY_RECALL",
   CAS_OPERATION = "CAS_OPERATION",
+  CALCULUS_OPERATION = "CALCULUS_OPERATION",
 }
 
 /**
