@@ -24,8 +24,8 @@ export class DefaultCasBlockParser implements CasBlockParser {
       return null;
     }
 
-    const functionName = match[1] ?? "";
-    const argumentsText = (match[2] ?? "").trim();
+    const functionName = match[1]!;
+    const argumentsText = (match[2]!).trim();
 
     if (argumentsText.length === 0) {
       return null;
@@ -62,9 +62,8 @@ export class DefaultCasBlockParser implements CasBlockParser {
     argumentsText: string
   ): CasBlockDescriptor {
     const argumentsList = this.splitTopLevelArguments(argumentsText);
-    const expressionText = (argumentsList[0] ?? "").trim();
+    const expressionText = (argumentsList[0]!).trim();
     const variableName = (argumentsList[1] ?? "").trim();
-
     return {
       operationKind: CasOperationKind.DERIVATIVE,
       innerExpressionText: expressionText,
