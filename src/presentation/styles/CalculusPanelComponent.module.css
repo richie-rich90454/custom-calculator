@@ -1,28 +1,28 @@
 .hintText {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: 0.8rem;
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
 }
 
 .operationList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
 }
 
 .operationButton {
-  min-height: 48px;
-  font-weight: 600;
-  background-color: var(--color-key-operator);
-  border-color: var(--color-border);
-  color: var(--color-key-operator-text);
+    min-height: 48px;
+    font-weight: 600;
+    background-color: var(--color-key-operator);
+    border-color: var(--color-border);
+    color: var(--color-key-operator-text);
 }
 
 .operationDescription {
-  display: block;
-  margin-top: var(--space-1);
-  color: var(--color-text-secondary);
-  font-size: 0.8rem;
+    display: block;
+    margin-top: var(--space-1);
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
 }
