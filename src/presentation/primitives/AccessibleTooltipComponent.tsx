@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Tooltip, TooltipTrigger, OverlayArrow } from "react-aria-components";
-import styles from "./AccessibleTooltipComponent.module.css";
+import styles from "../styles/AccessibleTooltipComponent.module.css";
 
 export interface AccessibleTooltipComponentProperties {
   readonly children: ReactNode;
