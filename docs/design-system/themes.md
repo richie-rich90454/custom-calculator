@@ -5,16 +5,15 @@ description: The theme architecture of the calculator design system.
 
 # Themes
 
-The calculator supports light, dark, and system themes through CSS variable
-token sets.
+The calculator supports light, dark, and system themes through CSS variable token sets.
 
 ## Theme preferences
 
-| Preference | Behavior |
-| ---------- | -------- |
-| Light | Always the light token set |
-| Dark | Always the dark token set |
-| System | Follows the operating system preference |
+| Preference | Behavior                                |
+| ---------- | --------------------------------------- |
+| Light      | Always the light token set              |
+| Dark       | Always the dark token set               |
+| System     | Follows the operating system preference |
 
 ## How theming works
 
@@ -30,13 +29,11 @@ token sets.
 
 ## System theme
 
-The system theme uses `matchMedia("(prefers-color-scheme: dark)")`. Changes to
-the operating system preference are honored while the app runs.
+The system theme uses `matchMedia("(prefers-color-scheme: dark)")`. Changes to the operating system preference are honored while the app runs.
 
 ## Reduced motion
 
-The design system honors `prefers-reduced-motion` and disables animation and
-transition durations.
+The design system honors `prefers-reduced-motion` and disables animation and transition durations.
 
 ## Extending themes
 
