@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, it } from "vitest";
 import fc from "fast-check";
 import { DefaultExpressionEditingService } from "./DefaultExpressionEditingService";
 import { DefaultScientificFunctionCatalogService } from "./DefaultScientificFunctionCatalogService";
@@ -52,15 +52,3 @@ describe("DefaultExpressionEditingService property tests", () => {
     );
   });
 });
-
-function countCharacters(text: string, character: string): number {
-  let count = 0;
-
-  for (const value of text) {
-    if (value === character) {
-      count += 1;
-    }
-  }
-
-  return count;
-}
