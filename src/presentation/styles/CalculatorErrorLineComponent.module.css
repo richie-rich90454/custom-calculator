@@ -1,8 +1,8 @@
 .error {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  color: var(--color-error);
-  word-break: break-word;
-  text-align: left;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    color: var(--color-error);
+    word-break: break-word;
+    text-align: left;
 }
