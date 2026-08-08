@@ -2,6 +2,7 @@ import { useEffect, useRef, type ChangeEvent, type KeyboardEvent } from "react";
 import { Input, Label, TextField } from "react-aria-components";
 import { useCalculatorApplicationContext } from "../../app/CalculatorApplicationContext";
 import { useCalculatorViewModel } from "../hooks/useCalculatorViewModel";
+import { cssClass } from "../utils/classNames";
 import styles from "../styles/CalculatorDisplayComponent.module.css";
 
 export function CalculatorDisplayComponent() {
@@ -96,35 +97,37 @@ export function CalculatorDisplayComponent() {
   };
 
   return (
-    <div className={styles.display}>
-      <TextField className={styles.textField}>
-        <Label className={styles.visuallyHidden}>
+    <div className={cssClass(styles.display)}>
+      <TextField className={cssClass(styles.textField)}>
+        <Label className={cssClass(styles.visuallyHidden)}>
           Calculator expression input
         </Label>
         <Input
           ref={inputRef}
-          className={styles.input}
+          className={cssClass(styles.input)}
           value={viewModel.expressionText}
           inputMode="text"
           autoComplete="off"
           spellCheck={false}
-          aria-describedby={viewModel.errorText !== null ? "error-text" : undefined}
+          {...(viewModel.errorText !== null
+            ? { "aria-describedby": "error-text" }
+            : {})}
           onChange={handleInputChange}
           onSelect={handleInputSelect}
           onKeyDown={handleInputKeyDown}
         />
       </TextField>
 
-      <div className={styles.resultRow}>
+      <div className={cssClass(styles.resultRow)}>
         {viewModel.resultText !== null ? (
-          <output className={styles.result} aria-live="polite">
+          <output className={cssClass(styles.result)} aria-live="polite">
             = {viewModel.resultText}
           </output>
         ) : null}
       </div>
 
       {viewModel.errorText !== null ? (
-        <p id="error-text" className={styles.error} role="alert">
+        <p id="error-text" className={cssClass(styles.error)} role="alert">
           {viewModel.errorText}
         </p>
       ) : null}
