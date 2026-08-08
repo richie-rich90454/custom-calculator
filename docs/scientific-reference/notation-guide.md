@@ -5,21 +5,20 @@ description: How mathematical notation is entered and rendered in the calculator
 
 # Notation Guide
 
-This guide explains the notation conventions used when entering expressions and
-how results are rendered.
+This guide explains the notation conventions used when entering expressions and how results are rendered.
 
 ## Entering expressions
 
 Expressions are entered as text using conventional math syntax.
 
-| Notation | You type | Meaning |
-| -------- | -------- | ------- |
-| Multiplication | `*` | Times |
-| Division | `/` | Divided by |
-| Exponentiation | `^` | To the power of |
-| Parentheses | `( )` | Grouping |
-| Factorial | `!` | Factorial |
-| Percent | `%` | Percent |
+| Notation       | You type | Meaning         |
+| -------------- | -------- | --------------- |
+| Multiplication | `*`      | Times           |
+| Division       | `/`      | Divided by      |
+| Exponentiation | `^`      | To the power of |
+| Parentheses    | `( )`    | Grouping        |
+| Factorial      | `!`      | Factorial       |
+| Percent        | `%`      | Percent         |
 
 ## Function calls
 
@@ -44,16 +43,15 @@ See [Implicit multiplication](/user-guide/implicit-multiplication).
 
 ## Greek letters and symbols
 
-Constants render with their conventional symbols in the display, while the
-expression keeps the plain name.
+Constants render with their conventional symbols in the display, while the expression keeps the plain name.
 
-| Constant | Display | Name |
-| -------- | ------- | ---- |
-| `pi` | π | Pi |
-| `tau` | τ | Tau |
-| `phi` | φ | Golden ratio |
-| `e` | e | Euler's number |
-| `gamma` | γ | Euler-Mascheroni constant |
+| Constant | Display | Name                      |
+| -------- | ------- | ------------------------- |
+| `pi`     | π       | Pi                        |
+| `tau`    | τ       | Tau                       |
+| `phi`    | φ       | Golden ratio              |
+| `e`      | e       | Euler's number            |
+| `gamma`  | γ       | Euler-Mascheroni constant |
 
 ## Scientific notation
 
@@ -65,8 +63,7 @@ Large and small results are rendered in scientific notation when appropriate.
 
 ## Fractions and roots
 
-Results that are rational can be rendered as fractions in fraction mode. Roots
-are rendered with radical notation where supported by the formatter.
+Results that are rational can be rendered as fractions in fraction mode. Roots are rendered with radical notation where supported by the formatter.
 
 $$
 \sqrt{16} = 4
@@ -102,11 +99,9 @@ $$
 
 ## Angle units
 
-Trigonometric results depend on the angle mode. See
-[Angle modes](/user-guide/angle-modes).
+Trigonometric results depend on the angle mode. See [Angle modes](/user-guide/angle-modes).
 
 ## Next steps
 
-- [Function catalog](/scientific-reference/function-catalog) lists every
-  function.
+- [Function catalog](/scientific-reference/function-catalog) lists every function.
 - [Calculus overview](/calculus/overview) covers calculus notation.
