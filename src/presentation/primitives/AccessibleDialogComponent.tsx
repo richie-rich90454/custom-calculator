@@ -26,7 +26,6 @@ export function AccessibleDialogComponent(
     >
       <Modal className={cssClass(styles.modal)}>
         <Dialog className={cssClass(styles.dialog)} aria-label={props.title}>
-          <h2 className={cssClass(styles.title)}>{props.title}</h2>
           <div className={cssClass(styles.content)}>{props.children}</div>
           <div className={cssClass(styles.footer)}>
             <AccessibleButtonComponent
