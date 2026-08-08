@@ -1,8 +1,8 @@
-import {
+import type {
   ExpressionEditingService,
   ExpressionTextEdit,
 } from "./ExpressionEditingService";
-import { ScientificFunctionCatalogService } from "./ScientificFunctionCatalogService";
+import type { ScientificFunctionCatalogService } from "./ScientificFunctionCatalogService";
 
 export abstract class AbstractExpressionEditingService
   implements ExpressionEditingService
