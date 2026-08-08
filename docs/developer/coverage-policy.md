@@ -5,19 +5,18 @@ description: The coverage requirements of the repository and how they are enforc
 
 # Coverage Policy
 
-The repository enforces strict code coverage. No new code lands without full
-coverage of the paths it introduces.
+The repository enforces strict code coverage. No new code lands without full coverage of the paths it introduces.
 
 ## Thresholds
 
 Vitest is configured with the following thresholds in `vite.config.ts`:
 
-| Metric | Threshold |
-| ------ | --------- |
-| Statements | 100% |
-| Branches | 100% |
-| Functions | 100% |
-| Lines | 100% |
+| Metric     | Threshold |
+| ---------- | --------- |
+| Statements | 100%      |
+| Branches   | 100%      |
+| Functions  | 100%      |
+| Lines      | 100%      |
 
 ## What is excluded
 
