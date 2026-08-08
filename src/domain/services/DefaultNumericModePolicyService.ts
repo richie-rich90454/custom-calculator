@@ -1,6 +1,6 @@
 import { NumericMode } from "../model/NumericMode";
-import { BigIntSupportDetector } from "../../infrastructure/featuredetection/BigIntSupportDetector";
-import { NumericModePolicyService } from "./NumericModePolicyService";
+import type { BigIntSupportDetector } from "../../infrastructure/featuredetection/BigIntSupportDetector";
+import type { NumericModePolicyService } from "./NumericModePolicyService";
 
 export abstract class AbstractNumericModePolicyService
   implements NumericModePolicyService
