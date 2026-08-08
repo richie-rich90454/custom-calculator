@@ -1,0 +1,127 @@
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+} from "react";
+import { Input, Label, TextField } from "react-aria-components";
+import type { CalculatorUiActions } from "../../state/CalculatorUiActions";
+import { ExpressionEditorCaretService } from "../services/ExpressionEditorCaretService";
+import { ExpressionEditorKeyboardService } from "../services/ExpressionEditorKeyboardService";
+import { CalculatorCaretIndicatorComponent } from "./CalculatorCaretIndicatorComponent";
+import { cssClass } from "../utils/classNames";
+import styles from "../styles/CalculatorExpressionEditorComponent.module.css";
+
+interface CalculatorExpressionEditorComponentProperties {
+  readonly expressionText: string;
+  readonly selectionStart: number;
+  readonly selectionEnd: number;
+  readonly errorText: string | null;
+  readonly actions: CalculatorUiActions;
+}
+
+const caretService = new ExpressionEditorCaretService();
+const keyboardService = new ExpressionEditorKeyboardService();
+
+export function CalculatorExpressionEditorComponent(
+  props: CalculatorExpressionEditorComponentProperties
+) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [hasFocus, setHasFocus] = useState<boolean>(false);
+  const { actions, expressionText, selectionStart, selectionEnd, errorText } =
+    props;
+
+  useEffect(() => {
+    const input = inputRef.current;
+
+    if (input === null) {
+      return;
+    }
+
+    input.setSelectionRange(selectionStart, selectionEnd);
+  }, [selectionStart, selectionEnd, expressionText]);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const input = event.currentTarget;
+
+    actions.onExpressionTextChanged(
+      input.value,
+      input.selectionStart ?? input.value.length,
+      input.selectionStart ?? input.value.length,
+      input.selectionEnd ?? input.value.length
+    );
+  };
+
+  const handleInputSelect = (): void => {
+    const input = inputRef.current;
+
+    if (input === null) {
+      return;
+    }
+
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+
+    if (start === selectionStart && end === selectionEnd) {
+      return;
+    }
+
+    actions.onExpressionTextChanged(input.value, end, start, end);
+  };
+
+  const handleInputKeyDown = (
+    event: KeyboardEvent<HTMLInputElement>
+  ): void => {
+    const resolution = keyboardService.handleKeyDown(event, actions);
+
+    if (resolution.handled) {
+      event.preventDefault();
+    }
+  };
+
+  const handleInputFocus = (event: FocusEvent<HTMLInputElement>): void => {
+    const input = event.currentTarget;
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+
+    setHasFocus(true);
+    actions.onExpressionTextChanged(input.value, end, start, end);
+  };
+
+  const handleInputBlur = (): void => {
+    setHasFocus(false);
+  };
+
+  const caretState = caretService.getCaretState(expressionText, hasFocus);
+
+  return (
+    <TextField className={cssClass(styles.textField)}>
+      <Label className={cssClass(styles.visuallyHidden)}>
+        Calculator expression input
+      </Label>
+      <div className={cssClass(styles.editorRow)}>
+        <Input
+          ref={inputRef}
+          className={cssClass(styles.input)}
+          value={expressionText}
+          inputMode="text"
+          autoComplete="off"
+          spellCheck={false}
+          /* Keyboard-first calculator: land focus in the editor on load. */
+          autoFocus
+          {...(errorText !== null
+            ? { "aria-describedby": "error-text" }
+            : {})}
+          onChange={handleInputChange}
+          onSelect={handleInputSelect}
+          onKeyDown={handleInputKeyDown}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+        />
+        {caretState.showIndicator ? <CalculatorCaretIndicatorComponent /> : null}
+      </div>
+    </TextField>
+  );
+}
