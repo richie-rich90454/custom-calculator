@@ -35,6 +35,8 @@ import { SimplifyExpressionCalculatorCommand } from "../commands/SimplifyExpress
 import { ToggleCasModeCalculatorCommand } from "../commands/ToggleCasModeCalculatorCommand";
 import { ToggleComplexNumbersCalculatorCommand } from "../commands/ToggleComplexNumbersCalculatorCommand";
 import type { CalculatorApplicationController } from "./CalculatorApplicationController";
+import type { CalculusBlockParser } from "../calculus/CalculusBlockParser";
+import type { CalculusExpressionRouterService } from "../calculus/CalculusExpressionRouterService";
 
 export class DefaultCalculatorApplicationController
   implements CalculatorApplicationController
@@ -48,7 +50,9 @@ export class DefaultCalculatorApplicationController
     private readonly constantCatalogService: ConstantCatalogService,
     private readonly casService: CasService,
     private readonly casBlockParser: CasBlockParser,
-    private readonly casExpressionRouterService: CasExpressionRouterService
+    private readonly casExpressionRouterService: CasExpressionRouterService,
+    private readonly calculusBlockParser: CalculusBlockParser,
+    private readonly calculusExpressionRouterService: CalculusExpressionRouterService
   ) {}
 
   public insertDigit(
@@ -160,7 +164,9 @@ export class DefaultCalculatorApplicationController
       this.expressionEvaluationGateway,
       this.casBlockParser,
       this.casExpressionRouterService,
-      this.casService
+      this.casService,
+      this.calculusBlockParser,
+      this.calculusExpressionRouterService
     ).execute(currentState);
   }
 
