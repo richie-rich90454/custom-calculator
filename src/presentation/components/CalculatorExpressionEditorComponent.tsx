@@ -57,7 +57,8 @@ export function CalculatorExpressionEditorComponent(
   const [caretOffsetX, setCaretOffsetX] = useState<number>(0);
 
   useEffect(() => {
-    setCaretOffsetX(caretMeasureRef.current?.offsetWidth ?? 0);
+    // The measure span is mounted before effects run, so the ref is set.
+    setCaretOffsetX(caretMeasureRef.current!.offsetWidth);
   }, [selectionStart, expressionText]);
 
   useEffect(() => {
