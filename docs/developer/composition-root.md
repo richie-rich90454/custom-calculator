@@ -5,9 +5,7 @@ description: How the composition root constructs and wires every dependency.
 
 # Composition Root
 
-`CalculatorCompositionRoot` is the single place where every service is
-constructed and wired together. Dependencies are passed by constructor
-injection.
+`CalculatorCompositionRoot` is the single place where every service is constructed and wired together. Dependencies are passed by constructor injection.
 
 ## Location
 
@@ -45,8 +43,7 @@ flowchart LR
 
 ## Constructor injection everywhere
 
-Every service accepts its dependencies in its constructor. There is no service
-locator and no global mutable state.
+Every service accepts its dependencies in its constructor. There is no service locator and no global mutable state.
 
 ```ts
 this.expressionEvaluationGateway = new MathJsExpressionEvaluationGateway(
@@ -60,22 +57,20 @@ this.expressionEvaluationGateway = new MathJsExpressionEvaluationGateway(
 
 ## Persistence selection
 
-If IndexedDB is unavailable, the composition root falls back to in-memory
-repositories:
+If IndexedDB is unavailable, the composition root falls back to in-memory repositories:
 
 ```ts
 if (typeof globalThis.indexedDB === "undefined") {
-  return {
-    historyRepository: new InMemoryHistoryRepository(),
-    variablesRepository: new InMemoryVariablesRepository(),
-  };
+    return {
+        historyRepository: new InMemoryHistoryRepository(),
+        variablesRepository: new InMemoryVariablesRepository(),
+    };
 }
 ```
 
 ## Bootstrap
 
-`CalculatorApplicationBootstrap` runs feature detection, loads settings, applies
-the BigInt fallback, and applies the theme to the document.
+`CalculatorApplicationBootstrap` runs feature detection, loads settings, applies the BigInt fallback, and applies the theme to the document.
 
 ## Next steps
 
