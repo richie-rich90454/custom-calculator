@@ -20,8 +20,6 @@ describe("CalculatorApplicationContext", () => {
   });
 
   it("throws when the hook is used without a provider", () => {
-    const harness = createCalculatorTestHarness();
-
     expect(() => render(<ContextProbe />)).toThrowError(
       "CalculatorApplicationContext is not available"
     );
