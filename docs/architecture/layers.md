@@ -5,8 +5,7 @@ description: The layer architecture of the calculator and its dependency rules.
 
 # Layers
 
-The calculator is built from five layers with a strict one-way dependency
-direction.
+The calculator is built from five layers with a strict one-way dependency direction.
 
 ## Layer diagram
 
@@ -46,21 +45,20 @@ flowchart TB
 
 ## Responsibility table
 
-| Layer | Responsibility |
-| ----- | -------------- |
-| Presentation | Render UI, forward events, prepare view models |
-| State | Adapter between UI actions and the application controller |
-| Application | Commands, routing, orchestration |
-| Domain | Pure models and business rules, no external dependencies |
-| Infrastructure | Math engine, storage, feature detection, static data |
+| Layer          | Responsibility                                            |
+| -------------- | --------------------------------------------------------- |
+| Presentation   | Render UI, forward events, prepare view models            |
+| State          | Adapter between UI actions and the application controller |
+| Application    | Commands, routing, orchestration                          |
+| Domain         | Pure models and business rules, no external dependencies  |
+| Infrastructure | Math engine, storage, feature detection, static data      |
 
 ## Dependency rules
 
 - Presentation imports State only.
 - State imports Application only.
 - Application imports Domain only.
-- Infrastructure implements Domain interfaces and is wired by the
-  composition root.
+- Infrastructure implements Domain interfaces and is wired by the composition root.
 - Domain never imports any other layer.
 
 ## Why this works
