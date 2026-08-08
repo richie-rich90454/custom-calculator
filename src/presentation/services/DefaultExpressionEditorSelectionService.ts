@@ -1,7 +1,7 @@
 import type {
-  ExpressionEditorSelection,
-  ExpressionEditorSelectionInput,
-  ExpressionEditorSelectionService,
+    ExpressionEditorSelection,
+    ExpressionEditorSelectionInput,
+    ExpressionEditorSelectionService,
 } from "./ExpressionEditorSelectionService";
 
 /**
@@ -10,15 +10,11 @@ import type {
  * Normalizes a null native selection to the end of the value so the editor
  * never misreads the caret when the browser reports no selection.
  */
-export class DefaultExpressionEditorSelectionService
-  implements ExpressionEditorSelectionService
-{
-  public resolveSelection(
-    input: ExpressionEditorSelectionInput
-  ): ExpressionEditorSelection {
-    return {
-      start: input.selectionStart ?? input.value.length,
-      end: input.selectionEnd ?? input.value.length,
-    };
-  }
+export class DefaultExpressionEditorSelectionService implements ExpressionEditorSelectionService {
+    public resolveSelection(input: ExpressionEditorSelectionInput): ExpressionEditorSelection {
+        return {
+            start: input.selectionStart ?? input.value.length,
+            end: input.selectionEnd ?? input.value.length,
+        };
+    }
 }
