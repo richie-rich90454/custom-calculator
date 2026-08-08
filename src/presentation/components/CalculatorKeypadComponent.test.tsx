@@ -165,6 +165,42 @@ describe("CalculatorKeypadComponent", () => {
     expect(fourButton).toHaveFocus();
   });
 
+  it("moves focus left with the left arrow", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    const sevenButton = screen.getByRole("button", { name: "Digit seven" });
+    const eightButton = screen.getByRole("button", { name: "Digit eight" });
+
+    eightButton.focus();
+    await user.keyboard("{ArrowLeft}");
+
+    expect(sevenButton).toHaveFocus();
+  });
+
+  it("moves focus up a row with the up arrow", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    const sevenButton = screen.getByRole("button", { name: "Digit seven" });
+    const fourButton = screen.getByRole("button", { name: "Digit four" });
+
+    fourButton.focus();
+    await user.keyboard("{ArrowUp}");
+
+    expect(sevenButton).toHaveFocus();
+  });
+
   it("keeps focus on the grid edge when moving left of the first column", async () => {
     const user = userEvent.setup();
     const harness = createCalculatorTestHarness();
