@@ -1,12 +1,10 @@
 .statusBar {
   width: 100%;
-  max-width: 460px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-bottom: var(--space-3);
 }
 
 .modes {
@@ -16,17 +14,18 @@
 }
 
 .angleButton {
-  min-height: 36px;
+  min-height: 32px;
   padding: var(--space-1) var(--space-3);
   font-size: 0.8rem;
   font-weight: 700;
   background-color: var(--color-key-operator);
-  border-color: var(--color-border);
+  border-color: var(--color-key-edge);
   color: var(--color-key-operator-text);
+  border-radius: var(--radius-sm);
 }
 
 .modeLabel {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-family: var(--font-family-mono);
   color: var(--color-text-secondary);
   padding: var(--space-1) var(--space-2);
@@ -43,17 +42,18 @@
 
 .panelButtons {
   display: flex;
-  gap: var(--space-1);
+  gap: 2px;
   flex-wrap: wrap;
 }
 
 .panelButton {
-  min-height: 36px;
+  min-height: 32px;
   padding: var(--space-1) var(--space-2);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   background-color: transparent;
   border-color: transparent;
   color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
 }
 
 .panelButton:hover {
@@ -69,6 +69,6 @@
 .statusMessage {
   flex-basis: 100%;
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--color-warning);
 }
