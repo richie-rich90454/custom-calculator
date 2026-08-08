@@ -194,6 +194,14 @@ export class DefaultScientificFunctionCatalogService
         2
       ),
       new ScientificFunctionDefinition(
+        "inv",
+        "1/x",
+        "Reciprocal of a value",
+        ScientificFunctionCategory.POWER_AND_ROOT,
+        1,
+        1
+      ),
+      new ScientificFunctionDefinition(
         "abs",
         "abs",
         "Absolute value",
