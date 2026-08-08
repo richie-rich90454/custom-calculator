@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { CalculatorSettings } from "../../domain/model/CalculatorSettings";
 import { AngleMode } from "../../domain/model/AngleMode";
 import { NumericMode } from "../../domain/model/NumericMode";
