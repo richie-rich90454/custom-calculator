@@ -30,6 +30,10 @@ describe("DefaultExpressionValidationService", () => {
     expect(validate("")).toBeNull();
   });
 
+  it("accepts the previous answer identifier", () => {
+    expect(validate("ans+1")).toBeNull();
+  });
+
   it("accepts known functions and constants", () => {
     expect(validate("sin(30)+speedOfLight")).toBeNull();
     expect(validate("pi+e")).toBeNull();
