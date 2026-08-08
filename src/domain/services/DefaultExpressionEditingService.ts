@@ -41,6 +41,23 @@ export class DefaultExpressionEditingService extends AbstractExpressionEditingSe
   private static readonly LEADING_IDENTIFIER_TOKEN_PATTERN =
     /^[a-zA-Z][a-zA-Z0-9]*/;
 
+  private static readonly BLOCK_FUNCTION_NAMES: ReadonlySet<string> = new Set([
+    "cas",
+    "casSimplify",
+    "casExpand",
+    "casDerivative",
+    "derivative",
+    "diff",
+    "numericDerivative",
+    "nderivative",
+    "integral",
+    "integrate",
+    "limit",
+    "taylor",
+    "sum",
+    "product",
+  ]);
+
   public constructor(
     private readonly functionCatalogService: ScientificFunctionCatalogService
   ) {
@@ -100,10 +117,20 @@ export class DefaultExpressionEditingService extends AbstractExpressionEditingSe
     );
 
     if (trailingFunctionGroupStart >= 0) {
+      const openParenthesisIndex = cursorPosition - 1;
+      const closingParenthesisIndex = this.findMatchingClosingParenthesis(
+        currentText,
+        openParenthesisIndex
+      );
+      const removalEnd =
+        closingParenthesisIndex >= 0
+          ? closingParenthesisIndex + 1
+          : cursorPosition;
+
       return this.removeRangeEdit(
         currentText,
         trailingFunctionGroupStart,
-        cursorPosition
+        removalEnd
       );
     }
 
@@ -232,11 +259,37 @@ export class DefaultExpressionEditingService extends AbstractExpressionEditingSe
 
     const functionName = nameTokenMatch[0];
 
-    if (!this.functionCatalogService.hasFunction(functionName)) {
+    if (
+      !this.functionCatalogService.hasFunction(functionName) &&
+      !DefaultExpressionEditingService.BLOCK_FUNCTION_NAMES.has(functionName)
+    ) {
       return -1;
     }
 
     return nameTokenMatch.index;
+  }
+
+  private findMatchingClosingParenthesis(
+    text: string,
+    openIndex: number
+  ): number {
+    let depth = 0;
+
+    for (let index = openIndex; index < text.length; index += 1) {
+      const character = text.charAt(index);
+
+      if (character === "(") {
+        depth += 1;
+      } else if (character === ")") {
+        depth -= 1;
+
+        if (depth === 0) {
+          return index;
+        }
+      }
+    }
+
+    return -1;
   }
 
   private findTrailingIdentifierStart(prefix: string): number {
