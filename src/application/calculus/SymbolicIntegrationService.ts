@@ -1,6 +1,3 @@
 export interface SymbolicIntegrationService {
-  integrateSymbolically(
-    expressionText: string,
-    variableName: string
-  ): string;
+    integrateSymbolically(expressionText: string, variableName: string): string;
 }
