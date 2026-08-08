@@ -42,7 +42,7 @@ This prevents accidentally leaving a stray parenthesis.
 Function buttons insert an opening parenthesis and place the cursor inside it.
 
 ```
-sin(|)
+sin(|
 ```
 
 When the call is complete, evaluation auto-closes it. See
@@ -65,7 +65,7 @@ When the cursor follows the opening parenthesis of a function call, backspace
 removes the entire function group rather than just the parenthesis.
 
 ```
-sin(|)  ->  |
+sin(|  ->  |
 ```
 
 See [Smart backspace](/user-guide/smart-backspace).
