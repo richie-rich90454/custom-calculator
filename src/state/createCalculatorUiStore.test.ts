@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { AngleMode } from "../domain/model/AngleMode";
 import { NumericMode } from "../domain/model/NumericMode";
+import { ThemePreference } from "../domain/model/ThemePreference";
 import { createCalculatorTestHarness } from "../test/calculatorTestHarness";
 
 describe("calculator UI store", () => {
@@ -195,8 +196,8 @@ describe("calculator UI store", () => {
     store.getState().onAngleModeChanged(AngleMode.RAD);
     expect(store.getState().angleMode).toBe(AngleMode.RAD);
 
-    store.getState().onThemeChanged("dark");
-    expect(store.getState().themePreference).toBe("dark");
+    store.getState().onThemeChanged(ThemePreference.DARK);
+    expect(store.getState().themePreference).toBe(ThemePreference.DARK);
   });
 
   it("updates the expression text with cursor positions", () => {
