@@ -5,8 +5,7 @@ description: How numeric derivative approximation works at a point.
 
 # Numeric Derivatives
 
-The numeric derivative operation approximates the derivative of an expression
-at a specific point.
+The numeric derivative operation approximates the derivative of an expression at a specific point.
 
 ## Syntax
 
@@ -28,9 +27,7 @@ The exact value is `6`; the numeric result is an approximation close to `6`.
 
 ## How it works
 
-The numeric derivative uses a finite-difference approximation of the
-derivative at the given point. The smaller the function is near the point, the
-more accurate the estimate.
+The numeric derivative uses a finite-difference approximation of the derivative at the given point. The smaller the function is near the point, the more accurate the estimate.
 
 ## Inserting a numeric derivative block
 
@@ -44,9 +41,7 @@ Replace the expression and the point.
 
 ## Angle modes
 
-Because numeric differentiation is extremely sensitive to angle units, the
-numeric service respects the active angle mode consistently with other numeric
-calculus operations. See [Angle mode policy](/calculus/angle-mode-policy).
+Because numeric differentiation is extremely sensitive to angle units, the numeric service respects the active angle mode consistently with other numeric calculus operations. See [Angle mode policy](/calculus/angle-mode-policy).
 
 ## Related pages
 
