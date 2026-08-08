@@ -3,12 +3,12 @@ import { useCalculatorApplicationContext } from "../../app/CalculatorApplication
 import { CalculatorViewModel } from "../viewmodels/CalculatorViewModel";
 
 export function useCalculatorViewModel(): CalculatorViewModel {
-  const { store, compositionRoot } = useCalculatorApplicationContext();
+    const { store, compositionRoot } = useCalculatorApplicationContext();
 
-  const uiState = store();
+    const uiState = store();
 
-  return useMemo(
-    () => new CalculatorViewModel(uiState, compositionRoot),
-    [uiState, compositionRoot]
-  );
+    return useMemo(
+        () => new CalculatorViewModel(uiState, compositionRoot),
+        [uiState, compositionRoot],
+    );
 }
