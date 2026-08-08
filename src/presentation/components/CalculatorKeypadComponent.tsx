@@ -14,53 +14,48 @@ import { cssClass } from "../utils/classNames";
 import styles from "../styles/CalculatorKeypadComponent.module.css";
 
 export function CalculatorKeypadComponent() {
-  const { store, compositionRoot } = useCalculatorApplicationContext();
-  const viewModel = useCalculatorViewModel();
+    const { store, compositionRoot } = useCalculatorApplicationContext();
+    const viewModel = useCalculatorViewModel();
 
-  const keypadRepository = useMemo(
-    () =>
-      new DefaultKeypadDefinitionRepository(
-        compositionRoot.casOperationCatalogService,
-        compositionRoot.calculusOperationCatalogService
-      ),
-    [compositionRoot]
-  );
-
-  const keyDispatcher = useMemo(
-    () => new CalculatorKeyCommandDispatcherService(),
-    []
-  );
-
-  const handleKeyPressed = (
-    key: CalculatorKeyDefinition,
-    activationKind: ButtonActivationKind
-  ): void => {
-    keyDispatcher.dispatchKeyPressed(key, store.getState());
-    defaultFocusPreservationService.restoreFocusAfterButtonPress(
-      activationKind
+    const keypadRepository = useMemo(
+        () =>
+            new DefaultKeypadDefinitionRepository(
+                compositionRoot.casOperationCatalogService,
+                compositionRoot.calculusOperationCatalogService,
+            ),
+        [compositionRoot],
     );
-  };
 
-  return (
-    <div className={cssClass(styles.keypad)}>
-      <CalculatorScientificFunctionPadComponent
-        keys={keypadRepository.getScientificFunctionKeys()}
-        onKeyPressed={handleKeyPressed}
-      />
-      {viewModel.casEnabled ? (
-        <CalculatorCasControlPadComponent
-          keys={keypadRepository.getCasOperationKeys()}
-          onKeyPressed={handleKeyPressed}
-        />
-      ) : null}
-      <CalculatorCalculusControlPadComponent
-        keys={keypadRepository.getCalculusOperationKeys()}
-        onKeyPressed={handleKeyPressed}
-      />
-      <CalculatorCorePadComponent
-        keys={keypadRepository.getCoreKeys()}
-        onKeyPressed={handleKeyPressed}
-      />
-    </div>
-  );
+    const keyDispatcher = useMemo(() => new CalculatorKeyCommandDispatcherService(), []);
+
+    const handleKeyPressed = (
+        key: CalculatorKeyDefinition,
+        activationKind: ButtonActivationKind,
+    ): void => {
+        keyDispatcher.dispatchKeyPressed(key, store.getState());
+        defaultFocusPreservationService.restoreFocusAfterButtonPress(activationKind);
+    };
+
+    return (
+        <div className={cssClass(styles.keypad)}>
+            <CalculatorScientificFunctionPadComponent
+                keys={keypadRepository.getScientificFunctionKeys()}
+                onKeyPressed={handleKeyPressed}
+            />
+            {viewModel.casEnabled ? (
+                <CalculatorCasControlPadComponent
+                    keys={keypadRepository.getCasOperationKeys()}
+                    onKeyPressed={handleKeyPressed}
+                />
+            ) : null}
+            <CalculatorCalculusControlPadComponent
+                keys={keypadRepository.getCalculusOperationKeys()}
+                onKeyPressed={handleKeyPressed}
+            />
+            <CalculatorCorePadComponent
+                keys={keypadRepository.getCoreKeys()}
+                onKeyPressed={handleKeyPressed}
+            />
+        </div>
+    );
 }
