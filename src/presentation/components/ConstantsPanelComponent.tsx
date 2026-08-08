@@ -1,67 +1,72 @@
+import { useMemo, useState } from "react";
 import { useCalculatorApplicationContext } from "../../app/CalculatorApplicationContext";
-import { ScientificConstantCategory } from "../../domain/model/ScientificConstantCategory";
 import { useCalculatorViewModel } from "../hooks/useCalculatorViewModel";
-import { AccessibleListBoxComponent, type AccessibleListBoxEntry } from "../primitives/AccessibleListBoxComponent";
+import { PanelComponent } from "../primitives/PanelComponent";
+import { PanelSectionComponent } from "../primitives/PanelSectionComponent";
+import { ConstantsPanelCategorySelectorComponent } from "./ConstantsPanelCategorySelectorComponent";
+import { ConstantsPanelEmptyStateComponent } from "./ConstantsPanelEmptyStateComponent";
+import { ConstantsPanelListItemComponent } from "./ConstantsPanelListItemComponent";
+import { ConstantsPanelSearchComponent } from "./ConstantsPanelSearchComponent";
+import { ConstantsPanelViewModel } from "../viewmodels/ConstantsPanelViewModel";
 import { cssClass } from "../utils/classNames";
 import styles from "../styles/ConstantsPanelComponent.module.css";
-
-interface ConstantCategoryGroup {
-  readonly category: ScientificConstantCategory;
-  readonly heading: string;
-}
-
-const CATEGORY_GROUPS: readonly ConstantCategoryGroup[] = [
-  { category: ScientificConstantCategory.MATHEMATICS, heading: "Mathematics" },
-  {
-    category: ScientificConstantCategory.UNIVERSAL_PHYSICS,
-    heading: "Universal physics",
-  },
-  {
-    category: ScientificConstantCategory.ATOMIC_AND_PARTICLE,
-    heading: "Atomic and particle",
-  },
-  { category: ScientificConstantCategory.CHEMISTRY, heading: "Chemistry" },
-];
 
 export function ConstantsPanelComponent() {
   const { store } = useCalculatorApplicationContext();
   const viewModel = useCalculatorViewModel();
+  const [searchText, setSearchText] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState(
+    ConstantsPanelViewModel.ALL_CATEGORIES_ID
+  );
+
+  const panelViewModel = useMemo(
+    () =>
+      new ConstantsPanelViewModel(
+        viewModel.constants,
+        searchText,
+        selectedCategoryId
+      ),
+    [viewModel.constants, searchText, selectedCategoryId]
+  );
+
+  const filteredConstants = panelViewModel.filteredConstants;
 
   return (
-    <div className={cssClass(styles.panel)}>
-      <p className={cssClass(styles.helpText)}>
-        Select a constant to insert it into the expression.
-      </p>
+    <PanelComponent title="Constants">
+      <PanelSectionComponent heading="Find a constant">
+        <ConstantsPanelSearchComponent
+          searchText={searchText}
+          onSearchTextChanged={setSearchText}
+        />
+        <ConstantsPanelCategorySelectorComponent
+          options={panelViewModel.categoryOptions}
+          selectedCategoryId={selectedCategoryId}
+          onCategoryChanged={setSelectedCategoryId}
+        />
+      </PanelSectionComponent>
 
-      {CATEGORY_GROUPS.map((group) => {
-        const constantsInCategory = viewModel.constants.filter(
-          (constant) => constant.category === group.category
-        );
-
-        if (constantsInCategory.length === 0) {
-          return null;
-        }
-
-        const entries: readonly AccessibleListBoxEntry[] =
-          constantsInCategory.map((constant) => ({
-            id: constant.id,
-            primaryText: `${constant.symbol}  ${constant.name}`,
-            secondaryText: `${constant.value}${constant.unit !== null ? ` ${constant.unit}` : ""}`,
-          }));
-
-        return (
-          <section key={group.category} className={cssClass(styles.group)}>
-            <h3 className={cssClass(styles.groupHeading)}>{group.heading}</h3>
-            <AccessibleListBoxComponent
-              label={`${group.heading} constants`}
-              entries={entries}
-              onEntrySelected={(constantId) =>
-                store.getState().onConstantPressed(constantId)
-              }
-            />
-          </section>
-        );
-      })}
-    </div>
+      <PanelSectionComponent heading="Available constants">
+        {filteredConstants.length === 0 ? (
+          <ConstantsPanelEmptyStateComponent
+            hasSearchQuery={panelViewModel.hasSearchQuery}
+          />
+        ) : (
+          <ul
+            className={cssClass(styles.constantList)}
+            aria-label="Constants list"
+          >
+            {filteredConstants.map((constant) => (
+              <ConstantsPanelListItemComponent
+                key={constant.id}
+                constant={constant}
+                onInsert={(constantId) =>
+                  store.getState().onConstantPressed(constantId)
+                }
+              />
+            ))}
+          </ul>
+        )}
+      </PanelSectionComponent>
+    </PanelComponent>
   );
 }
