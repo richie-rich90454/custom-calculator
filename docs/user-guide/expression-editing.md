@@ -17,7 +17,7 @@ every action.
 - Pressing a **digit** places the cursor after the digit: `7|`.
 - Pressing an **operator** places the cursor after the operator: `5+|`.
 - Pressing a **function** places the cursor inside the parentheses:
-  `sin(|)`.
+  `sin(|`.
 - Pressing a **template** button places the cursor at the first placeholder.
 - Pressing a **constant** or **variable** places the cursor after it.
 
@@ -29,11 +29,12 @@ Pressing the `sin` button inserts the function call and moves the cursor to the
 first editable position:
 
 ```
-sin(|)
+sin(|
 ```
 
 The same rule applies to every function button: `cos`, `tan`, `log`, `ln`,
-`sqrt`, and so on.
+`sqrt`, and so on. The closing parenthesis is added automatically at
+evaluation, so you never count parentheses by hand.
 
 ## Inserting a template
 
