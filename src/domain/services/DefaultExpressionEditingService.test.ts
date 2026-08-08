@@ -150,6 +150,13 @@ describe("DefaultExpressionEditingService", () => {
       expect(edit.text).toBe("");
       expect(edit.cursorPosition).toBe(0);
     });
+
+    it("deletes a template block with a nested closing parenthesis group", () => {
+      const edit = service.deleteBackward("sum(, n, 1, f(x))", 4, 4);
+
+      expect(edit.text).toBe("");
+      expect(edit.cursorPosition).toBe(0);
+    });
   });
 
   describe("autoCloseParentheses", () => {
