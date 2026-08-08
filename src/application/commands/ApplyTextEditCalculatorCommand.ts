@@ -10,20 +10,18 @@ import { AbstractCalculatorCommand } from "./AbstractCalculatorCommand";
  * wrapping stay out of the domain layer.
  */
 export class ApplyTextEditCalculatorCommand extends AbstractCalculatorCommand {
-  public constructor(private readonly edit: ExpressionTextEdit) {
-    super();
-  }
+    public constructor(private readonly edit: ExpressionTextEdit) {
+        super();
+    }
 
-  public override execute(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return currentState.copyWith({
-      expressionText: this.edit.text,
-      cursorPosition: this.edit.cursorPosition,
-      selectionStart: this.edit.selectionStart,
-      selectionEnd: this.edit.selectionEnd,
-      resultText: null,
-      errorText: null,
-    });
-  }
+    public override execute(currentState: CalculatorSessionState): CalculatorSessionState {
+        return currentState.copyWith({
+            expressionText: this.edit.text,
+            cursorPosition: this.edit.cursorPosition,
+            selectionStart: this.edit.selectionStart,
+            selectionEnd: this.edit.selectionEnd,
+            resultText: null,
+            errorText: null,
+        });
+    }
 }
