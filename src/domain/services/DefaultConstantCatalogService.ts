@@ -1,6 +1,6 @@
 import { ScientificConstant } from "../model/ScientificConstant";
-import { ScientificConstantRepository } from "../repositories/ScientificConstantRepository";
-import { ConstantCatalogService } from "./ConstantCatalogService";
+import type { ScientificConstantRepository } from "../repositories/ScientificConstantRepository";
+import type { ConstantCatalogService } from "./ConstantCatalogService";
 
 export class DefaultConstantCatalogService implements ConstantCatalogService {
   private readonly constants: readonly ScientificConstant[];
