@@ -2,13 +2,11 @@ import { CalculatorSessionState } from "../../domain/model/CalculatorSessionStat
 import { AbstractCalculatorCommand } from "./AbstractCalculatorCommand";
 
 export class ToggleCasModeCalculatorCommand extends AbstractCalculatorCommand {
-  public override execute(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return currentState.copyWith({
-      casEnabled: !currentState.casEnabled,
-      resultText: null,
-      errorText: null,
-    });
-  }
+    public override execute(currentState: CalculatorSessionState): CalculatorSessionState {
+        return currentState.copyWith({
+            casEnabled: !currentState.casEnabled,
+            resultText: null,
+            errorText: null,
+        });
+    }
 }
