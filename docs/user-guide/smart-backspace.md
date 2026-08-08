@@ -34,14 +34,17 @@ If the cursor follows the opening parenthesis of a function call, the whole
 function group is deleted.
 
 ```
-sin(|)  ->  |
+sin(|  ->  |
 ```
 
 For a non-empty call, delete inside first:
 
 ```
-sin(30|)  ->  sin(|)  ->  |
+sin(30|  ->  sin(|  ->  |
 ```
+
+Template blocks such as `derivative(, x)` are deleted as a complete group in
+the same way.
 
 ### Delete a paired empty parenthesis group
 
