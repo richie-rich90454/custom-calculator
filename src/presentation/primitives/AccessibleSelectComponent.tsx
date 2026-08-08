@@ -8,7 +8,7 @@ import {
   SelectValue,
   type SelectProps,
 } from "react-aria-components";
-import styles from "./AccessibleSelectComponent.module.css";
+import styles from "../styles/AccessibleSelectComponent.module.css";
 
 export interface AccessibleSelectOption {
   readonly id: string;
