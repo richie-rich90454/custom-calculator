@@ -5,7 +5,7 @@ import {
   TextField,
   type TextFieldProps,
 } from "react-aria-components";
-import styles from "./AccessibleTextFieldComponent.module.css";
+import styles from "../styles/AccessibleTextFieldComponent.module.css";
 
 export interface AccessibleTextFieldComponentProperties
   extends Omit<TextFieldProps, "className"> {
