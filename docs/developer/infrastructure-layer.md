@@ -1,6 +1,6 @@
 ---
 title: Infrastructure Layer
-description: The infrastructure layer: the math.js gateway, persistence, feature detection, and data modules.
+description: "The infrastructure layer: the math.js gateway, persistence, feature detection, and data modules."
 ---
 
 # Infrastructure Layer
