@@ -8,9 +8,11 @@ import {
 } from "react";
 import { Input, Label, TextField } from "react-aria-components";
 import type { CalculatorUiActions } from "../../state/CalculatorUiActions";
-import { ExpressionEditorCaretService } from "../services/ExpressionEditorCaretService";
+import { DefaultExpressionEditorCaretRenderingService } from "../services/DefaultExpressionEditorCaretRenderingService";
+import { DefaultExpressionEditorScrollService } from "../services/DefaultExpressionEditorScrollService";
+import { defaultFocusPreservationService } from "../services/DefaultFocusPreservationService";
+import { DefaultExpressionEditorSelectionService } from "../services/DefaultExpressionEditorSelectionService";
 import { ExpressionEditorKeyboardService } from "../services/ExpressionEditorKeyboardService";
-import { ExpressionEditorSelectionService } from "../services/ExpressionEditorSelectionService";
 import { CalculatorCaretIndicatorComponent } from "./CalculatorCaretIndicatorComponent";
 import { cssClass } from "../utils/classNames";
 import styles from "../styles/CalculatorExpressionEditorComponent.module.css";
@@ -23,14 +25,16 @@ interface CalculatorExpressionEditorComponentProperties {
   readonly actions: CalculatorUiActions;
 }
 
-const caretService = new ExpressionEditorCaretService();
+const caretRenderingService = new DefaultExpressionEditorCaretRenderingService();
 const keyboardService = new ExpressionEditorKeyboardService();
-const selectionService = new ExpressionEditorSelectionService();
+const scrollService = new DefaultExpressionEditorScrollService();
+const selectionService = new DefaultExpressionEditorSelectionService();
 
 export function CalculatorExpressionEditorComponent(
   props: CalculatorExpressionEditorComponentProperties
 ) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const caretMeasureRef = useRef<HTMLSpanElement>(null);
   const [hasFocus, setHasFocus] = useState<boolean>(false);
   const { actions, expressionText, selectionStart, selectionEnd, errorText } =
     props;
@@ -39,6 +43,27 @@ export function CalculatorExpressionEditorComponent(
     // The input is mounted before effects run, so the ref is always set.
     inputRef.current!.setSelectionRange(selectionStart, selectionEnd);
   }, [selectionStart, selectionEnd, expressionText]);
+
+  useEffect(() => {
+    defaultFocusPreservationService.registerEditor({
+      focus: () => inputRef.current?.focus(),
+    });
+
+    return () => {
+      defaultFocusPreservationService.unregisterEditor();
+    };
+  }, []);
+
+  const caretOffsetX = caretMeasureRef.current?.offsetWidth ?? 0;
+
+  useEffect(() => {
+    const input = inputRef.current!;
+    scrollService.scrollCaretIntoView({
+      input: input,
+      caretOffsetX: caretOffsetX,
+      scrollPadding: 8,
+    });
+  }, [caretOffsetX, selectionStart, selectionEnd, expressionText]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const input = event.currentTarget;
@@ -85,7 +110,10 @@ export function CalculatorExpressionEditorComponent(
     setHasFocus(false);
   };
 
-  const caretState = caretService.getCaretState(hasFocus);
+  const caretState = caretRenderingService.getCaretRenderingState(
+    hasFocus,
+    caretOffsetX
+  );
 
   return (
     <TextField className={cssClass(styles.textField)}>
@@ -112,7 +140,16 @@ export function CalculatorExpressionEditorComponent(
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
         />
-        {caretState.showIndicator ? <CalculatorCaretIndicatorComponent /> : null}
+        <span
+          ref={caretMeasureRef}
+          className={cssClass(styles.caretMeasure)}
+          aria-hidden="true"
+        >
+          {expressionText.slice(0, selectionStart)}
+        </span>
+        {caretState.showIndicator ? (
+          <CalculatorCaretIndicatorComponent offsetX={caretState.offsetX} />
+        ) : null}
       </div>
     </TextField>
   );
