@@ -71,6 +71,25 @@ describe("DefaultExpressionEditingService", () => {
 
       expect(edit.text).toBe("+1");
     });
+
+    it("does nothing when the cursor is at the end", () => {
+      const edit = service.deleteForward("123", 3, 3);
+
+      expect(edit.text).toBe("123");
+      expect(edit.cursorPosition).toBe(3);
+    });
+
+    it("deletes a paired empty parenthesis group", () => {
+      const edit = service.deleteForward("()", 1, 1);
+
+      expect(edit.text).toBe("");
+    });
+
+    it("deletes a selection", () => {
+      const edit = service.deleteForward("1234", 1, 3);
+
+      expect(edit.text).toBe("14");
+    });
   });
 
   describe("deleteWordBackward", () => {
@@ -84,6 +103,32 @@ describe("DefaultExpressionEditingService", () => {
       const edit = service.deleteWordBackward("2+ans", 5, 5);
 
       expect(edit.text).toBe("2+");
+    });
+
+    it("deletes a selection", () => {
+      const edit = service.deleteWordBackward("abc", 0, 2);
+
+      expect(edit.text).toBe("c");
+    });
+
+    it("does nothing when the cursor is at the start", () => {
+      const edit = service.deleteWordBackward("123", 0, 0);
+
+      expect(edit.text).toBe("123");
+    });
+
+    it("deletes a single character when the cursor is not after a word", () => {
+      const edit = service.deleteWordBackward("sin(30)", 7, 7);
+
+      expect(edit.text).toBe("sin(30");
+    });
+  });
+
+  describe("deleteBackward edge cases", () => {
+    it("returns early from the function group scan when only an opening parenthesis precedes the cursor", () => {
+      const edit = service.deleteBackward("(", 1, 1);
+
+      expect(edit.text).toBe("");
     });
   });
 
