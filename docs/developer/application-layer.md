@@ -5,8 +5,7 @@ description: "The application layer: commands, controllers, and orchestration se
 
 # Application Layer
 
-The application layer turns user intent into domain operations. It contains
-the command classes, the application controller, and orchestration services.
+The application layer turns user intent into domain operations. It contains the command classes, the application controller, and orchestration services.
 
 ## Location
 
@@ -21,8 +20,7 @@ src/application/
 
 ## The controller
 
-`CalculatorApplicationController` is the facade the UI talks to. It exposes
-operations such as:
+`CalculatorApplicationController` is the facade the UI talks to. It exposes operations such as:
 
 - `insertDigit`, `insertOperator`, `insertFunction`
 - `insertConstant`, `insertVariable`, `insertParenthesis`
@@ -38,22 +36,21 @@ Each operation constructs the matching command and executes it.
 
 ## The command pattern
 
-Every mutation is a command object with a single `execute` method that takes
-the current session state and returns the next session state.
+Every mutation is a command object with a single `execute` method that takes the current session state and returns the next session state.
 
 ```ts
 const edit = this.expressionEditingService.insertText(
-  currentState.expressionText,
-  this.digit,
-  currentState.selectionStart,
-  currentState.selectionEnd
+    currentState.expressionText,
+    this.digit,
+    currentState.selectionStart,
+    currentState.selectionEnd,
 );
 
 return currentState.copyWith({
-  expressionText: edit.text,
-  cursorPosition: edit.cursorPosition,
-  selectionStart: edit.selectionStart,
-  selectionEnd: edit.selectionEnd,
+    expressionText: edit.text,
+    cursorPosition: edit.cursorPosition,
+    selectionStart: edit.selectionStart,
+    selectionEnd: edit.selectionEnd,
 });
 ```
 
@@ -61,16 +58,14 @@ See [Command pattern](/developer/command-pattern).
 
 ## CAS and calculus routing
 
-The application layer parses `cas(...)` and calculus blocks from raw
-expression text and routes them to the correct engine.
+The application layer parses `cas(...)` and calculus blocks from raw expression text and routes them to the correct engine.
 
 - [CAS routing](/architecture/cas-routing)
 - [Calculus routing](/architecture/cas-routing)
 
 ## Orchestration
 
-`CalculatorSessionOrchestrationService` coordinates repositories for loading
-and saving settings, history, and variables.
+`CalculatorSessionOrchestrationService` coordinates repositories for loading and saving settings, history, and variables.
 
 ## Next steps
 
