@@ -5,8 +5,7 @@ description: How finite products work in the calculator.
 
 # Products
 
-The finite product operation multiplies the value of an expression over an
-integer range.
+The finite product operation multiplies the value of an expression over an integer range.
 
 ## Syntax
 
