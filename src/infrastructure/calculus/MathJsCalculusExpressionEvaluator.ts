@@ -67,7 +67,7 @@ export class MathJsCalculusExpressionEvaluator
   }
 
   private convertToFiniteNumber(math: MathJsInstance, result: unknown): number {
-    const numericResult = math.number(result);
+    const numericResult = math.number(result as never);
 
     if (!Number.isFinite(numericResult)) {
       throw new Error("Expression evaluation produced a non finite value.");
