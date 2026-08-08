@@ -27,41 +27,64 @@ export class DefaultCalculusBlockParser implements CalculusBlockParser {
       return null;
     }
 
+    const operationKind = this.resolveOperationKind(functionName);
+
     const argumentsList = this.splitTopLevelArguments(argumentsText);
 
-    switch (functionName) {
-      case "derivative":
-      case "diff":
+    switch (operationKind) {
+      case CalculusOperationKind.DERIVATIVE:
         return this.parseUnaryBlock(
           CalculusOperationKind.DERIVATIVE,
           argumentsList
         );
-      case "numericDerivative":
-      case "nderivative":
+      case CalculusOperationKind.NUMERIC_DERIVATIVE:
         return this.parseNumericDerivativeBlock(argumentsList);
-      case "integral":
+      case CalculusOperationKind.INTEGRAL:
         return this.parseBoundedBlock(
           CalculusOperationKind.INTEGRAL,
           argumentsList
         );
-      case "integrate":
+      case CalculusOperationKind.INTEGRATE:
         return this.parseUnaryBlock(
           CalculusOperationKind.INTEGRATE,
           argumentsList
         );
-      case "limit":
+      case CalculusOperationKind.LIMIT:
         return this.parseLimitBlock(argumentsList);
-      case "taylor":
+      case CalculusOperationKind.TAYLOR:
         return this.parseTaylorBlock(argumentsList);
-      case "sum":
+      case CalculusOperationKind.SUM:
         return this.parseBoundedBlock(CalculusOperationKind.SUM, argumentsList);
-      case "product":
+      case CalculusOperationKind.PRODUCT:
         return this.parseBoundedBlock(
           CalculusOperationKind.PRODUCT,
           argumentsList
         );
+    }
+  }
+
+  public resolveOperationKind(functionName: string): CalculusOperationKind {
+    switch (functionName) {
+      case "derivative":
+      case "diff":
+        return CalculusOperationKind.DERIVATIVE;
+      case "numericDerivative":
+      case "nderivative":
+        return CalculusOperationKind.NUMERIC_DERIVATIVE;
+      case "integral":
+        return CalculusOperationKind.INTEGRAL;
+      case "integrate":
+        return CalculusOperationKind.INTEGRATE;
+      case "limit":
+        return CalculusOperationKind.LIMIT;
+      case "taylor":
+        return CalculusOperationKind.TAYLOR;
+      case "sum":
+        return CalculusOperationKind.SUM;
+      case "product":
+        return CalculusOperationKind.PRODUCT;
       default:
-        return null;
+        throw new Error(`Unknown calculus function: ${functionName}.`);
     }
   }
 
