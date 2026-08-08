@@ -1,7 +1,7 @@
 import {
-  ButtonActivationKind,
-  type ExpressionEditorFocusHandle,
-  type FocusPreservationService,
+    ButtonActivationKind,
+    type ExpressionEditorFocusHandle,
+    type FocusPreservationService,
 } from "./FocusPreservationService";
 
 /**
@@ -12,48 +12,44 @@ import {
  * after the current render commits so the native caret appears at the freshly
  * inserted cursor position.
  */
-export class DefaultFocusPreservationService
-  implements FocusPreservationService
-{
-  private readonly editorHandles: ExpressionEditorFocusHandle[] = [];
+export class DefaultFocusPreservationService implements FocusPreservationService {
+    private readonly editorHandles: ExpressionEditorFocusHandle[] = [];
 
-  public resolveActivationKind(pointerType: string): ButtonActivationKind {
-    return pointerType === "keyboard"
-      ? ButtonActivationKind.KEYBOARD
-      : ButtonActivationKind.POINTER;
-  }
-
-  public registerEditor(handle: ExpressionEditorFocusHandle): void {
-    this.editorHandles.push(handle);
-  }
-
-  public unregisterEditor(): void {
-    this.editorHandles.pop();
-  }
-
-  public restoreFocusAfterButtonPress(
-    activationKind: ButtonActivationKind
-  ): void {
-    if (activationKind !== ButtonActivationKind.POINTER) {
-      return;
+    public resolveActivationKind(pointerType: string): ButtonActivationKind {
+        return pointerType === "keyboard"
+            ? ButtonActivationKind.KEYBOARD
+            : ButtonActivationKind.POINTER;
     }
 
-    const handle = this.editorHandles[this.editorHandles.length - 1];
-
-    if (handle === undefined) {
-      return;
+    public registerEditor(handle: ExpressionEditorFocusHandle): void {
+        this.editorHandles.push(handle);
     }
 
-    const scheduleFocus = (): void => {
-      handle.focus();
-    };
-
-    if (typeof window.requestAnimationFrame === "function") {
-      window.requestAnimationFrame(scheduleFocus);
-    } else {
-      window.setTimeout(scheduleFocus, 0);
+    public unregisterEditor(): void {
+        this.editorHandles.pop();
     }
-  }
+
+    public restoreFocusAfterButtonPress(activationKind: ButtonActivationKind): void {
+        if (activationKind !== ButtonActivationKind.POINTER) {
+            return;
+        }
+
+        const handle = this.editorHandles[this.editorHandles.length - 1];
+
+        if (handle === undefined) {
+            return;
+        }
+
+        const scheduleFocus = (): void => {
+            handle.focus();
+        };
+
+        if (typeof window.requestAnimationFrame === "function") {
+            window.requestAnimationFrame(scheduleFocus);
+        } else {
+            window.setTimeout(scheduleFocus, 0);
+        }
+    }
 }
 
 /**
