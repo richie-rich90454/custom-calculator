@@ -1,12 +1,12 @@
 export interface ExpressionEditorSelectionInput {
-  readonly selectionStart: number | null;
-  readonly selectionEnd: number | null;
-  readonly value: string;
+    readonly selectionStart: number | null;
+    readonly selectionEnd: number | null;
+    readonly value: string;
 }
 
 export interface ExpressionEditorSelection {
-  readonly start: number;
-  readonly end: number;
+    readonly start: number;
+    readonly end: number;
 }
 
 /**
@@ -16,7 +16,5 @@ export interface ExpressionEditorSelection {
  * resolver normalizes a null selection to the end of the value.
  */
 export interface ExpressionEditorSelectionService {
-  resolveSelection(
-    input: ExpressionEditorSelectionInput
-  ): ExpressionEditorSelection;
+    resolveSelection(input: ExpressionEditorSelectionInput): ExpressionEditorSelection;
 }
