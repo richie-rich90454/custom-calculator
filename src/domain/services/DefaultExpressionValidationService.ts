@@ -1,9 +1,9 @@
 import { CalculationError } from "../model/CalculationError";
 import { CalculationErrorCode } from "../model/CalculationErrorCode";
 import { CalculatorSessionState } from "../model/CalculatorSessionState";
-import { ConstantCatalogService } from "./ConstantCatalogService";
-import { ExpressionValidationService } from "./ExpressionValidationService";
-import { ScientificFunctionCatalogService } from "./ScientificFunctionCatalogService";
+import type { ConstantCatalogService } from "./ConstantCatalogService";
+import type { ExpressionValidationService } from "./ExpressionValidationService";
+import type { ScientificFunctionCatalogService } from "./ScientificFunctionCatalogService";
 
 export class DefaultExpressionValidationService
   implements ExpressionValidationService
