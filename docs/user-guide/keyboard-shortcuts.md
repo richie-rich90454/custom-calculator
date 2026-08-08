@@ -9,32 +9,31 @@ This page lists every keyboard shortcut in the calculator.
 
 ## Editing shortcuts
 
-| Key | Action |
-| --- | ------ |
-| `ArrowLeft` / `ArrowRight` | Move the caret |
-| `Home` / `End` | Jump to the start / end of the expression |
-| `Shift+ArrowLeft` / `Shift+ArrowRight` | Extend the selection |
-| `Backspace` | Smart delete backward |
-| `Delete` | Delete forward |
-| `Ctrl+Backspace` | Delete a word or token backward |
-| `Escape` | Clear the expression or close the active panel |
+| Key                                    | Action                                         |
+| -------------------------------------- | ---------------------------------------------- |
+| `ArrowLeft` / `ArrowRight`             | Move the caret                                 |
+| `Home` / `End`                         | Jump to the start / end of the expression      |
+| `Shift+ArrowLeft` / `Shift+ArrowRight` | Extend the selection                           |
+| `Backspace`                            | Smart delete backward                          |
+| `Delete`                               | Delete forward                                 |
+| `Ctrl+Backspace`                       | Delete a word or token backward                |
+| `Escape`                               | Clear the expression or close the active panel |
 
 ## Global shortcuts
 
-| Shortcut | Action |
-| -------- | ------ |
-| `Enter` | Evaluate the expression |
-| `Ctrl+D` | Cycle the angle mode |
-| `Ctrl+H` | Open the history panel |
+| Shortcut | Action                   |
+| -------- | ------------------------ |
+| `Enter`  | Evaluate the expression  |
+| `Ctrl+D` | Cycle the angle mode     |
+| `Ctrl+H` | Open the history panel   |
 | `Ctrl+E` | Open the constants panel |
-| `Ctrl+M` | Open the memory panel |
-| `Ctrl+L` | Open the calculus panel |
-| `Ctrl+,` | Open the settings panel |
+| `Ctrl+M` | Open the memory panel    |
+| `Ctrl+L` | Open the calculus panel  |
+| `Ctrl+,` | Open the settings panel  |
 
 ## Typing
 
-Digits, operators, parentheses, and function names can be typed directly into
-the expression editor.
+Digits, operators, parentheses, and function names can be typed directly into the expression editor.
 
 ```
 2+3sin(30)*x
@@ -42,8 +41,7 @@ the expression editor.
 
 ## Keypad navigation
 
-Each keypad grid exposes a single tab stop. Arrow keys move through the grid,
-and `Enter` or `Space` activates the focused button.
+Each keypad grid exposes a single tab stop. Arrow keys move through the grid, and `Enter` or `Space` activates the focused button.
 
 ## Panels
 
@@ -52,7 +50,5 @@ and `Enter` or `Space` activates the focused button.
 
 ## Related documentation
 
-- [Keyboard first usage](/getting-started/keyboard-first-usage) explains the
-  workflow.
-- [Keyboard handling](/architecture/keyboard-handling) explains the
-  implementation.
+- [Keyboard first usage](/getting-started/keyboard-first-usage) explains the workflow.
+- [Keyboard handling](/architecture/keyboard-handling) explains the implementation.
