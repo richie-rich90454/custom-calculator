@@ -5,8 +5,7 @@ description: How finite summations work in the calculator.
 
 # Summations
 
-The finite summation operation adds the value of an expression over an integer
-range.
+The finite summation operation adds the value of an expression over an integer range.
 
 ## Syntax
 
@@ -49,8 +48,7 @@ Replace the expression, the summation variable, and the bounds.
 ## Bounds
 
 - The lower and upper bounds must be numbers.
-- The summation variable is the index, and it must not collide with other
-  names in the expression.
+- The summation variable is the index, and it must not collide with other names in the expression.
 
 ## Related pages
 
