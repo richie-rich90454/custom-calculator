@@ -27,6 +27,9 @@ enableable CAS-style operations.
 - Light, dark, and system themes using CSS variables.
 - Enableable CAS-style symbolic operations: simplify, expand, and
   differentiate.
+- Calculus operations: symbolic and numeric differentiation, definite
+  integrals, symbolic antiderivatives, limits, Taylor series, and finite
+  summations and products.
 - Full keyboard navigation and visible focus states.
 - Mouse support that is never required.
 
@@ -88,6 +91,7 @@ npm run build
 - `Ctrl+H` — open the history panel
 - `Ctrl+M` — open the memory panel
 - `Ctrl+E` — open the constants panel
+- `Ctrl+L` — open the calculus panel
 - `Ctrl+,` — open the settings panel
 
 Digits, operators, parentheses, and function names can be typed directly
