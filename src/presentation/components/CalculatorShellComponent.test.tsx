@@ -13,9 +13,11 @@ describe("CalculatorShellComponent", () => {
       <CalculatorShellComponent />
     );
 
-    expect(screen.getByText("Scientific Calculator")).toBeInTheDocument();
     expect(
       screen.getByLabelText("Calculator expression input")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Cycle angle mode" })
     ).toBeInTheDocument();
   });
 
