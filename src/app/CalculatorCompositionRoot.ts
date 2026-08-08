@@ -27,6 +27,7 @@ import { DefaultMathJsInstanceProvider } from "../infrastructure/mathjs/DefaultM
 import type { MathJsInstanceProvider } from "../infrastructure/mathjs/MathJsInstanceProvider";
 import { MathJsConstantScopeBuilder } from "../infrastructure/mathjs/MathJsConstantScopeBuilder";
 import { DefaultMathJsFractionValueFactory } from "../infrastructure/mathjs/MathJsFractionValueFactory";
+import { MathJsCalculationErrorMapper } from "../infrastructure/mathjs/MathJsCalculationErrorMapper";
 import { MathJsExpressionEvaluationGateway } from "../infrastructure/mathjs/MathJsExpressionEvaluationGateway";
 import { MathJsFunctionWhitelist } from "../infrastructure/mathjs/MathJsFunctionWhitelist";
 import { CalculatorDexieDatabase } from "../infrastructure/persistence/CalculatorDexieDatabase";
@@ -103,7 +104,8 @@ export class CalculatorCompositionRoot {
       new MathJsFunctionWhitelist(
         this.functionCatalogService.getFunctionNames()
       ),
-      this.resultFormattingService
+      this.resultFormattingService,
+      new MathJsCalculationErrorMapper()
     );
     this.casService = new MathJsCasService(
       this.mathJsInstanceProvider,
