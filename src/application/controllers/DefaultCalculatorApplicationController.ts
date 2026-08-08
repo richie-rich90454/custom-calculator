@@ -3,11 +3,13 @@ import { NumericMode } from "../../domain/model/NumericMode";
 import type { CasService } from "../../domain/services/CasService";
 import type { ConstantCatalogService } from "../../domain/services/ConstantCatalogService";
 import type { ExpressionEditingService } from "../../domain/services/ExpressionEditingService";
+import type { ExpressionTextEdit } from "../../domain/services/ExpressionEditingService";
 import type { ExpressionEvaluationGateway } from "../../domain/services/ExpressionEvaluationGateway";
 import type { ExpressionValidationService } from "../../domain/services/ExpressionValidationService";
 import type { NumericModePolicyService } from "../../domain/services/NumericModePolicyService";
 import type { ScientificFunctionCatalogService } from "../../domain/services/ScientificFunctionCatalogService";
 import { ChangeNumericModeCalculatorCommand } from "../commands/ChangeNumericModeCalculatorCommand";
+import { ApplyTextEditCalculatorCommand } from "../commands/ApplyTextEditCalculatorCommand";
 import { ClearSessionCalculatorCommand } from "../commands/ClearSessionCalculatorCommand";
 import { CycleAngleModeCalculatorCommand } from "../commands/CycleAngleModeCalculatorCommand";
 import { DeleteBackwardCalculatorCommand } from "../commands/DeleteBackwardCalculatorCommand";
@@ -54,6 +56,13 @@ export class DefaultCalculatorApplicationController
     private readonly calculusBlockParser: CalculusBlockParser,
     private readonly calculusExpressionRouterService: CalculusExpressionRouterService
   ) {}
+
+  public applyInsertion(
+    currentState: CalculatorSessionState,
+    edit: ExpressionTextEdit
+  ): CalculatorSessionState {
+    return new ApplyTextEditCalculatorCommand(edit).execute(currentState);
+  }
 
   public insertDigit(
     currentState: CalculatorSessionState,
