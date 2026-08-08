@@ -44,6 +44,29 @@ describe("DefaultCasExpressionRouterService operation dispatch", () => {
 
     expect(resolution.resultText).toBe("simplified");
   });
+
+  it("stringifies a non error thrown value", () => {
+    const casService: CasService = {
+      simplifyExpression: () => {
+        throw "raw failure";
+      },
+      expandExpression: () => "",
+      differentiateExpression: () => "",
+    };
+
+    const resolution = router.routeBlock(
+      {
+        operationKind: CasOperationKind.SIMPLIFY,
+        innerExpressionText: "x+x",
+        derivativeVariableName: null,
+      },
+      true,
+      casService
+    );
+
+    expect(resolution.resultText).toBeNull();
+    expect(resolution.errorText).toContain("raw failure");
+  });
 });
 
 describe("MathJsCasService error mapping", () => {
