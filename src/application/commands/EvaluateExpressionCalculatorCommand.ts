@@ -1,6 +1,7 @@
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
 import { CalculationError } from "../../domain/model/CalculationError";
 import type { CasBlockParser } from "../cas/CasBlockParser";
+import type { CasBlockDescriptor } from "../cas/CasBlockDescriptor";
 import type { CasExpressionRouterService } from "../cas/CasExpressionRouterService";
 import type { CasService } from "../../domain/services/CasService";
 import type { ExpressionEditingService } from "../../domain/services/ExpressionEditingService";
