@@ -1,15 +1,15 @@
 import { PanelEmptyStateComponent } from "../primitives/PanelEmptyStateComponent";
 
 interface ConstantsPanelEmptyStateComponentProperties {
-  readonly hasSearchQuery: boolean;
+    readonly hasSearchQuery: boolean;
 }
 
 export function ConstantsPanelEmptyStateComponent(
-  props: ConstantsPanelEmptyStateComponentProperties
+    props: ConstantsPanelEmptyStateComponentProperties,
 ) {
-  const message = props.hasSearchQuery
-    ? "No constants match your search."
-    : "No constants are available.";
+    const message = props.hasSearchQuery
+        ? "No constants match your search."
+        : "No constants are available.";
 
-  return <PanelEmptyStateComponent message={message} />;
+    return <PanelEmptyStateComponent message={message} />;
 }
