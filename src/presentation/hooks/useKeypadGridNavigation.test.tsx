@@ -55,6 +55,19 @@ describe("useKeypadGridNavigation", () => {
     expect(screen.getByText("empty")).toBeInTheDocument();
   });
 
+  it("ignores non arrow keys entirely", async () => {
+    const user = userEvent.setup();
+
+    render(<SingleRowGridProbe />);
+
+    const firstButton = screen.getByRole("button", { name: "a" });
+
+    firstButton.focus();
+    await user.keyboard("a");
+
+    expect(firstButton).toHaveFocus();
+  });
+
   it("keeps focus within the grid on arrow key boundaries", async () => {
     const user = userEvent.setup();
 
