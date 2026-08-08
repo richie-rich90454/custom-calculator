@@ -5,8 +5,7 @@ description: "The display region of the calculator: the expression editor, resul
 
 # Display
 
-The display is the focal point of the calculator. It contains the expression
-editor, the result line, and the error line.
+The display is the focal point of the calculator. It contains the expression editor, the result line, and the error line.
 
 ## Expression editor
 
@@ -33,8 +32,7 @@ The error line renders evaluation errors.
 
 ## Visual layout
 
-The display sits above the keypad with a contrasting surface color. See the
-[interface tour](/getting-started/interface-tour) for the layout diagram.
+The display sits above the keypad with a contrasting surface color. See the [interface tour](/getting-started/interface-tour) for the layout diagram.
 
 ## Cursor visibility
 
