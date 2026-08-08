@@ -6,6 +6,8 @@ export class CalculatorSessionState {
   public constructor(
     public readonly expressionText: string,
     public readonly cursorPosition: number,
+    public readonly selectionStart: number,
+    public readonly selectionEnd: number,
     public readonly resultText: string | null,
     public readonly errorText: string | null,
     public readonly lastResultText: string | null,
@@ -21,6 +23,8 @@ export class CalculatorSessionState {
   public static createInitial(): CalculatorSessionState {
     return new CalculatorSessionState(
       "",
+      0,
+      0,
       0,
       null,
       null,
@@ -41,6 +45,8 @@ export class CalculatorSessionState {
     return new CalculatorSessionState(
       overrides.expressionText ?? this.expressionText,
       overrides.cursorPosition ?? this.cursorPosition,
+      overrides.selectionStart ?? this.selectionStart,
+      overrides.selectionEnd ?? this.selectionEnd,
       overrides.resultText !== undefined
         ? overrides.resultText
         : this.resultText,
