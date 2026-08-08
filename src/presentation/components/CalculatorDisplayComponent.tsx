@@ -109,6 +109,7 @@ export function CalculatorDisplayComponent() {
           inputMode="text"
           autoComplete="off"
           spellCheck={false}
+          autoFocus
           {...(viewModel.errorText !== null
             ? { "aria-describedby": "error-text" }
             : {})}
