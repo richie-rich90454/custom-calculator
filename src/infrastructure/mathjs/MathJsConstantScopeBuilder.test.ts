@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { CalculatorCompositionRoot } from "../../app/CalculatorCompositionRoot";
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
 import { NumericMode } from "../../domain/model/NumericMode";
+import { ScientificConstant } from "../../domain/model/ScientificConstant";
+import { ScientificConstantCategory } from "../../domain/model/ScientificConstantCategory";
 import { VariableAssignment } from "../../domain/model/VariableAssignment";
 import { MathJsConstantScopeBuilder } from "./MathJsConstantScopeBuilder";
 import { DefaultMathJsFractionValueFactory } from "./MathJsFractionValueFactory";
@@ -97,5 +99,69 @@ describe("MathJsConstantScopeBuilder", () => {
     const scope = scopeBuilder.buildScope(math, sessionState);
 
     expect(scope["ans"]).toBe(42);
+  });
+
+  it("skips a constant whose value text cannot be parsed", () => {
+    const root = new CalculatorCompositionRoot();
+    const brokenConstant = new ScientificConstant(
+      "brokenConstant",
+      "B",
+      "Broken constant",
+      ScientificConstantCategory.MATHEMATICS,
+      "not-a-number",
+      null,
+      "A constant with an invalid value.",
+      "Test",
+      []
+    );
+    const fakeCatalog = {
+      getAllConstants: () => [brokenConstant],
+    } as unknown as CalculatorCompositionRoot["constantCatalogService"];
+
+    const scopeBuilder = new MathJsConstantScopeBuilder(
+      fakeCatalog,
+      new DefaultMathJsFractionValueFactory()
+    );
+    const math = root.mathJsInstanceProvider.getInstance();
+
+    const scope = scopeBuilder.buildScope(
+      math,
+      CalculatorSessionState.createInitial()
+    );
+
+    expect(scope["brokenConstant"]).toBeUndefined();
+  });
+
+  it("keeps a non integer constant as a number in bigint mode", () => {
+    const root = new CalculatorCompositionRoot();
+    const decimalConstant = new ScientificConstant(
+      "decimalConstant",
+      "D",
+      "Decimal constant",
+      ScientificConstantCategory.MATHEMATICS,
+      "1.5",
+      null,
+      "A constant with a fractional value.",
+      "Test",
+      []
+    );
+    const fakeCatalog = {
+      getAllConstants: () => [decimalConstant],
+    } as unknown as CalculatorCompositionRoot["constantCatalogService"];
+
+    const scopeBuilder = new MathJsConstantScopeBuilder(
+      fakeCatalog,
+      new DefaultMathJsFractionValueFactory()
+    );
+    const math = root.mathJsInstanceProvider.getInstance();
+
+    math.config({ number: "bigint" });
+
+    const scope = scopeBuilder.buildScope(
+      math,
+      CalculatorSessionState.createInitial()
+    );
+
+    expect(scope["decimalConstant"]).toBe(1.5);
   });
 });
