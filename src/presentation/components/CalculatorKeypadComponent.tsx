@@ -178,6 +178,7 @@ function KeypadGridSection(props: KeypadGridSectionProperties) {
       role="grid"
       aria-label={props.gridLabel}
       className={cssClass(props.sectionClassName)}
+      tabIndex={-1}
       onKeyDown={navigation.handleGridKeyDown}
     >
       {props.keys.map((key) => (
@@ -186,7 +187,7 @@ function KeypadGridSection(props: KeypadGridSectionProperties) {
           ref={(element) => navigation.registerItemRef(key.id, element)}
           customClassName={props.resolveKeyClassName(key)}
           aria-label={key.ariaLabel}
-          tabIndex={navigation.getTabIndex(key.id)}
+          excludeFromTabOrder={navigation.getTabIndex(key.id) === -1}
           onFocus={() => navigation.handleItemFocus(key.id)}
           onPress={() => props.onKeyPressed(key)}
         >
