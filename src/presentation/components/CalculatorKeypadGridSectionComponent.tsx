@@ -1,4 +1,5 @@
 import type { CalculatorKeyDefinition } from "../services/CalculatorKeyDefinition";
+import type { ButtonActivationKind } from "../services/FocusPreservationService";
 import { useKeypadGridNavigation } from "../hooks/useKeypadGridNavigation";
 import { CalculatorKeyComponent } from "./CalculatorKeyComponent";
 import { cssClass } from "../utils/classNames";
@@ -9,7 +10,10 @@ interface CalculatorKeypadGridSectionComponentProperties {
   readonly keys: readonly CalculatorKeyDefinition[];
   readonly columnCount: number;
   readonly resolveKeyClassName: (key: CalculatorKeyDefinition) => string;
-  readonly onKeyPressed: (key: CalculatorKeyDefinition) => void;
+  readonly onKeyPressed: (
+    key: CalculatorKeyDefinition,
+    activationKind: ButtonActivationKind
+  ) => void;
 }
 
 export function CalculatorKeypadGridSectionComponent(
@@ -36,7 +40,7 @@ export function CalculatorKeypadGridSectionComponent(
           ariaLabel={key.ariaLabel}
           isExcludedFromTabOrder={navigation.getTabIndex(key.id) === -1}
           onFocus={() => navigation.handleItemFocus(key.id)}
-          onPress={() => props.onKeyPressed(key)}
+          onPress={(activationKind) => props.onKeyPressed(key, activationKind)}
         >
           {key.label}
         </CalculatorKeyComponent>
