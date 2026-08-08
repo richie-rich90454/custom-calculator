@@ -203,4 +203,49 @@ describe("CalculatorKeypadComponent", () => {
 
     expect(tabStops).toHaveLength(1);
   });
+
+  it("renders CAS operation keys when CAS is enabled", () => {
+    const harness = createCalculatorTestHarness({ casEnabled: true });
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    expect(
+      screen.getByRole("button", { name: "Insert CAS block" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Insert CAS derivative block" })
+    ).toBeInTheDocument();
+  });
+
+  it("hides CAS operation keys when CAS is disabled", () => {
+    const harness = createCalculatorTestHarness({ casEnabled: false });
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    expect(
+      screen.queryByRole("button", { name: "Insert CAS block" })
+    ).not.toBeInTheDocument();
+  });
+
+  it("inserts a CAS block when the CAS key is pressed", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness({ casEnabled: true });
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "Insert CAS block" })
+    );
+
+    expect(harness.store.getState().expressionText).toBe("cas(");
+  });
 });
