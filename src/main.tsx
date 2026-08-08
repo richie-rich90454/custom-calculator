@@ -20,63 +20,60 @@ import { createInitialCalculatorUiState } from "./state/createInitialCalculatorU
 import type { CalculatorUiStoreApi } from "./state/CalculatorUiStore";
 
 function CalculatorApplication() {
-  useCalculatorKeyboardBindings();
+    useCalculatorKeyboardBindings();
 
-  return <CalculatorShellComponent />;
+    return <CalculatorShellComponent />;
 }
 
 function bootstrapCalculatorApplication(): void {
-  const compositionRoot = new CalculatorCompositionRoot();
-  const bootstrap = new CalculatorApplicationBootstrap(compositionRoot);
-  const bootstrapResult = bootstrap.bootstrap();
+    const compositionRoot = new CalculatorCompositionRoot();
+    const bootstrap = new CalculatorApplicationBootstrap(compositionRoot);
+    const bootstrapResult = bootstrap.bootstrap();
 
-  const initialUiState = createInitialCalculatorUiState(
-    bootstrapResult.settings,
-    bootstrapResult.bigIntSupported,
-    bootstrapResult.statusMessage
-  );
+    const initialUiState = createInitialCalculatorUiState(
+        bootstrapResult.settings,
+        bootstrapResult.bigIntSupported,
+        bootstrapResult.statusMessage,
+    );
 
-  const store = createCalculatorUiStore(
-    compositionRoot,
-    initialUiState,
-    new CalculatorViewModelMapper()
-  );
+    const store = createCalculatorUiStore(
+        compositionRoot,
+        initialUiState,
+        new CalculatorViewModelMapper(),
+    );
 
-  void hydratePersistedState(compositionRoot, store);
+    void hydratePersistedState(compositionRoot, store);
 
-  const rootElement = document.getElementById("root");
+    const rootElement = document.getElementById("root");
 
-  if (rootElement === null) {
-    throw new Error("Root element not found.");
-  }
+    if (rootElement === null) {
+        throw new Error("Root element not found.");
+    }
 
-  createRoot(rootElement).render(
-    <StrictMode>
-      <CalculatorApplicationContextProvider
-        compositionRoot={compositionRoot}
-        store={store}
-      >
-        <CalculatorApplication />
-      </CalculatorApplicationContextProvider>
-    </StrictMode>
-  );
+    createRoot(rootElement).render(
+        <StrictMode>
+            <CalculatorApplicationContextProvider compositionRoot={compositionRoot} store={store}>
+                <CalculatorApplication />
+            </CalculatorApplicationContextProvider>
+        </StrictMode>,
+    );
 }
 
 async function hydratePersistedState(
-  compositionRoot: CalculatorCompositionRoot,
-  store: CalculatorUiStoreApi
+    compositionRoot: CalculatorCompositionRoot,
+    store: CalculatorUiStoreApi,
 ): Promise<void> {
-  const orchestration = compositionRoot.orchestrationService;
+    const orchestration = compositionRoot.orchestrationService;
 
-  const [historyEntries, variables] = await Promise.all([
-    orchestration.refreshHistoryEntries(),
-    orchestration.refreshVariables(),
-  ]);
+    const [historyEntries, variables] = await Promise.all([
+        orchestration.refreshHistoryEntries(),
+        orchestration.refreshVariables(),
+    ]);
 
-  store.setState({
-    historyEntries: historyEntries,
-    variables: variables,
-  });
+    store.setState({
+        historyEntries: historyEntries,
+        variables: variables,
+    });
 }
 
 bootstrapCalculatorApplication();
