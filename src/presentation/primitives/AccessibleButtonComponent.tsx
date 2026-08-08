@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Button, type ButtonProps } from "react-aria-components";
-import styles from "./AccessibleButtonComponent.module.css";
+import styles from "../styles/AccessibleButtonComponent.module.css";
 
 export interface AccessibleButtonComponentProperties
   extends Omit<ButtonProps, "className"> {
