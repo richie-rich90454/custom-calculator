@@ -1,0 +1,46 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.valueBox {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-display-background);
+  text-align: center;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.memoryValue {
+  font-family: var(--font-family-mono);
+  font-size: 1.2rem;
+  color: var(--color-text-primary);
+  word-break: break-all;
+}
+
+.emptyValue {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.buttonGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+}
+
+.memoryButton {
+  min-height: 48px;
+  font-weight: 600;
+}
+
+.hintText {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
