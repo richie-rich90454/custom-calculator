@@ -5,8 +5,7 @@ description: How to add a new CAS operation to the calculator.
 
 # Adding a CAS Operation
 
-CAS operations are symbolic operations exposed as `cas(...)` blocks. Adding
-one involves an operation kind, a catalog entry, and routing.
+CAS operations are symbolic operations exposed as `cas(...)` blocks. Adding one involves an operation kind, a catalog entry, and routing.
 
 ## Step one: add the operation kind
 
@@ -14,10 +13,10 @@ Extend `CasOperationKind`:
 
 ```ts
 export enum CasOperationKind {
-  SIMPLIFY = "SIMPLIFY",
-  EXPAND = "EXPAND",
-  DERIVATIVE = "DERIVATIVE",
-  // add your kind
+    SIMPLIFY = "SIMPLIFY",
+    EXPAND = "EXPAND",
+    DERIVATIVE = "DERIVATIVE",
+    // add your kind
 }
 ```
 
@@ -38,18 +37,15 @@ Add an entry to `DefaultCasOperationCatalogService`:
 
 ## Step three: extend the parser
 
-Extend `DefaultCasBlockParser` so `casFactor(...)` resolves to the new kind
-and produces the correct descriptor.
+Extend `DefaultCasBlockParser` so `casFactor(...)` resolves to the new kind and produces the correct descriptor.
 
 ## Step four: extend the service
 
-Extend `CasService` with the new operation and implement it in
-`MathJsCasService`.
+Extend `CasService` with the new operation and implement it in `MathJsCasService`.
 
 ## Step five: extend the router
 
-Extend `DefaultCasExpressionRouterService` to route the new kind to the
-service.
+Extend `DefaultCasExpressionRouterService` to route the new kind to the service.
 
 ## Step six: test
 
