@@ -15,19 +15,15 @@ The repository follows Java-flavored TypeScript naming conventions.
 
 ## Classes and interfaces
 
-- Interfaces are named for what they describe: `ExpressionEditingService`,
-  `CalculatorApplicationController`.
+- Interfaces are named for what they describe: `ExpressionEditingService`, `CalculatorApplicationController`.
 - Abstract classes are prefixed with `Abstract`: `AbstractCalculatorCommand`.
-- Default implementations are prefixed with `Default`:
-  `DefaultExpressionEditingService`.
+- Default implementations are prefixed with `Default`: `DefaultExpressionEditingService`.
 - Concrete classes describe their role: `MathJsExpressionEvaluationGateway`.
 
 ## Components
 
-- Components are suffixed with `Component`: `CalculatorShellComponent`,
-  `AccessibleButtonComponent`.
-- Props interfaces are suffixed with `Properties`:
-  `CalculatorKeypadComponentProperties`.
+- Components are suffixed with `Component`: `CalculatorShellComponent`, `AccessibleButtonComponent`.
+- Props interfaces are suffixed with `Properties`: `CalculatorKeypadComponentProperties`.
 
 ## Types and models
 
@@ -42,8 +38,7 @@ The repository follows Java-flavored TypeScript naming conventions.
 
 ## American English
 
-Use American English spellings in every identifier: `behavior`, `color`,
-`customize`, `initialize`, `organization`, `license`.
+Use American English spellings in every identifier: `behavior`, `color`, `customize`, `initialize`, `organization`, `license`.
 
 ## Enums
 
