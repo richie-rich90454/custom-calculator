@@ -27,8 +27,7 @@ Report bugs through the project's issue tracker. Include:
 
 ## Feature requests
 
-Suggest features through the issue tracker. Explain the use case and how it
-aligns with the project goals. See [Roadmap](/project/roadmap).
+Suggest features through the issue tracker. Explain the use case and how it aligns with the project goals. See [Roadmap](/project/roadmap).
 
 ## Security issues
 
