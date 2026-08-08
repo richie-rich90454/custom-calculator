@@ -5,64 +5,60 @@ import { CalculatorKeyKind } from "./CalculatorKeyDefinition";
 import { DefaultKeypadDefinitionRepository } from "./DefaultKeypadDefinitionRepository";
 
 function buildRepository(): DefaultKeypadDefinitionRepository {
-  return new DefaultKeypadDefinitionRepository(
-    new DefaultCasOperationCatalogService(),
-    new DefaultCalculusOperationCatalogService()
-  );
+    return new DefaultKeypadDefinitionRepository(
+        new DefaultCasOperationCatalogService(),
+        new DefaultCalculusOperationCatalogService(),
+    );
 }
 
 describe("DefaultKeypadDefinitionRepository", () => {
-  it("exposes scientific function keys", () => {
-    const repository = buildRepository();
-    const keys = repository.getScientificFunctionKeys();
+    it("exposes scientific function keys", () => {
+        const repository = buildRepository();
+        const keys = repository.getScientificFunctionKeys();
 
-    expect(keys.length).toBeGreaterThan(0);
-    expect(keys.some((key) => key.id === "sin")).toBe(true);
-    expect(keys.some((key) => key.id === "sqrt")).toBe(true);
-  });
+        expect(keys.length).toBeGreaterThan(0);
+        expect(keys.some((key) => key.id === "sin")).toBe(true);
+        expect(keys.some((key) => key.id === "sqrt")).toBe(true);
+    });
 
-  it("exposes core calculator keys", () => {
-    const repository = buildRepository();
-    const keys = repository.getCoreKeys();
+    it("exposes core calculator keys", () => {
+        const repository = buildRepository();
+        const keys = repository.getCoreKeys();
 
-    expect(keys.some((key) => key.id === "0")).toBe(true);
-    expect(keys.some((key) => key.id === "equals")).toBe(true);
-    expect(keys.some((key) => key.id === "add")).toBe(true);
-  });
+        expect(keys.some((key) => key.id === "0")).toBe(true);
+        expect(keys.some((key) => key.id === "equals")).toBe(true);
+        expect(keys.some((key) => key.id === "add")).toBe(true);
+    });
 
-  it("exposes CAS operation keys derived from the catalog", () => {
-    const repository = buildRepository();
-    const keys = repository.getCasOperationKeys();
+    it("exposes CAS operation keys derived from the catalog", () => {
+        const repository = buildRepository();
+        const keys = repository.getCasOperationKeys();
 
-    expect(keys).toHaveLength(4);
-    expect(keys.every((key) => key.kind === CalculatorKeyKind.CAS_OPERATION)).toBe(
-      true
-    );
-    expect(keys.map((key) => key.value)).toEqual([
-      "cas",
-      "casSimplify",
-      "casExpand",
-      "casDerivative",
-    ]);
-  });
+        expect(keys).toHaveLength(4);
+        expect(keys.every((key) => key.kind === CalculatorKeyKind.CAS_OPERATION)).toBe(true);
+        expect(keys.map((key) => key.value)).toEqual([
+            "cas",
+            "casSimplify",
+            "casExpand",
+            "casDerivative",
+        ]);
+    });
 
-  it("exposes calculus operation keys derived from the catalog", () => {
-    const repository = buildRepository();
-    const keys = repository.getCalculusOperationKeys();
+    it("exposes calculus operation keys derived from the catalog", () => {
+        const repository = buildRepository();
+        const keys = repository.getCalculusOperationKeys();
 
-    expect(keys).toHaveLength(8);
-    expect(
-      keys.every((key) => key.kind === CalculatorKeyKind.CALCULUS_OPERATION)
-    ).toBe(true);
-    expect(keys.map((key) => key.value)).toEqual([
-      "derivative",
-      "numericDerivative",
-      "integral",
-      "integrate",
-      "limit",
-      "taylor",
-      "sum",
-      "product",
-    ]);
-  });
+        expect(keys).toHaveLength(8);
+        expect(keys.every((key) => key.kind === CalculatorKeyKind.CALCULUS_OPERATION)).toBe(true);
+        expect(keys.map((key) => key.value)).toEqual([
+            "derivative",
+            "numericDerivative",
+            "integral",
+            "integrate",
+            "limit",
+            "taylor",
+            "sum",
+            "product",
+        ]);
+    });
 });
