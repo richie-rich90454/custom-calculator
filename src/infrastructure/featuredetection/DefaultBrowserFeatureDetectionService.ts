@@ -1,8 +1,8 @@
-import {
+import type {
   BrowserFeatureDetectionService,
   BrowserFeatureSnapshot,
 } from "./BrowserFeatureDetectionService";
-import { BigIntSupportDetector } from "./BigIntSupportDetector";
+import type { BigIntSupportDetector } from "./BigIntSupportDetector";
 
 export class DefaultBrowserFeatureDetectionService
   implements BrowserFeatureDetectionService
