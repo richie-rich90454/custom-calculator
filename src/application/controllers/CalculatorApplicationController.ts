@@ -1,7 +1,13 @@
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
 import { NumericMode } from "../../domain/model/NumericMode";
+import type { ExpressionTextEdit } from "../../domain/services/ExpressionEditingService";
 
 export interface CalculatorApplicationController {
+  applyInsertion(
+    currentState: CalculatorSessionState,
+    edit: ExpressionTextEdit
+  ): CalculatorSessionState;
+
   insertDigit(
     currentState: CalculatorSessionState,
     digit: string
