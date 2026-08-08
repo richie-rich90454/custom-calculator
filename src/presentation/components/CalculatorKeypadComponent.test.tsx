@@ -320,4 +320,33 @@ describe("CalculatorKeypadComponent", () => {
 
     expect(harness.store.getState().expressionText).toBe("cas(");
   });
+
+  it("renders calculus operation keys regardless of CAS mode", () => {
+    const harness = createCalculatorTestHarness({ casEnabled: false });
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    expect(
+      screen.getByRole("button", { name: "Insert symbolic derivative block" })
+    ).toBeInTheDocument();
+  });
+
+  it("inserts a derivative block when the calculus key is pressed", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "Insert symbolic derivative block" })
+    );
+
+    expect(harness.store.getState().expressionText).toBe("derivative(");
+  });
 });
