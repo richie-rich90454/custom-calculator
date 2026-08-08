@@ -38,6 +38,34 @@ describe("CalculatorStatusBarComponent", () => {
 
     expect(harness.store.getState().activePanel).toBe("HISTORY");
   });
+
+  it("shows the memory indicator when memory holds a value", () => {
+    const harness = createCalculatorTestHarness({ memoryValueText: "42" });
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorStatusBarComponent />
+    );
+
+    expect(
+      screen.getByLabelText("Memory contains a value")
+    ).toHaveTextContent("M");
+  });
+
+  it("shows a status message when one is present", () => {
+    const harness = createCalculatorTestHarness({
+      statusMessage: "BigInt mode is unavailable.",
+    });
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorStatusBarComponent />
+    );
+
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "BigInt mode is unavailable."
+    );
+  });
 });
 
 describe("SettingsPanelComponent", () => {
@@ -92,6 +120,25 @@ describe("SettingsPanelComponent", () => {
     expect(harness.store.getState().angleMode).toBe(AngleMode.RAD);
   });
 
+  it("changes the numeric mode through the select", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <SettingsPanelComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: /numeric mode/i })
+    );
+    await user.click(
+      await screen.findByRole("option", { name: "EXACT_DECIMAL" })
+    );
+
+    expect(harness.store.getState().numericMode).toBe("EXACT_DECIMAL");
+  });
+
   it("changes the theme through the select", async () => {
     const user = userEvent.setup();
     const harness = createCalculatorTestHarness();
@@ -105,5 +152,18 @@ describe("SettingsPanelComponent", () => {
     await user.click(await screen.findByRole("option", { name: "Dark" }));
 
     expect(harness.store.getState().themePreference).toBe("DARK");
+  });
+
+  it("shows a warning when BigInt is unsupported", () => {
+    const harness = createCalculatorTestHarness({ bigIntSupported: false });
+
+    renderWithCalculatorContext(
+      harness,
+      <SettingsPanelComponent />
+    );
+
+    expect(
+      screen.getByText(/BigInt is not supported in this browser/)
+    ).toBeInTheDocument();
   });
 });
