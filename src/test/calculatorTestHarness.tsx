@@ -18,6 +18,12 @@ export interface CalculatorTestHarness {
 export function createCalculatorTestHarness(
   initialStateOverrides?: Partial<CalculatorUiState>
 ): CalculatorTestHarness {
+  try {
+    globalThis.localStorage.clear();
+  } catch {
+    // Storage may be unavailable in some test environments.
+  }
+
   const compositionRoot = new CalculatorCompositionRoot();
   const bootstrap = new CalculatorApplicationBootstrap(compositionRoot);
   const bootstrapResult = bootstrap.bootstrap();
