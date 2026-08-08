@@ -21,6 +21,16 @@
   min-height: 2.2rem;
 }
 
+.caretMeasure {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.5;
+  pointer-events: none;
+}
+
 .input {
   width: 100%;
   border: none;
