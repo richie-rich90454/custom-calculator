@@ -5,8 +5,7 @@ description: How definite integrals are computed numerically.
 
 # Integrals
 
-The definite integral operation approximates the integral of an expression
-between two bounds.
+The definite integral operation approximates the integral of an expression between two bounds.
 
 ## Syntax
 
@@ -38,9 +37,7 @@ Replace the expression, the lower bound `a`, and the upper bound `b`.
 
 ## How it works
 
-The numeric integration uses an adaptive numerical method to approximate the
-definite integral. Accuracy depends on the smoothness of the function over the
-interval.
+The numeric integration uses an adaptive numerical method to approximate the definite integral. Accuracy depends on the smoothness of the function over the interval.
 
 ## Common integrals
 
@@ -54,6 +51,5 @@ $$
 
 ## Related pages
 
-- [Symbolic integration](/calculus/symbolic-integration) covers
-  antiderivatives.
+- [Symbolic integration](/calculus/symbolic-integration) covers antiderivatives.
 - [Angle mode policy](/calculus/angle-mode-policy) covers angle handling.
