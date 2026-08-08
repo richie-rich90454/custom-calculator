@@ -12,10 +12,7 @@ export interface ExpressionEditorCaretState {
 }
 
 export class ExpressionEditorCaretService {
-  public getCaretState(
-    expressionText: string,
-    hasFocus: boolean
-  ): ExpressionEditorCaretState {
+  public getCaretState(hasFocus: boolean): ExpressionEditorCaretState {
     return {
       showIndicator: !hasFocus,
     };
