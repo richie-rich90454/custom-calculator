@@ -42,6 +42,10 @@ import { DefaultUniqueIdentifierFactory } from "../application/services/DefaultU
 import type { UniqueIdentifierFactory } from "../application/services/UniqueIdentifierFactory";
 import { DefaultCalculatorApplicationController } from "../application/controllers/DefaultCalculatorApplicationController";
 import type { CalculatorApplicationController } from "../application/controllers/CalculatorApplicationController";
+import { DefaultCasBlockParser } from "../application/cas/DefaultCasBlockParser";
+import { DefaultCasExpressionRouterService } from "../application/cas/DefaultCasExpressionRouterService";
+import { DefaultCasOperationCatalogService } from "../application/cas/DefaultCasOperationCatalogService";
+import type { CasOperationCatalogService } from "../application/cas/CasOperationCatalogService";
 
 const DATABASE_NAME = "custom-calculator";
 
@@ -65,6 +69,7 @@ export class CalculatorCompositionRoot {
   public readonly orchestrationService: CalculatorSessionOrchestrationService;
   public readonly calculatorApplicationController: CalculatorApplicationController;
   public readonly uniqueIdentifierFactory: UniqueIdentifierFactory;
+  public readonly casOperationCatalogService: CasOperationCatalogService;
 
   public constructor() {
     this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
@@ -104,6 +109,9 @@ export class CalculatorCompositionRoot {
       this.mathJsInstanceProvider,
       this.resultFormattingService
     );
+    this.casOperationCatalogService = new DefaultCasOperationCatalogService();
+    const casBlockParser = new DefaultCasBlockParser();
+    const casExpressionRouterService = new DefaultCasExpressionRouterService();
     this.settingsRepository = new LocalStorageSettingsRepository();
 
     const persistence = this.createPersistenceRepositories();
@@ -124,7 +132,9 @@ export class CalculatorCompositionRoot {
         this.numericModePolicyService,
         this.functionCatalogService,
         this.constantCatalogService,
-        this.casService
+        this.casService,
+        casBlockParser,
+        casExpressionRouterService
       );
     this.uniqueIdentifierFactory = new DefaultUniqueIdentifierFactory();
   }
