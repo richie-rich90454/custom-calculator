@@ -15,7 +15,6 @@ export default defineConfig({
         "src/main.tsx",
         "src/**/*.test.{ts,tsx}",
         "src/test/**/*.{ts,tsx}",
-        "src/infrastructure/persistence/CalculatorDexieDatabase.ts",
       ],
       thresholds: {
         statements: 70,
