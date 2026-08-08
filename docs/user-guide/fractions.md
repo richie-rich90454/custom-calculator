@@ -5,8 +5,7 @@ description: How the calculator presents and handles fraction results in fractio
 
 # Fractions
 
-Fraction mode presents rational results as fractions instead of decimal
-approximations.
+Fraction mode presents rational results as fractions instead of decimal approximations.
 
 ## Enabling fraction mode
 
@@ -44,8 +43,7 @@ In fraction mode this evaluates to `1/2` rather than `0.5`.
 
 ## Interaction with other modes
 
-Fractions are one of the four numeric modes. Switching modes re-evaluates with
-the new presentation.
+Fractions are one of the four numeric modes. Switching modes re-evaluates with the new presentation.
 
 ## Related documentation
 
