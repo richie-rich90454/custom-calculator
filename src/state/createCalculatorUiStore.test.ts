@@ -24,6 +24,16 @@ describe("calculator UI store", () => {
     expect(store.getState().expressionText).toBe("5+3");
   });
 
+  it("inserts a parenthesis with the parenthesis action", () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onParenthesisPressed("(");
+    store.getState().onDigitPressed("2");
+    store.getState().onParenthesisPressed(")");
+
+    expect(store.getState().expressionText).toBe("(2)");
+  });
+
   it("inserts a function with an opening parenthesis", () => {
     const { store } = createCalculatorTestHarness();
 
@@ -135,6 +145,17 @@ describe("calculator UI store", () => {
     expect(store.getState().variables).toHaveLength(1);
     expect(store.getState().variables[0]?.name).toBe("a");
     expect(store.getState().variables[0]?.valueText).toBe("9");
+  });
+
+  it("does not save a variable when the command rejects the name", () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onDigitPressed("9");
+    store.getState().onEvaluatePressed();
+    store.getState().onSaveVariablePressed("1invalid");
+
+    expect(store.getState().variables).toHaveLength(0);
+    expect(store.getState().errorText).toContain("Invalid variable name");
   });
 
   it("inserts a saved variable into the expression", () => {
