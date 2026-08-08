@@ -184,6 +184,42 @@ describe("CalculatorKeypadComponent", () => {
     expect(clearButton).toHaveFocus();
   });
 
+  it("keeps focus on the grid edge when moving above the first row", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    const clearButton = screen.getByRole("button", {
+      name: "Clear expression",
+    });
+
+    clearButton.focus();
+    await user.keyboard("{ArrowUp}");
+
+    expect(clearButton).toHaveFocus();
+  });
+
+  it("keeps focus on the grid edge when moving below the last row", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorKeypadComponent />
+    );
+
+    const equalsButton = screen.getByRole("button", { name: "Evaluate" });
+
+    equalsButton.focus();
+    await user.keyboard("{ArrowDown}");
+
+    expect(equalsButton).toHaveFocus();
+  });
+
   it("exposes exactly one tab stop per keypad grid", () => {
     const harness = createCalculatorTestHarness();
 
