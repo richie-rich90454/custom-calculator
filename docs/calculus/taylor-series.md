@@ -5,8 +5,7 @@ description: How Taylor series expansion works in the calculator.
 
 # Taylor Series
 
-The Taylor series operation expands an expression into a truncated Taylor
-series about a center point.
+The Taylor series operation expands an expression into a truncated Taylor series about a center point.
 
 ## Syntax
 
@@ -41,8 +40,7 @@ Replace the expression, the center, and the order.
 ## Parameters
 
 - **center** — the point about which the function is expanded.
-- **order** — the highest power included in the truncated series. It must be
-  an integer.
+- **order** — the highest power included in the truncated series. It must be an integer.
 
 ## Example result
 
@@ -58,8 +56,7 @@ $$
 
 ## Angle mode policy
 
-Symbolic expansion evaluates trigonometric functions in radians and warns when
-the angle mode is not radians. See [Angle mode policy](/calculus/angle-mode-policy).
+Symbolic expansion evaluates trigonometric functions in radians and warns when the angle mode is not radians. See [Angle mode policy](/calculus/angle-mode-policy).
 
 ## Related pages
 
