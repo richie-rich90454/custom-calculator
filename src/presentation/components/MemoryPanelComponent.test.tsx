@@ -35,6 +35,27 @@ describe("MemoryPanelComponent", () => {
     expect(harness.store.getState().memoryValueText).toBe("5");
   });
 
+  it("subtracts the current result from memory", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness({ memoryValueText: "10" });
+
+    harness.store.getState().onExpressionTextChanged("3", 1, 1, 1);
+    harness.store.getState().onEvaluatePressed();
+
+    renderWithCalculatorContext(
+      harness,
+      <MemoryPanelComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", {
+        name: "Subtract current result from memory",
+      })
+    );
+
+    expect(harness.store.getState().memoryValueText).toBe("7");
+  });
+
   it("recalls the memory value into the expression", async () => {
     const user = userEvent.setup();
     const harness = createCalculatorTestHarness({ memoryValueText: "42" });
