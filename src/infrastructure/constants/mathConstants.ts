@@ -1,0 +1,126 @@
+import { ScientificConstant } from "../../domain/model/ScientificConstant";
+import { ScientificConstantCategory } from "../../domain/model/ScientificConstantCategory";
+
+export const mathConstants: readonly ScientificConstant[] = [
+  new ScientificConstant(
+    "pi",
+    "π",
+    "Pi",
+    ScientificConstantCategory.MATHEMATICS,
+    "3.141592653589793",
+    null,
+    "The ratio of a circle's circumference to its diameter.",
+    "ISO 80000-2",
+    ["π"]
+  ),
+  new ScientificConstant(
+    "e",
+    "e",
+    "Euler's number",
+    ScientificConstantCategory.MATHEMATICS,
+    "2.718281828459045",
+    null,
+    "The base of the natural logarithm.",
+    "ISO 80000-2",
+    []
+  ),
+  new ScientificConstant(
+    "tau",
+    "τ",
+    "Tau",
+    ScientificConstantCategory.MATHEMATICS,
+    "6.283185307179586",
+    null,
+    "The ratio of a circle's circumference to its radius, equal to two pi.",
+    "ISO 80000-2",
+    ["τ"]
+  ),
+  new ScientificConstant(
+    "phi",
+    "φ",
+    "Golden ratio",
+    ScientificConstantCategory.MATHEMATICS,
+    "1.618033988749895",
+    null,
+    "The golden ratio, satisfying the relationship phi squared equals phi plus one.",
+    "OEIS A001622",
+    ["φ"]
+  ),
+  new ScientificConstant(
+    "sqrt2",
+    "√2",
+    "Square root of two",
+    ScientificConstantCategory.MATHEMATICS,
+    "1.4142135623730951",
+    null,
+    "The positive solution of x squared equals two.",
+    "ISO 80000-2",
+    []
+  ),
+  new ScientificConstant(
+    "sqrt3",
+    "√3",
+    "Square root of three",
+    ScientificConstantCategory.MATHEMATICS,
+    "1.7320508075688772",
+    null,
+    "The positive solution of x squared equals three.",
+    "ISO 80000-2",
+    []
+  ),
+  new ScientificConstant(
+    "ln2",
+    "ln 2",
+    "Natural logarithm of two",
+    ScientificConstantCategory.MATHEMATICS,
+    "0.6931471805599453",
+    null,
+    "The natural logarithm of two.",
+    "OEIS A002162",
+    []
+  ),
+  new ScientificConstant(
+    "ln10",
+    "ln 10",
+    "Natural logarithm of ten",
+    ScientificConstantCategory.MATHEMATICS,
+    "2.302585092994046",
+    null,
+    "The natural logarithm of ten.",
+    "OEIS A002392",
+    []
+  ),
+  new ScientificConstant(
+    "log2e",
+    "log₂ e",
+    "Base two logarithm of e",
+    ScientificConstantCategory.MATHEMATICS,
+    "1.4426950408889634",
+    null,
+    "The base two logarithm of Euler's number.",
+    "ISO 80000-2",
+    []
+  ),
+  new ScientificConstant(
+    "log10e",
+    "log₁₀ e",
+    "Base ten logarithm of e",
+    ScientificConstantCategory.MATHEMATICS,
+    "0.4342944819032518",
+    null,
+    "The base ten logarithm of Euler's number.",
+    "ISO 80000-2",
+    []
+  ),
+  new ScientificConstant(
+    "eulerMascheroniGamma",
+    "γ",
+    "Euler-Mascheroni constant",
+    ScientificConstantCategory.MATHEMATICS,
+    "0.5772156649015329",
+    null,
+    "The limiting difference between the harmonic series and the natural logarithm.",
+    "OEIS A001620",
+    ["γ"]
+  ),
+];
