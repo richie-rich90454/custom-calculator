@@ -1,5 +1,4 @@
 import { AngleMode } from "../../domain/model/AngleMode";
-import type { NumericIntegrationService } from "./NumericIntegrationService";
 
 export interface NumericIntegrationService {
   integrate(
