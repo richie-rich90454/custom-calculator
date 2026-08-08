@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { ListBox, ListBoxItem } from "react-aria-components";
-import styles from "./AccessibleListBoxComponent.module.css";
+import styles from "../styles/AccessibleListBoxComponent.module.css";
 
 export interface AccessibleListBoxEntry {
   readonly id: string;
