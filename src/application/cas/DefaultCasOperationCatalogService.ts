@@ -19,7 +19,7 @@ export class DefaultCasOperationCatalogService
       functionName: "cas",
       operationKind: CasOperationKind.SIMPLIFY,
       label: "CAS",
-      ariaLabel: "Insert CAS simplify block",
+      ariaLabel: "Insert CAS block",
       invocationText: "cas(",
       description: "Simplifies the wrapped symbolic expression.",
     },
