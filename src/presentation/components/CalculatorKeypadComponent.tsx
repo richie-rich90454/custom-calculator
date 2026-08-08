@@ -3,6 +3,8 @@ import { useCalculatorApplicationContext } from "../../app/CalculatorApplication
 import { useCalculatorViewModel } from "../hooks/useCalculatorViewModel";
 import { CalculatorKeyCommandDispatcherService } from "../services/CalculatorKeyCommandDispatcherService";
 import type { CalculatorKeyDefinition } from "../services/CalculatorKeyDefinition";
+import type { ButtonActivationKind } from "../services/FocusPreservationService";
+import { defaultFocusPreservationService } from "../services/DefaultFocusPreservationService";
 import { DefaultKeypadDefinitionRepository } from "../services/DefaultKeypadDefinitionRepository";
 import { CalculatorCasControlPadComponent } from "./CalculatorCasControlPadComponent";
 import { CalculatorCalculusControlPadComponent } from "./CalculatorCalculusControlPadComponent";
@@ -29,8 +31,14 @@ export function CalculatorKeypadComponent() {
     []
   );
 
-  const handleKeyPressed = (key: CalculatorKeyDefinition): void => {
+  const handleKeyPressed = (
+    key: CalculatorKeyDefinition,
+    activationKind: ButtonActivationKind
+  ): void => {
     keyDispatcher.dispatchKeyPressed(key, store.getState());
+    defaultFocusPreservationService.restoreFocusAfterButtonPress(
+      activationKind
+    );
   };
 
   return (
