@@ -6,16 +6,16 @@ import { CalculatorPanelName } from "../../state/CalculatorUiState";
  * decision logic stays testable outside TSX.
  */
 export interface CalculatorKeyboardShortcutTarget {
-  readonly activePanel: CalculatorPanelName;
-  readonly isTypingContext: boolean;
-  readonly onPanelOpened: (panelName: string) => void;
-  readonly onClearPressed: () => void;
-  readonly onEvaluatePressed: () => void;
-  readonly onAngleModeTogglePressed: () => void;
+    readonly activePanel: CalculatorPanelName;
+    readonly isTypingContext: boolean;
+    readonly onPanelOpened: (panelName: string) => void;
+    readonly onClearPressed: () => void;
+    readonly onEvaluatePressed: () => void;
+    readonly onAngleModeTogglePressed: () => void;
 }
 
 export interface CalculatorKeyboardShortcutResolution {
-  readonly handled: boolean;
+    readonly handled: boolean;
 }
 
 /**
@@ -27,85 +27,85 @@ export interface CalculatorKeyboardShortcutResolution {
  * focused control.
  */
 export class CalculatorKeyboardShortcutRegistry {
-  public resolveKeyDown(
-    event: {
-      readonly key: string;
-      readonly ctrlKey: boolean;
-      readonly metaKey: boolean;
-    },
-    target: CalculatorKeyboardShortcutTarget
-  ): CalculatorKeyboardShortcutResolution {
-    if (event.key === "Escape") {
-      return this.resolveEscape(target);
+    public resolveKeyDown(
+        event: {
+            readonly key: string;
+            readonly ctrlKey: boolean;
+            readonly metaKey: boolean;
+        },
+        target: CalculatorKeyboardShortcutTarget,
+    ): CalculatorKeyboardShortcutResolution {
+        if (event.key === "Escape") {
+            return this.resolveEscape(target);
+        }
+
+        if (event.key === "Enter" && !target.isTypingContext) {
+            target.onEvaluatePressed();
+            return { handled: true };
+        }
+
+        if (event.ctrlKey || event.metaKey) {
+            return this.resolveModifierShortcut(event, target);
+        }
+
+        return { handled: false };
     }
 
-    if (event.key === "Enter" && !target.isTypingContext) {
-      target.onEvaluatePressed();
-      return { handled: true };
+    private resolveEscape(
+        target: CalculatorKeyboardShortcutTarget,
+    ): CalculatorKeyboardShortcutResolution {
+        if (target.activePanel !== CalculatorPanelName.NONE) {
+            target.onPanelOpened(target.activePanel);
+            return { handled: true };
+        }
+
+        if (!target.isTypingContext) {
+            target.onClearPressed();
+        }
+
+        return { handled: true };
     }
 
-    if (event.ctrlKey || event.metaKey) {
-      return this.resolveModifierShortcut(event, target);
+    private resolveModifierShortcut(
+        event: {
+            readonly key: string;
+            readonly ctrlKey: boolean;
+            readonly metaKey: boolean;
+        },
+        target: CalculatorKeyboardShortcutTarget,
+    ): CalculatorKeyboardShortcutResolution {
+        const shortcutKey = event.key.toLowerCase();
+
+        if (shortcutKey === "d") {
+            target.onAngleModeTogglePressed();
+            return { handled: true };
+        }
+
+        if (shortcutKey === "h") {
+            target.onPanelOpened(CalculatorPanelName.HISTORY);
+            return { handled: true };
+        }
+
+        if (shortcutKey === "m") {
+            target.onPanelOpened(CalculatorPanelName.MEMORY);
+            return { handled: true };
+        }
+
+        if (shortcutKey === "e") {
+            target.onPanelOpened(CalculatorPanelName.CONSTANTS);
+            return { handled: true };
+        }
+
+        if (shortcutKey === ",") {
+            target.onPanelOpened(CalculatorPanelName.SETTINGS);
+            return { handled: true };
+        }
+
+        if (shortcutKey === "l") {
+            target.onPanelOpened(CalculatorPanelName.CALCULUS);
+            return { handled: true };
+        }
+
+        return { handled: false };
     }
-
-    return { handled: false };
-  }
-
-  private resolveEscape(
-    target: CalculatorKeyboardShortcutTarget
-  ): CalculatorKeyboardShortcutResolution {
-    if (target.activePanel !== CalculatorPanelName.NONE) {
-      target.onPanelOpened(target.activePanel);
-      return { handled: true };
-    }
-
-    if (!target.isTypingContext) {
-      target.onClearPressed();
-    }
-
-    return { handled: true };
-  }
-
-  private resolveModifierShortcut(
-    event: {
-      readonly key: string;
-      readonly ctrlKey: boolean;
-      readonly metaKey: boolean;
-    },
-    target: CalculatorKeyboardShortcutTarget
-  ): CalculatorKeyboardShortcutResolution {
-    const shortcutKey = event.key.toLowerCase();
-
-    if (shortcutKey === "d") {
-      target.onAngleModeTogglePressed();
-      return { handled: true };
-    }
-
-    if (shortcutKey === "h") {
-      target.onPanelOpened(CalculatorPanelName.HISTORY);
-      return { handled: true };
-    }
-
-    if (shortcutKey === "m") {
-      target.onPanelOpened(CalculatorPanelName.MEMORY);
-      return { handled: true };
-    }
-
-    if (shortcutKey === "e") {
-      target.onPanelOpened(CalculatorPanelName.CONSTANTS);
-      return { handled: true };
-    }
-
-    if (shortcutKey === ",") {
-      target.onPanelOpened(CalculatorPanelName.SETTINGS);
-      return { handled: true };
-    }
-
-    if (shortcutKey === "l") {
-      target.onPanelOpened(CalculatorPanelName.CALCULUS);
-      return { handled: true };
-    }
-
-    return { handled: false };
-  }
 }
