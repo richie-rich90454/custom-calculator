@@ -5,9 +5,7 @@ description: "The infrastructure layer: the math.js gateway, persistence, featur
 
 # Infrastructure Layer
 
-The infrastructure layer implements the external boundaries of the
-application: the math.js engine, persistence, feature detection, and static
-data catalogs.
+The infrastructure layer implements the external boundaries of the application: the math.js engine, persistence, feature detection, and static data catalogs.
 
 ## Location
 
@@ -36,8 +34,7 @@ All math.js usage lives under `src/infrastructure/mathjs`.
 
 The math.js gateway is the security boundary for evaluation.
 
-- The expression is parsed through the math.js parser, never through `eval` or
-  `new Function`.
+- The expression is parsed through the math.js parser, never through `eval` or `new Function`.
 - A function allowlist limits which functions the engine may call.
 - User input is treated as untrusted.
 
@@ -45,16 +42,14 @@ See [Security policy](/developer/security-policy).
 
 ## Feature detection
 
-`BrowserFeatureDetectionService` detects `BigInt` support at startup. The
-numeric mode policy uses the result to expose or hide BigInt mode.
+`BrowserFeatureDetectionService` detects `BigInt` support at startup. The numeric mode policy uses the result to expose or hide BigInt mode.
 
 ## Persistence
 
 - `IndexedDbHistoryRepository` — history in IndexedDB.
 - `IndexedDbVariablesRepository` — variables in IndexedDB.
 - `LocalStorageSettingsRepository` — settings in local storage.
-- `InMemoryHistoryRepository` / `InMemoryVariablesRepository` — fallbacks when
-  storage is unavailable.
+- `InMemoryHistoryRepository` / `InMemoryVariablesRepository` — fallbacks when storage is unavailable.
 
 ## Static data
 
