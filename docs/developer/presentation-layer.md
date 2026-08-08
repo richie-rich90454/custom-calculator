@@ -5,9 +5,7 @@ description: "The presentation layer: React components, view models, services, h
 
 # Presentation Layer
 
-The presentation layer renders the interface and forwards events. It is
-deliberately thin: complex logic lives in TypeScript services, and JSX
-components orchestrate the primitives.
+The presentation layer renders the interface and forwards events. It is deliberately thin: complex logic lives in TypeScript services, and JSX components orchestrate the primitives.
 
 ## Location
 
@@ -24,15 +22,11 @@ src/presentation/
 
 ## The thin component rule
 
-Components render UI and forward events. Cursor math, insertion templates, and
-keyboard decisions live in services under `src/presentation/services` so they
-are unit testable without a DOM.
+Components render UI and forward events. Cursor math, insertion templates, and keyboard decisions live in services under `src/presentation/services` so they are unit testable without a DOM.
 
 ## View models
 
-`CalculatorViewModel` reads the UI state and exposes prepared values to
-components. `CalculatorViewModelMapper` converts between UI state and session
-state.
+`CalculatorViewModel` reads the UI state and exposes prepared values to components. `CalculatorViewModelMapper` converts between UI state and session state.
 
 ## Primitives
 
@@ -53,8 +47,7 @@ The primitives wrap React Aria components:
 
 ## Styles
 
-Styling uses CSS Modules and CSS variables. There is no Tailwind. The design
-tokens live in `themes.css`.
+Styling uses CSS Modules and CSS variables. There is no Tailwind. The design tokens live in `themes.css`.
 
 ## Next steps
 
