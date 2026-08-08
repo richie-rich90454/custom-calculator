@@ -70,4 +70,13 @@ describe("Calculator post-evaluation behavior", () => {
 
     expect(harness.store.getState().expressionText).toBe("56");
   });
+
+  it("ignores an unknown constant identifier", () => {
+    const harness = createCalculatorTestHarness();
+    const { onConstantPressed } = harness.store.getState();
+
+    onConstantPressed("notARealConstant");
+
+    expect(harness.store.getState().expressionText).toBe("");
+  });
 });
