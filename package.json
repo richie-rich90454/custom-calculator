@@ -1,0 +1,17 @@
+{
+  "name": "custom-calculator",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A custom DOM-based scientific calculator built with React Aria, math.js, and Zustand.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  }
+}
