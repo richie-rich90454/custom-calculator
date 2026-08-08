@@ -1,99 +1,80 @@
 import { describe, expect, it } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { createCalculatorTestHarness, renderWithCalculatorContext } from "../../test/calculatorTestHarness";
+import {
+    createCalculatorTestHarness,
+    renderWithCalculatorContext,
+} from "../../test/calculatorTestHarness";
 import { MemoryPanelComponent } from "./MemoryPanelComponent";
 
 describe("MemoryPanelComponent", () => {
-  it("shows an empty state when memory is empty", () => {
-    const harness = createCalculatorTestHarness();
+    it("shows an empty state when memory is empty", () => {
+        const harness = createCalculatorTestHarness();
 
-    renderWithCalculatorContext(
-      harness,
-      <MemoryPanelComponent />
-    );
+        renderWithCalculatorContext(harness, <MemoryPanelComponent />);
 
-    expect(screen.getByText("Memory is empty.")).toBeInTheDocument();
-  });
+        expect(screen.getByText("Memory is empty.")).toBeInTheDocument();
+    });
 
-  it("adds the current result to memory", async () => {
-    const user = userEvent.setup();
-    const harness = createCalculatorTestHarness();
+    it("adds the current result to memory", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness();
 
-    harness.store.getState().onDigitPressed("5");
-    harness.store.getState().onEvaluatePressed();
+        harness.store.getState().onDigitPressed("5");
+        harness.store.getState().onEvaluatePressed();
 
-    renderWithCalculatorContext(
-      harness,
-      <MemoryPanelComponent />
-    );
+        renderWithCalculatorContext(harness, <MemoryPanelComponent />);
 
-    await user.click(
-      screen.getByRole("button", { name: "Add current result to memory" })
-    );
+        await user.click(screen.getByRole("button", { name: "Add current result to memory" }));
 
-    expect(harness.store.getState().memoryValueText).toBe("5");
-  });
+        expect(harness.store.getState().memoryValueText).toBe("5");
+    });
 
-  it("subtracts the current result from memory", async () => {
-    const user = userEvent.setup();
-    const harness = createCalculatorTestHarness({ memoryValueText: "10" });
+    it("subtracts the current result from memory", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness({ memoryValueText: "10" });
 
-    harness.store.getState().onExpressionTextChanged("3", 1, 1, 1);
-    harness.store.getState().onEvaluatePressed();
+        harness.store.getState().onExpressionTextChanged("3", 1, 1, 1);
+        harness.store.getState().onEvaluatePressed();
 
-    renderWithCalculatorContext(
-      harness,
-      <MemoryPanelComponent />
-    );
+        renderWithCalculatorContext(harness, <MemoryPanelComponent />);
 
-    await user.click(
-      screen.getByRole("button", {
-        name: "Subtract current result from memory",
-      })
-    );
+        await user.click(
+            screen.getByRole("button", {
+                name: "Subtract current result from memory",
+            }),
+        );
 
-    expect(harness.store.getState().memoryValueText).toBe("7");
-  });
+        expect(harness.store.getState().memoryValueText).toBe("7");
+    });
 
-  it("recalls the memory value into the expression", async () => {
-    const user = userEvent.setup();
-    const harness = createCalculatorTestHarness({ memoryValueText: "42" });
+    it("recalls the memory value into the expression", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness({ memoryValueText: "42" });
 
-    renderWithCalculatorContext(
-      harness,
-      <MemoryPanelComponent />
-    );
+        renderWithCalculatorContext(harness, <MemoryPanelComponent />);
 
-    await user.click(screen.getByRole("button", { name: "Recall memory value" }));
+        await user.click(screen.getByRole("button", { name: "Recall memory value" }));
 
-    expect(harness.store.getState().expressionText).toBe("42");
-  });
+        expect(harness.store.getState().expressionText).toBe("42");
+    });
 
-  it("clears the memory value", async () => {
-    const user = userEvent.setup();
-    const harness = createCalculatorTestHarness({ memoryValueText: "42" });
+    it("clears the memory value", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness({ memoryValueText: "42" });
 
-    renderWithCalculatorContext(
-      harness,
-      <MemoryPanelComponent />
-    );
+        renderWithCalculatorContext(harness, <MemoryPanelComponent />);
 
-    await user.click(screen.getByRole("button", { name: "Clear memory" }));
+        await user.click(screen.getByRole("button", { name: "Clear memory" }));
 
-    expect(harness.store.getState().memoryValueText).toBeNull();
-  });
+        expect(harness.store.getState().memoryValueText).toBeNull();
+    });
 
-  it("disables memory actions without a current result", () => {
-    const harness = createCalculatorTestHarness();
+    it("disables memory actions without a current result", () => {
+        const harness = createCalculatorTestHarness();
 
-    renderWithCalculatorContext(
-      harness,
-      <MemoryPanelComponent />
-    );
+        renderWithCalculatorContext(harness, <MemoryPanelComponent />);
 
-    expect(
-      screen.getByRole("button", { name: "Add current result to memory" })
-    ).toBeDisabled();
-  });
+        expect(screen.getByRole("button", { name: "Add current result to memory" })).toBeDisabled();
+    });
 });
