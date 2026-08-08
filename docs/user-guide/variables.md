@@ -17,8 +17,7 @@ You can also save the current result under a name from the variables panel.
 
 ## Using a variable
 
-Type the variable name directly in an expression, or insert it from the
-variables panel.
+Type the variable name directly in an expression, or insert it from the variables panel.
 
 ```
 a + b
@@ -28,8 +27,7 @@ The cursor moves to after the inserted variable name.
 
 ## The `ans` variable
 
-The previous result is always available as `ans`. Press the `Ans` key or type
-`ans`.
+The previous result is always available as `ans`. Press the `Ans` key or type `ans`.
 
 ```
 ans + 1
@@ -49,8 +47,7 @@ ans + 1
 
 ## Reserved names
 
-Function names such as `sin` and constant names such as `pi` cannot be
-overwritten as variables.
+Function names such as `sin` and constant names such as `pi` cannot be overwritten as variables.
 
 ## Related documentation
 
