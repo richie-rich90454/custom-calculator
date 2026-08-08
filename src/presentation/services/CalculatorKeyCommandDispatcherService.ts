@@ -21,6 +21,7 @@ export class CalculatorKeyCommandDispatcherService {
         break;
       case CalculatorKeyKind.FUNCTION:
       case CalculatorKeyKind.CAS_OPERATION:
+      case CalculatorKeyKind.CALCULUS_OPERATION:
         actions.onFunctionPressed(key.value);
         break;
       case CalculatorKeyKind.CONSTANT:
