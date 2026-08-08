@@ -19,14 +19,14 @@
   font-size: 0.8rem;
   font-weight: 700;
   background-color: var(--color-key-operator);
-  border-color: var(--color-key-edge);
+  border-color: var(--color-border-strong);
   color: var(--color-key-operator-text);
   border-radius: var(--radius-sm);
 }
 
 .modeLabel {
   font-size: 0.72rem;
-  font-family: var(--font-family-mono);
+  font-family: var(--font-display);
   color: var(--color-text-secondary);
   padding: var(--space-1) var(--space-2);
   border: 1px solid var(--color-border);
@@ -35,7 +35,7 @@
 
 .memoryIndicator {
   font-size: 0.75rem;
-  font-family: var(--font-family-mono);
+  font-family: var(--font-display);
   font-weight: 700;
   color: var(--color-warning);
 }
