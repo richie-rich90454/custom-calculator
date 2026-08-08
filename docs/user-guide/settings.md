@@ -5,48 +5,41 @@ description: A reference for every setting available in the settings panel.
 
 # Settings
 
-The settings panel (`Ctrl+,`) groups the calculator's configuration options.
-All settings are persisted and restored across sessions.
+The settings panel (`Ctrl+,`) groups the calculator's configuration options. All settings are persisted and restored across sessions.
 
 ## Angle mode
 
-Choose between **DEG**, **RAD**, and **GON**. See
-[Angle modes](/user-guide/angle-modes).
+Choose between **DEG**, **RAD**, and **GON**. See [Angle modes](/user-guide/angle-modes).
 
 ## Numeric mode
 
-Choose between **STANDARD**, **EXACT_DECIMAL**, **FRACTION**, and **BIGINT**.
-See [Numeric modes](/user-guide/numeric-modes).
+Choose between **STANDARD**, **EXACT_DECIMAL**, **FRACTION**, and **BIGINT**. See [Numeric modes](/user-guide/numeric-modes).
 
 ## Complex numbers
 
-Toggle complex number support. See
-[Complex numbers](/user-guide/complex-numbers).
+Toggle complex number support. See [Complex numbers](/user-guide/complex-numbers).
 
 ## CAS
 
-Toggle the enableable CAS-style operations. See
-[Enabling CAS](/cas/enabling-cas).
+Toggle the enableable CAS-style operations. See [Enabling CAS](/cas/enabling-cas).
 
 ## Theme
 
-Choose between **Light**, **Dark**, and **System**. See
-[Themes](/user-guide/themes).
+Choose between **Light**, **Dark**, and **System**. See [Themes](/user-guide/themes).
 
 ## Settings summary
 
-| Setting | Options | Persisted |
-| ------- | ------- | --------- |
-| Angle mode | DEG, RAD, GON | Yes |
-| Numeric mode | STANDARD, EXACT_DECIMAL, FRACTION, BIGINT | Yes |
-| Complex numbers | On, Off | Yes |
-| CAS | On, Off | Yes |
-| Theme | Light, Dark, System | Yes |
+| Setting         | Options                                   | Persisted |
+| --------------- | ----------------------------------------- | --------- |
+| Angle mode      | DEG, RAD, GON                             | Yes       |
+| Numeric mode    | STANDARD, EXACT_DECIMAL, FRACTION, BIGINT | Yes       |
+| Complex numbers | On, Off                                   | Yes       |
+| CAS             | On, Off                                   | Yes       |
+| Theme           | Light, Dark, System                       | Yes       |
 
 ## Persistence
 
-Settings are stored in browser local storage. See
-[Persistence](/architecture/persistence).
+Settings are stored in browser local storage. See [Persistence](/architecture/persistence).
 
 ## Next steps
 
