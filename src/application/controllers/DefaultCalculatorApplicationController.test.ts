@@ -105,6 +105,15 @@ describe("DefaultCalculatorApplicationController", () => {
     expect(nextState.resultText).toBe("5");
   });
 
+  it("reports a validation error inline", () => {
+    const nextState = controller.evaluateExpression(
+      createState({ expressionText: "2+*3" })
+    );
+
+    expect(nextState.resultText).toBeNull();
+    expect(nextState.errorText).not.toBeNull();
+  });
+
   it("cycles the angle mode", () => {
     const nextState = controller.cycleAngleMode(
       createState({ angleMode: AngleMode.DEG })
