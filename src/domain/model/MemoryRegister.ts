@@ -1,14 +1,14 @@
 export class MemoryRegister {
-  public constructor(
-    public readonly valueText: string,
-    public readonly updatedAt: string
-  ) {}
+    public constructor(
+        public readonly valueText: string,
+        public readonly updatedAt: string,
+    ) {}
 
-  public static createEmpty(): MemoryRegister {
-    return new MemoryRegister("", "");
-  }
+    public static createEmpty(): MemoryRegister {
+        return new MemoryRegister("", "");
+    }
 
-  public get isEmpty(): boolean {
-    return this.valueText.length === 0;
-  }
+    public get isEmpty(): boolean {
+        return this.valueText.length === 0;
+    }
 }
