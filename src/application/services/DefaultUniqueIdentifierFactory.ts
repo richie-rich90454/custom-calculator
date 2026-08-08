@@ -1,3 +1,5 @@
+import type { UniqueIdentifierFactory } from "./UniqueIdentifierFactory";
+
 export class DefaultUniqueIdentifierFactory
   implements UniqueIdentifierFactory
 {
