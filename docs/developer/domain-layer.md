@@ -5,9 +5,7 @@ description: The domain layer, its models, services, and repositories.
 
 # Domain Layer
 
-The domain layer holds the pure TypeScript model of the calculator: session
-state, editing rules, validation, formatting, and the service interfaces the
-rest of the application depends on.
+The domain layer holds the pure TypeScript model of the calculator: session state, editing rules, validation, formatting, and the service interfaces the rest of the application depends on.
 
 ## Location
 
@@ -20,12 +18,10 @@ src/domain/
 
 ## Models
 
-- `CalculatorSessionState` — the immutable session state passed through every
-  command.
+- `CalculatorSessionState` — the immutable session state passed through every command.
 - `CalculatorSettings` — persisted settings.
 - `AngleMode`, `NumericMode`, `ThemePreference` — value enums.
-- `EvaluationResult`, `FailedEvaluationResult`, `NumericEvaluationResult`,
-  `SymbolicEvaluationResult` — evaluation outcomes.
+- `EvaluationResult`, `FailedEvaluationResult`, `NumericEvaluationResult`, `SymbolicEvaluationResult` — evaluation outcomes.
 - `MemoryRegister` — the memory register value.
 - `VariableAssignment` — a saved variable.
 - `HistoryEntry` — a history record.
@@ -53,16 +49,13 @@ src/domain/
 
 ## Dependency rule
 
-The domain layer has no external dependencies. It does not import React,
-math.js, or browser APIs. This keeps the core logic trivially testable.
+The domain layer has no external dependencies. It does not import React, math.js, or browser APIs. This keeps the core logic trivially testable.
 
 ## Testability
 
-Because domain services are pure, they are covered by direct unit tests with no
-DOM. See [Testing guide](/developer/testing-guide).
+Because domain services are pure, they are covered by direct unit tests with no DOM. See [Testing guide](/developer/testing-guide).
 
 ## Next steps
 
 - [Application layer](/developer/application-layer) consumes these services.
-- [Expression editing model](/architecture/expression-editing-model) explains
-  the editing service.
+- [Expression editing model](/architecture/expression-editing-model) explains the editing service.
