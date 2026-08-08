@@ -110,6 +110,7 @@ export function CalculatorExpressionEditorComponent(
           autoComplete="off"
           spellCheck={false}
           /* Keyboard-first calculator: land focus in the editor on load. */
+          /* eslint-disable-next-line jsx-a11y/no-autofocus -- Focus on load enables immediate keyboard entry. */
           autoFocus
           {...(errorText !== null
             ? { "aria-describedby": "error-text" }
