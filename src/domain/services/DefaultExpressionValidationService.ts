@@ -10,6 +10,12 @@ export class DefaultExpressionValidationService
 {
   private static readonly IDENTIFIER_PATTERN = /[a-zA-Z][a-zA-Z0-9_]*/g;
   private static readonly TRAILING_OPERATOR_PATTERN = /[+\-*/^%]$/;
+  private static readonly CAS_FUNCTION_NAMES: readonly string[] = [
+    "cas",
+    "casSimplify",
+    "casExpand",
+    "casDerivative",
+  ];
 
   public constructor(
     private readonly functionCatalogService: ScientificFunctionCatalogService,
@@ -121,7 +127,8 @@ export class DefaultExpressionValidationService
       if (isFunctionInvocation) {
         if (
           !this.functionCatalogService.hasFunction(identifier) &&
-          !this.isUserVariable(identifier, sessionState)
+          !this.isUserVariable(identifier, sessionState) &&
+          !this.isCasFunctionInvocation(identifier, sessionState)
         ) {
           return new CalculationError(
             CalculationErrorCode.UNKNOWN_FUNCTION,
@@ -152,6 +159,16 @@ export class DefaultExpressionValidationService
   ): boolean {
     return sessionState.variables.some(
       (variable) => variable.name === identifier
+    );
+  }
+
+  private isCasFunctionInvocation(
+    identifier: string,
+    sessionState: CalculatorSessionState
+  ): boolean {
+    return (
+      sessionState.casEnabled &&
+      DefaultExpressionValidationService.CAS_FUNCTION_NAMES.includes(identifier)
     );
   }
 }
