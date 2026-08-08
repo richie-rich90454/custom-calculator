@@ -5,11 +5,10 @@ description: Reference for the chemistry constants available in the constant cat
 
 # Chemistry Constants
 
-The chemistry category provides constants used in thermodynamics and
-physicochemical calculations, following IUPAC and BIPM values.
+The chemistry category provides constants used in thermodynamics and physicochemical calculations, following IUPAC and BIPM values.
 
 | Name | Value | Unit | Description |
-| ---- | ----- | ---- | ----------- |
+| --- | --- | --- | --- |
 | `standardPressure` | `101325` | Pa | The standard atmospheric pressure |
 | `molarVolumeIdealGas` | `0.02241396954` | m³/mol | Molar volume of an ideal gas at STP |
 | `waterTriplePointTemperature` | `273.16` | K | The water triple point temperature |
