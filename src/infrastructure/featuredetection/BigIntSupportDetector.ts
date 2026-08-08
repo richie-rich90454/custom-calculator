@@ -1,3 +1,3 @@
 export interface BigIntSupportDetector {
-  isBigIntSupported(): boolean;
+    isBigIntSupported(): boolean;
 }
