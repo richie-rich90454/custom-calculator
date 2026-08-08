@@ -85,6 +85,22 @@
   font-weight: 600;
 }
 
+.calculusArea {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-1);
+}
+
+.calculusKey {
+  min-height: 32px;
+  padding: var(--space-1) 0;
+  background-color: var(--color-key-function);
+  border-color: var(--color-border-strong);
+  color: var(--color-key-function-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
 .keypad button {
   border-radius: var(--radius-sm);
   box-shadow: 0 1px 0 var(--color-border-strong);
