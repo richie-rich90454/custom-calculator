@@ -1,5 +1,5 @@
 import { AngleMode } from "../model/AngleMode";
-import { AngleConversionService } from "./AngleConversionService";
+import type { AngleConversionService } from "./AngleConversionService";
 
 export abstract class AbstractAngleConversionService
   implements AngleConversionService
