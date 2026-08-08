@@ -10,58 +10,55 @@ import type { CalculatorUiState } from "../state/CalculatorUiState";
 import type { CalculatorUiStoreApi } from "../state/CalculatorUiStore";
 
 export interface CalculatorTestHarness {
-  readonly compositionRoot: CalculatorCompositionRoot;
-  readonly store: CalculatorUiStoreApi;
-  readonly viewModelMapper: CalculatorViewModelMapper;
+    readonly compositionRoot: CalculatorCompositionRoot;
+    readonly store: CalculatorUiStoreApi;
+    readonly viewModelMapper: CalculatorViewModelMapper;
 }
 
 export function createCalculatorTestHarness(
-  initialStateOverrides?: Partial<CalculatorUiState>
+    initialStateOverrides?: Partial<CalculatorUiState>,
 ): CalculatorTestHarness {
-  try {
-    globalThis.localStorage.clear();
-  } catch {
-    // Storage may be unavailable in some test environments.
-  }
+    try {
+        globalThis.localStorage.clear();
+    } catch {
+        // Storage may be unavailable in some test environments.
+    }
 
-  const compositionRoot = new CalculatorCompositionRoot();
-  const bootstrap = new CalculatorApplicationBootstrap(compositionRoot);
-  const bootstrapResult = bootstrap.bootstrap();
+    const compositionRoot = new CalculatorCompositionRoot();
+    const bootstrap = new CalculatorApplicationBootstrap(compositionRoot);
+    const bootstrapResult = bootstrap.bootstrap();
 
-  const initialUiState = createInitialCalculatorUiState(
-    bootstrapResult.settings,
-    bootstrapResult.bigIntSupported,
-    bootstrapResult.statusMessage
-  );
+    const initialUiState = createInitialCalculatorUiState(
+        bootstrapResult.settings,
+        bootstrapResult.bigIntSupported,
+        bootstrapResult.statusMessage,
+    );
 
-  const viewModelMapper = new CalculatorViewModelMapper();
+    const viewModelMapper = new CalculatorViewModelMapper();
 
-  const store = createCalculatorUiStore(
-    compositionRoot,
-    {
-      ...initialUiState,
-      ...initialStateOverrides,
-    },
-    viewModelMapper
-  );
+    const store = createCalculatorUiStore(
+        compositionRoot,
+        {
+            ...initialUiState,
+            ...initialStateOverrides,
+        },
+        viewModelMapper,
+    );
 
-  return {
-    compositionRoot: compositionRoot,
-    store: store,
-    viewModelMapper: viewModelMapper,
-  };
+    return {
+        compositionRoot: compositionRoot,
+        store: store,
+        viewModelMapper: viewModelMapper,
+    };
 }
 
-export function renderWithCalculatorContext(
-  harness: CalculatorTestHarness,
-  children: ReactNode
-) {
-  return render(
-    <CalculatorApplicationContextProvider
-      compositionRoot={harness.compositionRoot}
-      store={harness.store}
-    >
-      {children}
-    </CalculatorApplicationContextProvider>
-  );
+export function renderWithCalculatorContext(harness: CalculatorTestHarness, children: ReactNode) {
+    return render(
+        <CalculatorApplicationContextProvider
+            compositionRoot={harness.compositionRoot}
+            store={harness.store}
+        >
+            {children}
+        </CalculatorApplicationContextProvider>,
+    );
 }
