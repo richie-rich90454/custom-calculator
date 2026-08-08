@@ -1,6 +1,6 @@
 ---
 title: Presentation Layer
-description: The presentation layer: React components, view models, services, hooks, and styles.
+description: "The presentation layer: React components, view models, services, hooks, and styles."
 ---
 
 # Presentation Layer
