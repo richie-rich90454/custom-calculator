@@ -3,20 +3,18 @@ import { CalculatorSessionState } from "../../domain/model/CalculatorSessionStat
 import { AbstractCalculatorCommand } from "./AbstractCalculatorCommand";
 
 export class CycleAngleModeCalculatorCommand extends AbstractCalculatorCommand {
-  public override execute(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    const nextAngleMode =
-      currentState.angleMode === AngleMode.DEG
-        ? AngleMode.RAD
-        : currentState.angleMode === AngleMode.RAD
-          ? AngleMode.GON
-          : AngleMode.DEG;
+    public override execute(currentState: CalculatorSessionState): CalculatorSessionState {
+        const nextAngleMode =
+            currentState.angleMode === AngleMode.DEG
+                ? AngleMode.RAD
+                : currentState.angleMode === AngleMode.RAD
+                  ? AngleMode.GON
+                  : AngleMode.DEG;
 
-    return currentState.copyWith({
-      angleMode: nextAngleMode,
-      resultText: null,
-      errorText: null,
-    });
-  }
+        return currentState.copyWith({
+            angleMode: nextAngleMode,
+            resultText: null,
+            errorText: null,
+        });
+    }
 }
