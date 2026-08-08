@@ -8,17 +8,15 @@ import type { CalculatorButtonTemplate } from "./CalculatorButtonTemplate";
  * land, so every button shares a consistent insertion model.
  */
 export interface ButtonInsertionTemplateService {
-  resolveTemplate(
-    button: CalculatorButtonDefinition
-  ): CalculatorButtonTemplate;
+    resolveTemplate(button: CalculatorButtonDefinition): CalculatorButtonTemplate;
 
-  resolveDigitTemplate(digit: string): CalculatorButtonTemplate;
+    resolveDigitTemplate(digit: string): CalculatorButtonTemplate;
 
-  resolveOperatorTemplate(operator: string): CalculatorButtonTemplate;
+    resolveOperatorTemplate(operator: string): CalculatorButtonTemplate;
 
-  resolveFunctionTemplate(functionName: string): CalculatorButtonTemplate;
+    resolveFunctionTemplate(functionName: string): CalculatorButtonTemplate;
 
-  resolveTokenTemplate(token: string): CalculatorButtonTemplate;
+    resolveTokenTemplate(token: string): CalculatorButtonTemplate;
 
-  resolveCharacterTemplate(character: string): CalculatorButtonTemplate;
+    resolveCharacterTemplate(character: string): CalculatorButtonTemplate;
 }
