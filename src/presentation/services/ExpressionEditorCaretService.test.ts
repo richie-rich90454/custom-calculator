@@ -4,19 +4,13 @@ import { ExpressionEditorCaretService } from "./ExpressionEditorCaretService";
 describe("ExpressionEditorCaretService", () => {
   const service = new ExpressionEditorCaretService();
 
-  it("shows the caret indicator when the focused editor is empty", () => {
-    expect(service.getCaretState("", true).showIndicator).toBe(true);
-  });
-
-  it("hides the caret indicator when the editor has content", () => {
+  it("hides the synthetic caret while the editor is focused so the native caret is the single cursor", () => {
+    expect(service.getCaretState("", true).showIndicator).toBe(false);
     expect(service.getCaretState("2+2", true).showIndicator).toBe(false);
   });
 
-  it("hides the caret indicator when the editor is not focused", () => {
-    expect(service.getCaretState("", false).showIndicator).toBe(false);
-  });
-
-  it("hides the caret indicator when the editor has content and is not focused", () => {
-    expect(service.getCaretState("2+2", false).showIndicator).toBe(false);
+  it("shows the synthetic caret when the editor loses focus", () => {
+    expect(service.getCaretState("", false).showIndicator).toBe(true);
+    expect(service.getCaretState("2+2", false).showIndicator).toBe(true);
   });
 });
