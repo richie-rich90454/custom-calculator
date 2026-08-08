@@ -80,6 +80,46 @@ describe("MathJsExpressionEvaluationGateway", () => {
     expect(result.resultText).toBe("0.5");
   });
 
+  it("applies the degree angle mode to cosine", () => {
+    const result = evaluateExpression(gateway, "cos(60)", {
+      angleMode: AngleMode.DEG,
+    });
+
+    expect(result.resultText).toBe("0.5");
+  });
+
+  it("applies the degree angle mode to tangent", () => {
+    const result = evaluateExpression(gateway, "tan(45)", {
+      angleMode: AngleMode.DEG,
+    });
+
+    expect(result.resultText).toBe("1");
+  });
+
+  it("applies the degree angle mode to inverse sine", () => {
+    const result = evaluateExpression(gateway, "asin(0.5)", {
+      angleMode: AngleMode.DEG,
+    });
+
+    expect(result.resultText).toBe("30");
+  });
+
+  it("applies the degree angle mode to inverse cosine", () => {
+    const result = evaluateExpression(gateway, "acos(0.5)", {
+      angleMode: AngleMode.DEG,
+    });
+
+    expect(result.resultText).toBe("60");
+  });
+
+  it("applies the degree angle mode to inverse tangent", () => {
+    const result = evaluateExpression(gateway, "atan(1)", {
+      angleMode: AngleMode.DEG,
+    });
+
+    expect(result.resultText).toBe("45");
+  });
+
   it("respects the active angle mode for radians", () => {
     const result = evaluateExpression(gateway, "sin(pi/6)", {
       angleMode: AngleMode.RAD,
