@@ -15,11 +15,11 @@ casExpand(expression)
 
 ## Examples
 
-| Expression | Expanded result |
-| ---------- | --------------- |
-| `casExpand((x + 1)^2)` | `x^2 + 2*x + 1` |
-| `casExpand(x*(y + z))` | `x*y + x*z` |
-| `casExpand((x - 1)*(x + 1))` | `x^2 - 1` |
+| Expression                   | Expanded result |
+| ---------------------------- | --------------- |
+| `casExpand((x + 1)^2)`       | `x^2 + 2*x + 1` |
+| `casExpand(x*(y + z))`       | `x*y + x*z`     |
+| `casExpand((x - 1)*(x + 1))` | `x^2 - 1`       |
 
 ## What expansion does
 
