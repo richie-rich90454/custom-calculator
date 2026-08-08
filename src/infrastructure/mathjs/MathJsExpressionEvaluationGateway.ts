@@ -9,6 +9,7 @@ import type { ResultFormattingService } from "../../domain/services/ResultFormat
 import type { MathJsInstanceProvider } from "./MathJsInstanceProvider";
 import type { MathJsEvaluationScopeBuilder } from "./MathJsEvaluationScopeBuilder";
 import type { MathJsFunctionWhitelist } from "./MathJsFunctionWhitelist";
+import type { MathJsCalculationErrorMapper } from "./MathJsCalculationErrorMapper";
 
 export class MathJsExpressionEvaluationGateway
   implements ExpressionEvaluationGateway
@@ -22,7 +23,8 @@ export class MathJsExpressionEvaluationGateway
     private readonly instanceProvider: MathJsInstanceProvider,
     private readonly scopeBuilder: MathJsEvaluationScopeBuilder,
     private readonly functionWhitelist: MathJsFunctionWhitelist,
-    private readonly resultFormattingService: ResultFormattingService
+    private readonly resultFormattingService: ResultFormattingService,
+    private readonly calculationErrorMapper: MathJsCalculationErrorMapper
   ) {}
 
   public evaluateExpression(
@@ -38,7 +40,7 @@ export class MathJsExpressionEvaluationGateway
     try {
       node = math.parse(sessionState.expressionText);
     } catch (error) {
-      throw this.mapParseError(error);
+      throw this.calculationErrorMapper.mapParseError(error);
     }
 
     this.validateExpressionNode(node, scope);
@@ -47,7 +49,7 @@ export class MathJsExpressionEvaluationGateway
     try {
       result = node.compile().evaluate(scope);
     } catch (error) {
-      throw this.mapEvaluationError(error);
+      throw this.calculationErrorMapper.mapEvaluationError(error);
     }
 
     this.validateResultType(result, sessionState.numericMode);
@@ -239,76 +241,5 @@ export class MathJsExpressionEvaluationGateway
     return math.format(result, {
       precision: MathJsExpressionEvaluationGateway.DISPLAY_PRECISION,
     });
-  }
-
-  private mapParseError(error: unknown): CalculationError {
-    const message = this.extractErrorMessage(error);
-
-    if (message.includes("Unexpected end of expression")) {
-      return new CalculationError(
-        CalculationErrorCode.MISSING_PARENTHESES,
-        "Missing parentheses: the expression is incomplete."
-      );
-    }
-
-    if (message.includes("Parenthesis")) {
-      return new CalculationError(
-        CalculationErrorCode.MISSING_PARENTHESES,
-        "Missing parentheses: the expression has unbalanced parentheses."
-      );
-    }
-
-    return new CalculationError(
-      CalculationErrorCode.SYNTAX_ERROR,
-      `Syntax error: ${message}`
-    );
-  }
-
-  private mapEvaluationError(error: unknown): CalculationError {
-    const message = this.extractErrorMessage(error);
-
-    if (message.includes("Division by zero") || message.includes("Division by Zero")) {
-      return new CalculationError(
-        CalculationErrorCode.DIVISION_BY_ZERO,
-        "Division by zero is not defined."
-      );
-    }
-
-    if (message.includes("Undefined function")) {
-      return new CalculationError(
-        CalculationErrorCode.UNKNOWN_FUNCTION,
-        `Unknown function: ${message.replace("Undefined function ", "")}.`
-      );
-    }
-
-    if (message.includes("Undefined symbol")) {
-      return new CalculationError(
-        CalculationErrorCode.UNKNOWN_VARIABLE,
-        `Unknown variable or constant: ${message.replace(
-          "Undefined symbol ",
-          ""
-        )}.`
-      );
-    }
-
-    if (message.includes("Unexpected")) {
-      return new CalculationError(
-        CalculationErrorCode.SYNTAX_ERROR,
-        `Syntax error: ${message}`
-      );
-    }
-
-    return new CalculationError(
-      CalculationErrorCode.EVALUATION_FAILED,
-      `Evaluation failed: ${message}`
-    );
-  }
-
-  private extractErrorMessage(error: unknown): string {
-    if (error instanceof Error) {
-      return error.message;
-    }
-
-    return String(error);
   }
 }
