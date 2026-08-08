@@ -5,6 +5,7 @@ import { CalculatorKeyCommandDispatcherService } from "../services/CalculatorKey
 import type { CalculatorKeyDefinition } from "../services/CalculatorKeyDefinition";
 import { DefaultKeypadDefinitionRepository } from "../services/DefaultKeypadDefinitionRepository";
 import { CalculatorCasControlPadComponent } from "./CalculatorCasControlPadComponent";
+import { CalculatorCalculusControlPadComponent } from "./CalculatorCalculusControlPadComponent";
 import { CalculatorCorePadComponent } from "./CalculatorCorePadComponent";
 import { CalculatorScientificFunctionPadComponent } from "./CalculatorScientificFunctionPadComponent";
 import { cssClass } from "../utils/classNames";
@@ -17,7 +18,8 @@ export function CalculatorKeypadComponent() {
   const keypadRepository = useMemo(
     () =>
       new DefaultKeypadDefinitionRepository(
-        compositionRoot.casOperationCatalogService
+        compositionRoot.casOperationCatalogService,
+        compositionRoot.calculusOperationCatalogService
       ),
     [compositionRoot]
   );
@@ -43,6 +45,10 @@ export function CalculatorKeypadComponent() {
           onKeyPressed={handleKeyPressed}
         />
       ) : null}
+      <CalculatorCalculusControlPadComponent
+        keys={keypadRepository.getCalculusOperationKeys()}
+        onKeyPressed={handleKeyPressed}
+      />
       <CalculatorCorePadComponent
         keys={keypadRepository.getCoreKeys()}
         onKeyPressed={handleKeyPressed}
