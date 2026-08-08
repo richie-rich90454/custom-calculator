@@ -15,13 +15,7 @@ export function VariablesPanelComponent() {
   const [variableName, setVariableName] = useState("");
 
   const handleSaveVariable = (): void => {
-    const trimmedName = variableName.trim();
-
-    if (trimmedName.length === 0) {
-      return;
-    }
-
-    store.getState().onSaveVariablePressed(trimmedName);
+    store.getState().onSaveVariablePressed(variableName.trim());
     setVariableName("");
   };
 
