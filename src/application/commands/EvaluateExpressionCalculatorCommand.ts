@@ -13,135 +13,133 @@ import type { ExpressionValidationService } from "../../domain/services/Expressi
 import { AbstractCalculatorCommand } from "./AbstractCalculatorCommand";
 
 export class EvaluateExpressionCalculatorCommand extends AbstractCalculatorCommand {
-  public constructor(
-    private readonly expressionEditingService: ExpressionEditingService,
-    private readonly expressionValidationService: ExpressionValidationService,
-    private readonly expressionEvaluationGateway: ExpressionEvaluationGateway,
-    private readonly casBlockParser: CasBlockParser,
-    private readonly casExpressionRouterService: CasExpressionRouterService,
-    private readonly casService: CasService,
-    private readonly calculusBlockParser: CalculusBlockParser,
-    private readonly calculusExpressionRouterService: CalculusExpressionRouterService
-  ) {
-    super();
-  }
-
-  public override execute(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    const trimmedExpression = currentState.expressionText.trim();
-
-    if (trimmedExpression.length === 0) {
-      return currentState.copyWith({
-        resultText: null,
-        errorText: null,
-      });
+    public constructor(
+        private readonly expressionEditingService: ExpressionEditingService,
+        private readonly expressionValidationService: ExpressionValidationService,
+        private readonly expressionEvaluationGateway: ExpressionEvaluationGateway,
+        private readonly casBlockParser: CasBlockParser,
+        private readonly casExpressionRouterService: CasExpressionRouterService,
+        private readonly casService: CasService,
+        private readonly calculusBlockParser: CalculusBlockParser,
+        private readonly calculusExpressionRouterService: CalculusExpressionRouterService,
+    ) {
+        super();
     }
 
-    const autoClosedExpression =
-      this.expressionEditingService.autoCloseParentheses(currentState.expressionText);
+    public override execute(currentState: CalculatorSessionState): CalculatorSessionState {
+        const trimmedExpression = currentState.expressionText.trim();
 
-    const evaluationState = currentState.copyWith({
-      expressionText: autoClosedExpression,
-      cursorPosition: autoClosedExpression.length,
-      selectionStart: autoClosedExpression.length,
-      selectionEnd: autoClosedExpression.length,
-    });
+        if (trimmedExpression.length === 0) {
+            return currentState.copyWith({
+                resultText: null,
+                errorText: null,
+            });
+        }
 
-    const casBlockDescriptor = this.casBlockParser.parseBlock(autoClosedExpression);
+        const autoClosedExpression = this.expressionEditingService.autoCloseParentheses(
+            currentState.expressionText,
+        );
 
-    if (casBlockDescriptor !== null) {
-      return this.routeCasBlock(evaluationState, casBlockDescriptor);
-    }
-
-    const calculusBlockDescriptor =
-      this.calculusBlockParser.parseBlock(autoClosedExpression);
-
-    if (calculusBlockDescriptor !== null) {
-      return this.routeCalculusBlock(evaluationState, calculusBlockDescriptor);
-    }
-
-    const validationError =
-      this.expressionValidationService.validateExpression(evaluationState);
-
-    if (validationError !== null) {
-      return evaluationState.copyWith({
-        resultText: null,
-        errorText: validationError.message,
-      });
-    }
-
-    try {
-      const evaluationResult =
-        this.expressionEvaluationGateway.evaluateExpression(evaluationState);
-
-      return evaluationState.copyWith({
-        resultText: evaluationResult.resultText,
-        lastResultText: evaluationResult.resultText,
-        lastResultValue: evaluationResult.rawValue,
-        errorText: null,
-      });
-    } catch (error) {
-      if (error instanceof CalculationError) {
-        return evaluationState.copyWith({
-          resultText: null,
-          errorText: error.message,
+        const evaluationState = currentState.copyWith({
+            expressionText: autoClosedExpression,
+            cursorPosition: autoClosedExpression.length,
+            selectionStart: autoClosedExpression.length,
+            selectionEnd: autoClosedExpression.length,
         });
-      }
 
-      return evaluationState.copyWith({
-        resultText: null,
-        errorText: "Evaluation failed unexpectedly.",
-      });
-    }
-  }
+        const casBlockDescriptor = this.casBlockParser.parseBlock(autoClosedExpression);
 
-  private routeCasBlock(
-    evaluationState: CalculatorSessionState,
-    casBlockDescriptor: CasBlockDescriptor
-  ): CalculatorSessionState {
-    const resolution = this.casExpressionRouterService.routeBlock(
-      casBlockDescriptor,
-      evaluationState.casEnabled,
-      this.casService
-    );
+        if (casBlockDescriptor !== null) {
+            return this.routeCasBlock(evaluationState, casBlockDescriptor);
+        }
 
-    if (resolution.errorText !== null) {
-      return evaluationState.copyWith({
-        resultText: null,
-        errorText: resolution.errorText,
-      });
-    }
+        const calculusBlockDescriptor = this.calculusBlockParser.parseBlock(autoClosedExpression);
 
-    return evaluationState.copyWith({
-      resultText: resolution.resultText,
-      lastResultText: resolution.resultText,
-      lastResultValue: null,
-      errorText: null,
-    });
-  }
+        if (calculusBlockDescriptor !== null) {
+            return this.routeCalculusBlock(evaluationState, calculusBlockDescriptor);
+        }
 
-  private routeCalculusBlock(
-    evaluationState: CalculatorSessionState,
-    calculusBlockDescriptor: CalculusBlockDescriptor
-  ): CalculatorSessionState {
-    const resolution = this.calculusExpressionRouterService.routeBlock(
-      calculusBlockDescriptor,
-      evaluationState.angleMode
-    );
+        const validationError =
+            this.expressionValidationService.validateExpression(evaluationState);
 
-    if (resolution.errorText !== null) {
-      return evaluationState.copyWith({
-        resultText: null,
-        errorText: resolution.errorText,
-      });
+        if (validationError !== null) {
+            return evaluationState.copyWith({
+                resultText: null,
+                errorText: validationError.message,
+            });
+        }
+
+        try {
+            const evaluationResult =
+                this.expressionEvaluationGateway.evaluateExpression(evaluationState);
+
+            return evaluationState.copyWith({
+                resultText: evaluationResult.resultText,
+                lastResultText: evaluationResult.resultText,
+                lastResultValue: evaluationResult.rawValue,
+                errorText: null,
+            });
+        } catch (error) {
+            if (error instanceof CalculationError) {
+                return evaluationState.copyWith({
+                    resultText: null,
+                    errorText: error.message,
+                });
+            }
+
+            return evaluationState.copyWith({
+                resultText: null,
+                errorText: "Evaluation failed unexpectedly.",
+            });
+        }
     }
 
-    return evaluationState.copyWith({
-      resultText: resolution.resultText,
-      lastResultText: resolution.resultText,
-      lastResultValue: null,
-      errorText: null,
-    });
-  }
+    private routeCasBlock(
+        evaluationState: CalculatorSessionState,
+        casBlockDescriptor: CasBlockDescriptor,
+    ): CalculatorSessionState {
+        const resolution = this.casExpressionRouterService.routeBlock(
+            casBlockDescriptor,
+            evaluationState.casEnabled,
+            this.casService,
+        );
+
+        if (resolution.errorText !== null) {
+            return evaluationState.copyWith({
+                resultText: null,
+                errorText: resolution.errorText,
+            });
+        }
+
+        return evaluationState.copyWith({
+            resultText: resolution.resultText,
+            lastResultText: resolution.resultText,
+            lastResultValue: null,
+            errorText: null,
+        });
+    }
+
+    private routeCalculusBlock(
+        evaluationState: CalculatorSessionState,
+        calculusBlockDescriptor: CalculusBlockDescriptor,
+    ): CalculatorSessionState {
+        const resolution = this.calculusExpressionRouterService.routeBlock(
+            calculusBlockDescriptor,
+            evaluationState.angleMode,
+        );
+
+        if (resolution.errorText !== null) {
+            return evaluationState.copyWith({
+                resultText: null,
+                errorText: resolution.errorText,
+            });
+        }
+
+        return evaluationState.copyWith({
+            resultText: resolution.resultText,
+            lastResultText: resolution.resultText,
+            lastResultValue: null,
+            errorText: null,
+        });
+    }
 }
