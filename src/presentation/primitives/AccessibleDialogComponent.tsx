@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Dialog, Modal, ModalOverlay } from "react-aria-components";
 import { AccessibleButtonComponent } from "./AccessibleButtonComponent";
+import { cssClass } from "../utils/classNames";
 import styles from "../styles/AccessibleDialogComponent.module.css";
 
 export interface AccessibleDialogComponentProperties {
@@ -16,20 +17,20 @@ export function AccessibleDialogComponent(
   return (
     <ModalOverlay
       isOpen={props.isOpen}
-      className={styles.overlay}
+      className={cssClass(styles.overlay)}
       onOpenChange={(isOpen) => {
         if (!isOpen) {
           props.onClose();
         }
       }}
     >
-      <Modal className={styles.modal}>
-        <Dialog className={styles.dialog} aria-label={props.title}>
-          <h2 className={styles.title}>{props.title}</h2>
-          <div className={styles.content}>{props.children}</div>
-          <div className={styles.footer}>
+      <Modal className={cssClass(styles.modal)}>
+        <Dialog className={cssClass(styles.dialog)} aria-label={props.title}>
+          <h2 className={cssClass(styles.title)}>{props.title}</h2>
+          <div className={cssClass(styles.content)}>{props.children}</div>
+          <div className={cssClass(styles.footer)}>
             <AccessibleButtonComponent
-              customClassName={styles.closeButton}
+              customClassName={cssClass(styles.closeButton)}
               onPress={props.onClose}
             >
               Close
