@@ -17,8 +17,7 @@ The calculator targets modern evergreen browsers.
 ## Requirements
 
 - A browser that supports ES2022.
-- `BigInt` support is detected at runtime; where absent, BigInt mode falls back
-  gracefully. See [BigInt mode](/user-guide/bigint-mode).
+- `BigInt` support is detected at runtime; where absent, BigInt mode falls back gracefully. See [BigInt mode](/user-guide/bigint-mode).
 - IndexedDB is used for history and variables, with an in-memory fallback.
 
 ## Modern APIs used
@@ -30,13 +29,11 @@ The calculator targets modern evergreen browsers.
 
 ## Feature detection
 
-`BrowserFeatureDetectionService` detects `BigInt` support at startup. See
-[Feature detection](/developer/infrastructure-layer).
+`BrowserFeatureDetectionService` detects `BigInt` support at startup. See [Feature detection](/developer/infrastructure-layer).
 
 ## Mobile
 
-The interface is touch friendly and remains usable on mobile browsers. See
-[Mobile usage](/user-guide/mobile-usage).
+The interface is touch friendly and remains usable on mobile browsers. See [Mobile usage](/user-guide/mobile-usage).
 
 ## Next steps
 
