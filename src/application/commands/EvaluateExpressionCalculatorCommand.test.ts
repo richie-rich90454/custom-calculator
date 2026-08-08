@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CalculatorCompositionRoot } from "../../app/CalculatorCompositionRoot";
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
-import { EvaluateExpressionCalculatorCommand } from "./EvaluateExpressionCalculatorCommand";
 
 describe("EvaluateExpressionCalculatorCommand", () => {
   const compositionRoot = new CalculatorCompositionRoot();
