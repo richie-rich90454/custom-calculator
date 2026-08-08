@@ -8,6 +8,7 @@ import {
   SelectValue,
   type SelectProps,
 } from "react-aria-components";
+import { cssClass } from "../utils/classNames";
 import styles from "../styles/AccessibleSelectComponent.module.css";
 
 export interface AccessibleSelectOption {
@@ -27,21 +28,21 @@ export function AccessibleSelectComponent(
   const { label, options, ...selectProperties } = props;
 
   return (
-    <Select {...selectProperties} className={styles.select}>
-      <Label className={styles.label}>{label}</Label>
-      <Button className={styles.trigger}>
-        <SelectValue className={styles.value} />
-        <span aria-hidden="true" className={styles.indicator}>
+    <Select {...selectProperties} className={cssClass(styles.select)}>
+      <Label className={cssClass(styles.label)}>{label}</Label>
+      <Button className={cssClass(styles.trigger)}>
+        <SelectValue className={cssClass(styles.value)} />
+        <span aria-hidden="true" className={cssClass(styles.indicator)}>
           ▾
         </span>
       </Button>
-      <Popover className={styles.popover}>
-        <ListBox className={styles.listBox}>
+      <Popover className={cssClass(styles.popover)}>
+        <ListBox className={cssClass(styles.listBox)}>
           {options.map((option) => (
             <ListBoxItem
               key={option.id}
               id={option.id}
-              className={styles.item}
+              className={cssClass(styles.item)}
             >
               {option.label}
             </ListBoxItem>
