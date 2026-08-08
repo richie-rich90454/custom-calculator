@@ -5,11 +5,10 @@ description: Reference for the mathematics constants available in the constant c
 
 # Math Constants
 
-The mathematics category provides the classic constants used across
-mathematics and physics.
+The mathematics category provides the classic constants used across mathematics and physics.
 
 | Name | Value | Description |
-| ---- | ----- | ----------- |
+| --- | --- | --- |
 | `pi` | `3.141592653589793` | The ratio of a circle's circumference to its diameter |
 | `e` | `2.718281828459045` | The base of the natural logarithm |
 | `tau` | `6.283185307179586` | Two times pi |
@@ -24,8 +23,7 @@ mathematics and physics.
 
 ## Insertion
 
-Constants are inserted by name. Inserting a constant moves the cursor to after
-the constant token.
+Constants are inserted by name. Inserting a constant moves the cursor to after the constant token.
 
 ```
 2 * pi
