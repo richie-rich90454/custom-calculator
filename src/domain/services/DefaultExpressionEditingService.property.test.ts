@@ -4,51 +4,51 @@ import { DefaultExpressionEditingService } from "./DefaultExpressionEditingServi
 import { DefaultScientificFunctionCatalogService } from "./DefaultScientificFunctionCatalogService";
 
 describe("DefaultExpressionEditingService property tests", () => {
-  const service = new DefaultExpressionEditingService(
-    new DefaultScientificFunctionCatalogService()
-  );
-
-  it("auto-closes all opening parentheses for arbitrary expressions", () => {
-    const expressionGenerator = fc
-      .array(fc.constantFrom("(", ")", "1", "2", "+"))
-      .map((characters) => characters.join(""));
-
-    fc.assert(
-      fc.property(expressionGenerator, (input) => {
-        const closedText = service.autoCloseParentheses(input);
-
-        if (!closedText.startsWith(input)) {
-          return false;
-        }
-
-        const appendedText = closedText.slice(input.length);
-
-        return appendedText.split("").every((character) => character === ")");
-      })
+    const service = new DefaultExpressionEditingService(
+        new DefaultScientificFunctionCatalogService(),
     );
-  });
 
-  it("never increases the length when deleting backward", () => {
-    fc.assert(
-      fc.property(fc.string(), fc.nat(), (text, cursorPositionRaw) => {
-        const cursorPosition = Math.min(cursorPositionRaw, text.length);
+    it("auto-closes all opening parentheses for arbitrary expressions", () => {
+        const expressionGenerator = fc
+            .array(fc.constantFrom("(", ")", "1", "2", "+"))
+            .map((characters) => characters.join(""));
 
-        const edit = service.deleteBackward(text, cursorPosition, cursorPosition);
+        fc.assert(
+            fc.property(expressionGenerator, (input) => {
+                const closedText = service.autoCloseParentheses(input);
 
-        return edit.text.length <= text.length;
-      })
-    );
-  });
+                if (!closedText.startsWith(input)) {
+                    return false;
+                }
 
-  it("keeps the cursor within the resulting text after inserting", () => {
-    fc.assert(
-      fc.property(fc.string(), fc.string(), fc.nat(), (text, insertion, cursorRaw) => {
-        const cursorPosition = Math.min(cursorRaw, text.length);
+                const appendedText = closedText.slice(input.length);
 
-        const edit = service.insertText(text, insertion, cursorPosition, cursorPosition);
+                return appendedText.split("").every((character) => character === ")");
+            }),
+        );
+    });
 
-        return edit.cursorPosition <= edit.text.length;
-      })
-    );
-  });
+    it("never increases the length when deleting backward", () => {
+        fc.assert(
+            fc.property(fc.string(), fc.nat(), (text, cursorPositionRaw) => {
+                const cursorPosition = Math.min(cursorPositionRaw, text.length);
+
+                const edit = service.deleteBackward(text, cursorPosition, cursorPosition);
+
+                return edit.text.length <= text.length;
+            }),
+        );
+    });
+
+    it("keeps the cursor within the resulting text after inserting", () => {
+        fc.assert(
+            fc.property(fc.string(), fc.string(), fc.nat(), (text, insertion, cursorRaw) => {
+                const cursorPosition = Math.min(cursorRaw, text.length);
+
+                const edit = service.insertText(text, insertion, cursorPosition, cursorPosition);
+
+                return edit.cursorPosition <= edit.text.length;
+            }),
+        );
+    });
 });
