@@ -2,7 +2,7 @@ import { cssClass } from "../utils/classNames";
 import styles from "../styles/CalculatorCaretIndicatorComponent.module.css";
 
 interface CalculatorCaretIndicatorComponentProperties {
-  readonly offsetX: number;
+    readonly offsetX: number;
 }
 
 /**
@@ -14,14 +14,14 @@ interface CalculatorCaretIndicatorComponentProperties {
  * editing cursor whenever the editor is focused.
  */
 export function CalculatorCaretIndicatorComponent(
-  props: CalculatorCaretIndicatorComponentProperties
+    props: CalculatorCaretIndicatorComponentProperties,
 ) {
-  return (
-    <span
-      aria-hidden="true"
-      data-testid="caret-indicator"
-      className={cssClass(styles.caretIndicator)}
-      style={{ left: props.offsetX }}
-    />
-  );
+    return (
+        <span
+            aria-hidden="true"
+            data-testid="caret-indicator"
+            className={cssClass(styles.caretIndicator)}
+            style={{ left: props.offsetX }}
+        />
+    );
 }
