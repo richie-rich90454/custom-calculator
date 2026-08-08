@@ -49,8 +49,8 @@ export class DefaultResultFormattingService
 
   private formatScientificNotation(value: number): string {
     const parts = value.toExponential(10).split("e");
-    const mantissa = parts[0] ?? "";
-    const exponent = parts[1] ?? "";
+    const mantissa = parts[0]!;
+    const exponent = parts[1]!;
 
     const trimmedMantissa = Number(mantissa).toString();
 
