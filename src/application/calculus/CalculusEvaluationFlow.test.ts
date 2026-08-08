@@ -4,102 +4,102 @@ import { AngleMode } from "../../domain/model/AngleMode";
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
 
 describe("calculus evaluation flow", () => {
-  const compositionRoot = new CalculatorCompositionRoot();
-  const controller = compositionRoot.calculatorApplicationController;
+    const compositionRoot = new CalculatorCompositionRoot();
+    const controller = compositionRoot.calculatorApplicationController;
 
-  function evaluate(
-    expressionText: string,
-    angleMode: AngleMode = AngleMode.DEG
-  ): CalculatorSessionState {
-    const initialState = CalculatorSessionState.createInitial().copyWith({
-      expressionText: expressionText,
-      angleMode: angleMode,
+    function evaluate(
+        expressionText: string,
+        angleMode: AngleMode = AngleMode.DEG,
+    ): CalculatorSessionState {
+        const initialState = CalculatorSessionState.createInitial().copyWith({
+            expressionText: expressionText,
+            angleMode: angleMode,
+        });
+
+        return controller.evaluateExpression(initialState);
+    }
+
+    it("differentiates a symbolic block", () => {
+        const nextState = evaluate("derivative(x^2, x)");
+
+        expect(nextState.errorText).toBeNull();
+        expect(nextState.resultText).toBe("2*x");
     });
 
-    return controller.evaluateExpression(initialState);
-  }
+    it("differentiates with a default variable when omitted", () => {
+        const nextState = evaluate("derivative(x^3)");
 
-  it("differentiates a symbolic block", () => {
-    const nextState = evaluate("derivative(x^2, x)");
+        expect(nextState.errorText).toBeNull();
+        expect(nextState.resultText).toBe("3*x^2");
+    });
 
-    expect(nextState.errorText).toBeNull();
-    expect(nextState.resultText).toBe("2*x");
-  });
+    it("integrates a symbolic block", () => {
+        const nextState = evaluate("integrate(x, x)");
 
-  it("differentiates with a default variable when omitted", () => {
-    const nextState = evaluate("derivative(x^3)");
+        expect(nextState.errorText).toBeNull();
+        expect(nextState.resultText).toBe("x^2/2");
+    });
 
-    expect(nextState.errorText).toBeNull();
-    expect(nextState.resultText).toBe("3*x^2");
-  });
+    it("computes a definite integral", () => {
+        const nextState = evaluate("integral(x^2, x, 0, 1)");
 
-  it("integrates a symbolic block", () => {
-    const nextState = evaluate("integrate(x, x)");
+        expect(nextState.errorText).toBeNull();
+        expect(Number(nextState.resultText)).toBeCloseTo(1 / 3, 6);
+    });
 
-    expect(nextState.errorText).toBeNull();
-    expect(nextState.resultText).toBe("x^2/2");
-  });
+    it("estimates a limit", () => {
+        const nextState = evaluate("limit(sin(x)/x, x, 0)", AngleMode.RAD);
 
-  it("computes a definite integral", () => {
-    const nextState = evaluate("integral(x^2, x, 0, 1)");
+        expect(nextState.errorText).toBeNull();
+        expect(Number(nextState.resultText)).toBeCloseTo(1, 3);
+    });
 
-    expect(nextState.errorText).toBeNull();
-    expect(Number(nextState.resultText)).toBeCloseTo(1 / 3, 6);
-  });
+    it("expands a taylor series", () => {
+        const nextState = evaluate("taylor(sin(x), x, 0, 5)");
 
-  it("estimates a limit", () => {
-    const nextState = evaluate("limit(sin(x)/x, x, 0)", AngleMode.RAD);
+        expect(nextState.errorText).toBeNull();
+        expect(nextState.resultText).toContain("x^5/120");
+    });
 
-    expect(nextState.errorText).toBeNull();
-    expect(Number(nextState.resultText)).toBeCloseTo(1, 3);
-  });
+    it("sums a finite series", () => {
+        const nextState = evaluate("sum(n^2, n, 1, 10)");
 
-  it("expands a taylor series", () => {
-    const nextState = evaluate("taylor(sin(x), x, 0, 5)");
+        expect(nextState.errorText).toBeNull();
+        expect(nextState.resultText).toBe("385");
+    });
 
-    expect(nextState.errorText).toBeNull();
-    expect(nextState.resultText).toContain("x^5/120");
-  });
+    it("computes a finite product", () => {
+        const nextState = evaluate("product(n, n, 1, 5)");
 
-  it("sums a finite series", () => {
-    const nextState = evaluate("sum(n^2, n, 1, 10)");
+        expect(nextState.errorText).toBeNull();
+        expect(nextState.resultText).toBe("120");
+    });
 
-    expect(nextState.errorText).toBeNull();
-    expect(nextState.resultText).toBe("385");
-  });
+    it("warns for symbolic calculus under a non radian angle mode", () => {
+        const nextState = evaluate("derivative(x^2, x)", AngleMode.DEG);
 
-  it("computes a finite product", () => {
-    const nextState = evaluate("product(n, n, 1, 5)");
+        expect(nextState.errorText).toBeNull();
+        expect(nextState.resultText).toBe("2*x");
+    });
 
-    expect(nextState.errorText).toBeNull();
-    expect(nextState.resultText).toBe("120");
-  });
+    it("surfaces symbolic errors inline", () => {
+        const nextState = evaluate("integrate(sec(x), x)");
 
-  it("warns for symbolic calculus under a non radian angle mode", () => {
-    const nextState = evaluate("derivative(x^2, x)", AngleMode.DEG);
+        expect(nextState.resultText).toBeNull();
+        expect(nextState.errorText).toContain("not supported");
+    });
 
-    expect(nextState.errorText).toBeNull();
-    expect(nextState.resultText).toBe("2*x");
-  });
+    it("routes calculus blocks before numeric evaluation", () => {
+        const nextState = evaluate("sum(n, n, 1, 3)");
 
-  it("surfaces symbolic errors inline", () => {
-    const nextState = evaluate("integrate(sec(x), x)");
+        expect(nextState.errorText).toBeNull();
+        expect(nextState.resultText).toBe("6");
+    });
 
-    expect(nextState.resultText).toBeNull();
-    expect(nextState.errorText).toContain("not supported");
-  });
+    it("keeps plain expressions numeric", () => {
+        const nextState = evaluate("2+3");
 
-  it("routes calculus blocks before numeric evaluation", () => {
-    const nextState = evaluate("sum(n, n, 1, 3)");
-
-    expect(nextState.errorText).toBeNull();
-    expect(nextState.resultText).toBe("6");
-  });
-
-  it("keeps plain expressions numeric", () => {
-    const nextState = evaluate("2+3");
-
-    expect(nextState.errorText).toBeNull();
-    expect(nextState.resultText).toBe("5");
-  });
+        expect(nextState.errorText).toBeNull();
+        expect(nextState.resultText).toBe("5");
+    });
 });
