@@ -71,6 +71,18 @@ npm install
 npm run dev
 ```
 
+## Documentation
+
+A complete documentation hub ships as an isolated VitePress package in the
+`docs` directory. It covers the user guide, scientific reference, calculus,
+CAS, architecture, design system, and API reference.
+
+```bash
+cd docs
+npm install
+npm run dev
+```
+
 ## Verification
 
 ```bash
