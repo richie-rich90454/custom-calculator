@@ -8,6 +8,8 @@ import {
   type AccessibleSelectOption,
 } from "../primitives/AccessibleSelectComponent";
 import { AccessibleSwitchComponent } from "../primitives/AccessibleSwitchComponent";
+import { PanelComponent } from "../primitives/PanelComponent";
+import { PanelSectionComponent } from "../primitives/PanelSectionComponent";
 import { cssClass } from "../utils/classNames";
 import styles from "../styles/SettingsPanelComponent.module.css";
 
@@ -34,71 +36,75 @@ export function SettingsPanelComponent() {
     }));
 
   return (
-    <div className={cssClass(styles.panel)}>
-      <div className={cssClass(styles.settingRow)}>
-        <AccessibleSelectComponent
-          label="Angle mode"
-          options={ANGLE_MODE_OPTIONS}
-          selectedKey={viewModel.angleMode}
-          onSelectionChange={(key) => {
-            if (key !== null) {
-              store.getState().onAngleModeChanged(key as AngleMode);
-            }
-          }}
-        />
-      </div>
+    <PanelComponent title="Settings">
+      <PanelSectionComponent heading="Calculation">
+        <div className={cssClass(styles.settingRow)}>
+          <AccessibleSelectComponent
+            label="Angle mode"
+            options={ANGLE_MODE_OPTIONS}
+            selectedKey={viewModel.angleMode}
+            onSelectionChange={(key) => {
+              if (key !== null) {
+                store.getState().onAngleModeChanged(key as AngleMode);
+              }
+            }}
+          />
+        </div>
 
-      <div className={cssClass(styles.settingRow)}>
-        <AccessibleSelectComponent
-          label="Numeric mode"
-          options={numericModeOptions}
-          selectedKey={viewModel.numericMode}
-          onSelectionChange={(key) => {
-            if (key !== null) {
-              store.getState().onNumericModeChanged(key as NumericMode);
-            }
-          }}
-        />
-      </div>
+        <div className={cssClass(styles.settingRow)}>
+          <AccessibleSelectComponent
+            label="Numeric mode"
+            options={numericModeOptions}
+            selectedKey={viewModel.numericMode}
+            onSelectionChange={(key) => {
+              if (key !== null) {
+                store.getState().onNumericModeChanged(key as NumericMode);
+              }
+            }}
+          />
+        </div>
 
-      <div className={cssClass(styles.settingRow)}>
-        <AccessibleSelectComponent
-          label="Theme"
-          options={THEME_OPTIONS}
-          selectedKey={viewModel.themePreference}
-          onSelectionChange={(key) => {
-            if (key !== null) {
-              store.getState().onThemeChanged(key as ThemePreference);
-            }
-          }}
-        />
-      </div>
+        <div className={cssClass(styles.settingRow)}>
+          <AccessibleSwitchComponent
+            label="Complex numbers"
+            isSelected={viewModel.complexNumbersEnabled}
+            onChange={() => store.getState().onComplexNumbersTogglePressed()}
+          >
+            Enable complex numbers
+          </AccessibleSwitchComponent>
+        </div>
 
-      <div className={cssClass(styles.settingRow)}>
-        <AccessibleSwitchComponent
-          label="Complex numbers"
-          isSelected={viewModel.complexNumbersEnabled}
-          onChange={() => store.getState().onComplexNumbersTogglePressed()}
-        >
-          Enable complex numbers
-        </AccessibleSwitchComponent>
-      </div>
+        <div className={cssClass(styles.settingRow)}>
+          <AccessibleSwitchComponent
+            label="CAS mode"
+            isSelected={viewModel.casEnabled}
+            onChange={() => store.getState().onCasTogglePressed()}
+          >
+            Enable CAS-style symbolic operations
+          </AccessibleSwitchComponent>
+        </div>
+      </PanelSectionComponent>
 
-      <div className={cssClass(styles.settingRow)}>
-        <AccessibleSwitchComponent
-          label="CAS mode"
-          isSelected={viewModel.casEnabled}
-          onChange={() => store.getState().onCasTogglePressed()}
-        >
-          Enable CAS-style symbolic operations
-        </AccessibleSwitchComponent>
-      </div>
+      <PanelSectionComponent heading="Appearance">
+        <div className={cssClass(styles.settingRow)}>
+          <AccessibleSelectComponent
+            label="Theme"
+            options={THEME_OPTIONS}
+            selectedKey={viewModel.themePreference}
+            onSelectionChange={(key) => {
+              if (key !== null) {
+                store.getState().onThemeChanged(key as ThemePreference);
+              }
+            }}
+          />
+        </div>
+      </PanelSectionComponent>
 
       {!viewModel.bigIntSupported ? (
         <p className={cssClass(styles.warningText)}>
           BigInt is not supported in this browser, so BigInt mode is hidden.
         </p>
       ) : null}
-    </div>
+    </PanelComponent>
   );
 }
