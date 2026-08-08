@@ -5,20 +5,19 @@ description: How the calculator manages cursor placement, caret visibility, and 
 
 # Cursor Management
 
-Cursor management is a deliberate, service-based subsystem. It guarantees the
-caret always lands at the logically correct position and stays visible.
+Cursor management is a deliberate, service-based subsystem. It guarantees the caret always lands at the logically correct position and stays visible.
 
 ## Responsibilities
 
-| Concern | Service |
-| ------- | ------- |
-| Cursor placement rules | `ExpressionCursorService` |
-| Insertion orchestration | `ExpressionInsertionService` |
-| Button insertion templates | `ButtonInsertionTemplateService` |
-| Caret visibility | `ExpressionEditorCaretRenderingService` |
-| Horizontal scrolling | `ExpressionEditorScrollService` |
-| Focus preservation | `FocusPreservationService` |
-| Selection resolution | `ExpressionEditorSelectionService` |
+| Concern                    | Service                                 |
+| -------------------------- | --------------------------------------- |
+| Cursor placement rules     | `ExpressionCursorService`               |
+| Insertion orchestration    | `ExpressionInsertionService`            |
+| Button insertion templates | `ButtonInsertionTemplateService`        |
+| Caret visibility           | `ExpressionEditorCaretRenderingService` |
+| Horizontal scrolling       | `ExpressionEditorScrollService`         |
+| Focus preservation         | `FocusPreservationService`              |
+| Selection resolution       | `ExpressionEditorSelectionService`      |
 
 ## Cursor placement rules
 
@@ -35,8 +34,7 @@ flowchart TB
 
 ## Caret visibility model
 
-The native input caret is authoritative while the editor is focused. When
-focus moves to a button, a synthetic indicator renders at the cursor position.
+The native input caret is authoritative while the editor is focused. When focus moves to a button, a synthetic indicator renders at the cursor position.
 
 ```mermaid
 flowchart LR
@@ -45,8 +43,7 @@ flowchart LR
     A -- No --> C[Synthetic indicator at cursor]
 ```
 
-The synthetic caret is positioned using a hidden measure of the text before
-the cursor so it always matches the logical position.
+The synthetic caret is positioned using a hidden measure of the text before the cursor so it always matches the logical position.
 
 ## Scroll model
 
@@ -66,8 +63,7 @@ flowchart LR
 After a button press, focus behavior depends on the input device:
 
 - Mouse click: focus returns to the expression editor so typing continues.
-- Keyboard activation: focus stays on the button for grid navigation, and the
-  synthetic caret keeps the cursor visible.
+- Keyboard activation: focus stays on the button for grid navigation, and the synthetic caret keeps the cursor visible.
 
 ## Next steps
 
