@@ -31,16 +31,18 @@ export function CalculatorShellComponent() {
 
   return (
     <div className={cssClass(styles.shell)}>
-      <header className={cssClass(styles.header)}>
-        <h1 className={cssClass(styles.title)}>Scientific Calculator</h1>
-      </header>
+      <div className={cssClass(styles.calculator)}>
+        <header className={cssClass(styles.header)}>
+          <h1 className={cssClass(styles.title)}>Scientific Calculator</h1>
+        </header>
 
-      <CalculatorStatusBarComponent />
+        <CalculatorStatusBarComponent />
 
-      <main className={cssClass(styles.main)}>
-        <CalculatorDisplayComponent />
-        <CalculatorKeypadComponent />
-      </main>
+        <div className={cssClass(styles.main)}>
+          <CalculatorDisplayComponent />
+          <CalculatorKeypadComponent />
+        </div>
+      </div>
 
       <AccessibleDialogComponent
         title={panelDescriptor.title}
