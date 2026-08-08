@@ -6,7 +6,7 @@ import {
   TabPanel,
   type TabsProps,
 } from "react-aria-components";
-import styles from "./AccessibleTabsComponent.module.css";
+import styles from "../styles/AccessibleTabsComponent.module.css";
 
 export interface AccessibleTabDefinition {
   readonly id: string;
