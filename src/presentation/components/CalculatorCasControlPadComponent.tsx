@@ -5,11 +5,11 @@ import { cssClass } from "../utils/classNames";
 import styles from "../styles/CalculatorKeypadComponent.module.css";
 
 interface CalculatorCasControlPadComponentProperties {
-  readonly keys: readonly CalculatorKeyDefinition[];
-  readonly onKeyPressed: (
-    key: CalculatorKeyDefinition,
-    activationKind: ButtonActivationKind
-  ) => void;
+    readonly keys: readonly CalculatorKeyDefinition[];
+    readonly onKeyPressed: (
+        key: CalculatorKeyDefinition,
+        activationKind: ButtonActivationKind,
+    ) => void;
 }
 
 /**
@@ -19,16 +19,16 @@ interface CalculatorCasControlPadComponentProperties {
  * disabled users never see the symbolic operation keys.
  */
 export function CalculatorCasControlPadComponent(
-  props: CalculatorCasControlPadComponentProperties
+    props: CalculatorCasControlPadComponentProperties,
 ) {
-  return (
-    <CalculatorKeypadGridSectionComponent
-      sectionClassName={cssClass(styles.casArea)}
-      gridLabel="CAS operations"
-      keys={props.keys}
-      columnCount={4}
-      resolveKeyClassName={() => cssClass(styles.casKey)}
-      onKeyPressed={props.onKeyPressed}
-    />
-  );
+    return (
+        <CalculatorKeypadGridSectionComponent
+            sectionClassName={cssClass(styles.casArea)}
+            gridLabel="CAS operations"
+            keys={props.keys}
+            columnCount={4}
+            resolveKeyClassName={() => cssClass(styles.casKey)}
+            onKeyPressed={props.onKeyPressed}
+        />
+    );
 }
