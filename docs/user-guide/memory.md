@@ -1,6 +1,6 @@
 ---
 title: Memory
-description: How the classic memory register works: M+, M-, MR, MC.
+description: "How the classic memory register works: M+, M-, MR, MC."
 ---
 
 # Memory
