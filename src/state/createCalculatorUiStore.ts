@@ -5,6 +5,10 @@ import type { CalculatorCompositionRoot } from "../app/CalculatorCompositionRoot
 import { CalculatorPanelName, type CalculatorUiState } from "./CalculatorUiState";
 import type { CalculatorUiStore, CalculatorUiStoreApi } from "./CalculatorUiStore";
 import type { CalculatorViewModelMapper } from "../presentation/viewmodels/CalculatorViewModelMapper";
+import { DefaultButtonInsertionTemplateService } from "../presentation/services/DefaultButtonInsertionTemplateService";
+import { DefaultExpressionCursorService } from "../presentation/services/DefaultExpressionCursorService";
+import { DefaultExpressionInsertionService } from "../presentation/services/DefaultExpressionInsertionService";
+import type { CalculatorButtonTemplate } from "../presentation/services/CalculatorButtonTemplate";
 
 export function createCalculatorUiStore(
   compositionRoot: CalculatorCompositionRoot,
@@ -13,6 +17,36 @@ export function createCalculatorUiStore(
 ): CalculatorUiStoreApi {
   const { calculatorApplicationController: controller, orchestrationService } =
     compositionRoot;
+
+  const buttonInsertionTemplateService = new DefaultButtonInsertionTemplateService();
+  const expressionCursorService = new DefaultExpressionCursorService();
+  const expressionInsertionService = new DefaultExpressionInsertionService(
+    expressionCursorService
+  );
+
+  const applyInsertion = (
+    sessionState: CalculatorSessionState,
+    template: CalculatorButtonTemplate
+  ): CalculatorSessionState => {
+    const edit = expressionInsertionService.insertTemplate(
+      template,
+      sessionState.expressionText,
+      sessionState.selectionStart,
+      sessionState.selectionEnd
+    );
+
+    return controller.applyInsertion(sessionState, edit);
+  };
+
+  const resolveInsertionBaseState = (): CalculatorSessionState => {
+    const sessionState = viewModelMapper.mapUiStateToSessionState(get());
+
+    if (sessionState.resultText === null) {
+      return sessionState;
+    }
+
+    return controller.clearSession(sessionState);
+  };
 
   return create<CalculatorUiStore>()((set, get) => {
     const recordHistoryEntry = async (
@@ -39,38 +73,68 @@ export function createCalculatorUiStore(
     ...initialUiState,
 
     onDigitPressed: (digit) => {
-      const sessionState = viewModelMapper.mapUiStateToSessionState(get());
-      const nextSessionState = controller.insertDigit(sessionState, digit);
+      const baseState = resolveInsertionBaseState();
+      const nextSessionState = applyInsertion(
+        baseState,
+        buttonInsertionTemplateService.resolveDigitTemplate(digit)
+      );
       set(viewModelMapper.mapSessionStateToUiState(nextSessionState, get()));
     },
 
     onOperatorPressed: (operator) => {
       const sessionState = viewModelMapper.mapUiStateToSessionState(get());
-      const nextSessionState = controller.insertOperator(sessionState, operator);
+      const baseState =
+        sessionState.expressionText.length === 0 &&
+        sessionState.lastResultText !== null
+          ? controller.insertVariable(sessionState, "ans")
+          : sessionState;
+      const nextSessionState = applyInsertion(
+        baseState,
+        buttonInsertionTemplateService.resolveOperatorTemplate(operator)
+      );
       set(viewModelMapper.mapSessionStateToUiState(nextSessionState, get()));
     },
 
     onFunctionPressed: (functionName) => {
-      const sessionState = viewModelMapper.mapUiStateToSessionState(get());
-      const nextSessionState = controller.insertFunction(sessionState, functionName);
+      const baseState = resolveInsertionBaseState();
+      const nextSessionState = applyInsertion(
+        baseState,
+        buttonInsertionTemplateService.resolveFunctionTemplate(functionName)
+      );
       set(viewModelMapper.mapSessionStateToUiState(nextSessionState, get()));
     },
 
     onConstantPressed: (constantId) => {
-      const sessionState = viewModelMapper.mapUiStateToSessionState(get());
-      const nextSessionState = controller.insertConstant(sessionState, constantId);
+      const constantText =
+        compositionRoot.constantCatalogService.getConstantInsertText(constantId);
+
+      if (constantText === null) {
+        return;
+      }
+
+      const baseState = resolveInsertionBaseState();
+      const nextSessionState = applyInsertion(
+        baseState,
+        buttonInsertionTemplateService.resolveTokenTemplate(constantText)
+      );
       set(viewModelMapper.mapSessionStateToUiState(nextSessionState, get()));
     },
 
     onVariablePressed: (variableName) => {
-      const sessionState = viewModelMapper.mapUiStateToSessionState(get());
-      const nextSessionState = controller.insertVariable(sessionState, variableName);
+      const baseState = resolveInsertionBaseState();
+      const nextSessionState = applyInsertion(
+        baseState,
+        buttonInsertionTemplateService.resolveTokenTemplate(variableName)
+      );
       set(viewModelMapper.mapSessionStateToUiState(nextSessionState, get()));
     },
 
     onParenthesisPressed: (parenthesis) => {
-      const sessionState = viewModelMapper.mapUiStateToSessionState(get());
-      const nextSessionState = controller.insertParenthesis(sessionState, parenthesis);
+      const baseState = resolveInsertionBaseState();
+      const nextSessionState = applyInsertion(
+        baseState,
+        buttonInsertionTemplateService.resolveCharacterTemplate(parenthesis)
+      );
       set(viewModelMapper.mapSessionStateToUiState(nextSessionState, get()));
     },
 
