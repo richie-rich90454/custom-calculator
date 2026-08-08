@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { CalculatorPanelName } from "../../state/CalculatorUiState";
 import { createCalculatorTestHarness, renderWithCalculatorContext } from "../../test/calculatorTestHarness";
 import { useCalculatorKeyboardBindings } from "./useCalculatorKeyboardBindings";
 import { CalculatorDisplayComponent } from "../components/CalculatorDisplayComponent";
@@ -58,7 +59,9 @@ describe("useCalculatorKeyboardBindings", () => {
 
   it("closes an open panel with Escape", async () => {
     const user = userEvent.setup();
-    const harness = createCalculatorTestHarness({ activePanel: "MEMORY" });
+    const harness = createCalculatorTestHarness({
+      activePanel: CalculatorPanelName.MEMORY,
+    });
 
     renderWithCalculatorContext(
       harness,
