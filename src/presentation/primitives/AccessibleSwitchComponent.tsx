@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Switch, type SwitchProps } from "react-aria-components";
-import styles from "./AccessibleSwitchComponent.module.css";
+import styles from "../styles/AccessibleSwitchComponent.module.css";
 
 export interface AccessibleSwitchComponentProperties
   extends Omit<SwitchProps, "className"> {
