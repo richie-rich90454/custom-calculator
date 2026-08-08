@@ -5,24 +5,19 @@ description: About the scientific calculator project, its goals, and its archite
 
 # About
 
-The Scientific Calculator is a production-minded, expression-based scientific
-calculator built for the web. It is designed as a calm, precise scientific
-instrument.
+The Scientific Calculator is a production-minded, expression-based scientific calculator built for the web. It is designed as a calm, precise scientific instrument.
 
 ## Goals
 
 - Provide a keyboard-first expression calculator that never requires a mouse.
 - Keep the cursor and editing behavior predictable and precise.
-- Cover a broad scientific surface: functions, constants, numeric modes,
-  calculus, and enableable CAS.
+- Cover a broad scientific surface: functions, constants, numeric modes, calculus, and enableable CAS.
 - Stay accessible and screen reader friendly.
 - Keep the architecture clean, testable, and layered.
 
 ## History
 
-The project grew from a standard calculator into a full expression calculator
-with calculus and CAS layers, always preserving strict separation between
-logic and presentation.
+The project grew from a standard calculator into a full expression calculator with calculus and CAS layers, always preserving strict separation between logic and presentation.
 
 ## Guiding principles
 
