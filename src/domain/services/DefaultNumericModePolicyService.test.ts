@@ -4,54 +4,44 @@ import type { BigIntSupportDetector } from "../../infrastructure/featuredetectio
 import { DefaultNumericModePolicyService } from "./DefaultNumericModePolicyService";
 
 class FakeBigIntSupportDetector implements BigIntSupportDetector {
-  public constructor(private readonly supported: boolean) {}
+    public constructor(private readonly supported: boolean) {}
 
-  public isBigIntSupported(): boolean {
-    return this.supported;
-  }
+    public isBigIntSupported(): boolean {
+        return this.supported;
+    }
 }
 
 describe("DefaultNumericModePolicyService", () => {
-  it("includes BigInt mode when BigInt is supported", () => {
-    const service = new DefaultNumericModePolicyService(
-      new FakeBigIntSupportDetector(true)
-    );
+    it("includes BigInt mode when BigInt is supported", () => {
+        const service = new DefaultNumericModePolicyService(new FakeBigIntSupportDetector(true));
 
-    expect(service.isNumericModeSupported(NumericMode.BIGINT)).toBe(true);
-    expect(service.getSupportedNumericModes()).toContain(NumericMode.BIGINT);
-  });
+        expect(service.isNumericModeSupported(NumericMode.BIGINT)).toBe(true);
+        expect(service.getSupportedNumericModes()).toContain(NumericMode.BIGINT);
+    });
 
-  it("excludes BigInt mode when BigInt is unsupported", () => {
-    const service = new DefaultNumericModePolicyService(
-      new FakeBigIntSupportDetector(false)
-    );
+    it("excludes BigInt mode when BigInt is unsupported", () => {
+        const service = new DefaultNumericModePolicyService(new FakeBigIntSupportDetector(false));
 
-    expect(service.isNumericModeSupported(NumericMode.BIGINT)).toBe(false);
-    expect(service.getSupportedNumericModes()).not.toContain(
-      NumericMode.BIGINT
-    );
-  });
+        expect(service.isNumericModeSupported(NumericMode.BIGINT)).toBe(false);
+        expect(service.getSupportedNumericModes()).not.toContain(NumericMode.BIGINT);
+    });
 
-  it("resolves BigInt to exact decimal mode when unsupported", () => {
-    const service = new DefaultNumericModePolicyService(
-      new FakeBigIntSupportDetector(false)
-    );
+    it("resolves BigInt to exact decimal mode when unsupported", () => {
+        const service = new DefaultNumericModePolicyService(new FakeBigIntSupportDetector(false));
 
-    expect(service.resolveEffectiveNumericMode(NumericMode.BIGINT)).toBe(
-      NumericMode.EXACT_DECIMAL
-    );
-  });
+        expect(service.resolveEffectiveNumericMode(NumericMode.BIGINT)).toBe(
+            NumericMode.EXACT_DECIMAL,
+        );
+    });
 
-  it("resolves a supported mode to itself", () => {
-    const service = new DefaultNumericModePolicyService(
-      new FakeBigIntSupportDetector(false)
-    );
+    it("resolves a supported mode to itself", () => {
+        const service = new DefaultNumericModePolicyService(new FakeBigIntSupportDetector(false));
 
-    expect(service.resolveEffectiveNumericMode(NumericMode.STANDARD)).toBe(
-      NumericMode.STANDARD
-    );
-    expect(service.resolveEffectiveNumericMode(NumericMode.FRACTION)).toBe(
-      NumericMode.FRACTION
-    );
-  });
+        expect(service.resolveEffectiveNumericMode(NumericMode.STANDARD)).toBe(
+            NumericMode.STANDARD,
+        );
+        expect(service.resolveEffectiveNumericMode(NumericMode.FRACTION)).toBe(
+            NumericMode.FRACTION,
+        );
+    });
 });
