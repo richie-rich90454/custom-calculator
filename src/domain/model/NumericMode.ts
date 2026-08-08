@@ -1,0 +1,6 @@
+export enum NumericMode {
+  STANDARD = "STANDARD",
+  EXACT_DECIMAL = "EXACT_DECIMAL",
+  FRACTION = "FRACTION",
+  BIGINT = "BIGINT",
+}
