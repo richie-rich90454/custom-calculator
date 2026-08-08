@@ -5,20 +5,19 @@ description: The panel design of the calculator, including behavior and visual c
 
 # Panels
 
-Panels are secondary views that open over the calculator shell. They share a
-common visual design and consistent behavior.
+Panels are secondary views that open over the calculator shell. They share a common visual design and consistent behavior.
 
 ## Panel inventory
 
-| Panel | Opens |
-| ----- | ----- |
-| History | `Ctrl+H` |
-| Constants | `Ctrl+E` |
+| Panel     | Opens      |
+| --------- | ---------- |
+| History   | `Ctrl+H`   |
+| Constants | `Ctrl+E`   |
 | Variables | Status bar |
-| Memory | `Ctrl+M` |
-| Settings | `Ctrl+,` |
-| CAS | Status bar |
-| Calculus | `Ctrl+L` |
+| Memory    | `Ctrl+M`   |
+| Settings  | `Ctrl+,`   |
+| CAS       | Status bar |
+| Calculus  | `Ctrl+L`   |
 
 ## Behavior rules
 
@@ -37,13 +36,11 @@ Panels are built from the shared primitives:
 
 ## Visual design
 
-Panels use the same color, spacing, and radius tokens as the rest of the
-interface. They stay visually consistent in light and dark themes.
+Panels use the same color, spacing, and radius tokens as the rest of the interface. They stay visually consistent in light and dark themes.
 
 ## Empty states
 
-Panels render an empty state when they have nothing to show, such as an empty
-history list.
+Panels render an empty state when they have nothing to show, such as an empty history list.
 
 ## Next steps
 
