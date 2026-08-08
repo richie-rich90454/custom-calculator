@@ -1,4 +1,4 @@
-import type {
+import {
   ScientificFunctionCategory,
   ScientificFunctionDefinition,
 } from "./ScientificFunctionDefinition";
