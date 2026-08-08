@@ -5,9 +5,7 @@ description: A hand-maintained reference to the major classes and services of th
 
 # API Reference Index
 
-This index describes the major classes and services of the calculator,
-organized by layer. The reference is hand-maintained so it stays accurate and
-readable.
+This index describes the major classes and services of the calculator, organized by layer. The reference is hand-maintained so it stays accurate and readable.
 
 ## Domain models
 
@@ -16,7 +14,7 @@ readable.
 Immutable session state passed through every command.
 
 | Field | Type | Purpose |
-| ----- | ---- | ------- |
+| --- | --- | --- |
 | `expressionText` | `string` | The expression text |
 | `cursorPosition` | `number` | The logical cursor position |
 | `selectionStart` / `selectionEnd` | `number` | The selection range |
@@ -34,8 +32,7 @@ Key methods:
 
 ### CalculatorSettings
 
-Persisted settings: angle mode, numeric mode, complex number flag, CAS flag,
-and theme preference.
+Persisted settings: angle mode, numeric mode, complex number flag, CAS flag, and theme preference.
 
 ### MemoryRegister
 
@@ -47,19 +44,18 @@ A recorded evaluation with expression, result, modes, and timestamp.
 
 ### ScientificConstant
 
-A constant catalog entry with id, symbol, name, category, value, unit,
-description, source, and aliases.
+A constant catalog entry with id, symbol, name, category, value, unit, description, source, and aliases.
 
 ## Domain services
 
 ### ExpressionEditingService
 
-| Method | Purpose |
-| ------ | ------- |
-| `insertText` | Insert text at the selection |
-| `deleteBackward` | Smart backward deletion |
-| `deleteForward` | Smart forward deletion |
-| `deleteWordBackward` | Token deletion |
+| Method                 | Purpose                            |
+| ---------------------- | ---------------------------------- |
+| `insertText`           | Insert text at the selection       |
+| `deleteBackward`       | Smart backward deletion            |
+| `deleteForward`        | Smart forward deletion             |
+| `deleteWordBackward`   | Token deletion                     |
 | `autoCloseParentheses` | Balance parentheses for evaluation |
 
 ### ExpressionValidationService
@@ -72,11 +68,11 @@ The interface to the math engine.
 
 ### NumericModePolicyService
 
-| Method | Purpose |
-| ------ | ------- |
-| `getSupportedNumericModes` | Modes available in this browser |
-| `isNumericModeSupported` | Whether a mode is supported |
-| `resolveEffectiveNumericMode` | Fallback resolution |
+| Method                        | Purpose                         |
+| ----------------------------- | ------------------------------- |
+| `getSupportedNumericModes`    | Modes available in this browser |
+| `isNumericModeSupported`      | Whether a mode is supported     |
+| `resolveEffectiveNumericMode` | Fallback resolution             |
 
 ### ResultFormattingService
 
@@ -84,11 +80,11 @@ Formats numeric and symbolic results.
 
 ### ScientificFunctionCatalogService
 
-| Method | Purpose |
-| ------ | ------- |
-| `getAllFunctions` | All function definitions |
-| `getFunction` | A definition by name |
-| `hasFunction` | Whether a function exists |
+| Method            | Purpose                   |
+| ----------------- | ------------------------- |
+| `getAllFunctions` | All function definitions  |
+| `getFunction`     | A definition by name      |
+| `hasFunction`     | Whether a function exists |
 
 ### ConstantCatalogService
 
@@ -96,10 +92,10 @@ Queries the constant catalog, including insertion text.
 
 ### CasService
 
-| Method | Purpose |
-| ------ | ------- |
-| `simplifyExpression` | Simplify |
-| `expandExpression` | Expand |
+| Method                    | Purpose       |
+| ------------------------- | ------------- |
+| `simplifyExpression`      | Simplify      |
+| `expandExpression`        | Expand        |
 | `differentiateExpression` | Differentiate |
 
 ## Repositories
@@ -152,8 +148,7 @@ Routes calculus descriptors to numeric or symbolic services.
 
 ### MathJsExpressionEvaluationGateway
 
-The math.js evaluation gateway. Parses through the math.js parser, applies the
-function whitelist and a controlled scope, and maps errors.
+The math.js evaluation gateway. Parses through the math.js parser, applies the function whitelist and a controlled scope, and maps errors.
 
 ### MathJsFunctionWhitelist
 
@@ -209,19 +204,15 @@ Maps a key definition to a store action.
 
 ### ButtonInsertionTemplateService
 
-Resolves the insertion template for a button, including the text to insert and
-the cursor offset. The default implementation covers digits, operators,
-functions, constants, variables, and calculus templates.
+Resolves the insertion template for a button, including the text to insert and the cursor offset. The default implementation covers digits, operators, functions, constants, variables, and calculus templates.
 
 ### ExpressionCursorService
 
-Resolves the cursor position produced by inserting a button template,
-including selection wrapping.
+Resolves the cursor position produced by inserting a button template, including selection wrapping.
 
 ### ExpressionInsertionService
 
-Applies a button insertion template to the current expression and produces the
-final text edit.
+Applies a button insertion template to the current expression and produces the final text edit.
 
 ### ExpressionEditorKeyboardService
 
@@ -241,8 +232,7 @@ Scrolls the editor horizontally to keep the caret visible.
 
 ### FocusPreservationService
 
-Restores focus to the expression editor after pointer button presses and keeps
-it on the button for keyboard grid navigation.
+Restores focus to the expression editor after pointer button presses and keeps it on the button for keyboard grid navigation.
 
 ### CalculatorKeyboardShortcutRegistry
 
