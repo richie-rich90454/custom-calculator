@@ -5,23 +5,21 @@ description: The layered architecture of the calculator and the dependency rules
 
 # Architecture Overview
 
-The calculator follows a strict layered architecture. Each layer has a clear
-responsibility, and dependencies flow in one direction only.
+The calculator follows a strict layered architecture. Each layer has a clear responsibility, and dependencies flow in one direction only.
 
 ## The layers
 
-| Layer | Responsibility | Dependencies |
-| ----- | -------------- | ------------ |
-| Presentation | React components, React Aria usage, styles, view models | State |
-| State | Thin Zustand store mapping UI state to session state | Application |
-| Application | Commands, the application controller, orchestration | Domain |
-| Domain | Pure TypeScript models and services | None |
-| Infrastructure | math.js gateway, persistence, feature detection, data | Domain |
+| Layer          | Responsibility                                          | Dependencies |
+| -------------- | ------------------------------------------------------- | ------------ |
+| Presentation   | React components, React Aria usage, styles, view models | State        |
+| State          | Thin Zustand store mapping UI state to session state    | Application  |
+| Application    | Commands, the application controller, orchestration     | Domain       |
+| Domain         | Pure TypeScript models and services                     | None         |
+| Infrastructure | math.js gateway, persistence, feature detection, data   | Domain       |
 
 ## Core rules
 
-- `.tsx` files render UI and forward events only. Logic lives in discrete
-  `.ts` classes.
+- `.tsx` files render UI and forward events only. Logic lives in discrete `.ts` classes.
 - math.js is only reachable through `src/infrastructure/mathjs`.
 - React Aria is only used in the presentation layer.
 - The domain layer never imports React, math.js, or the browser.
@@ -49,13 +47,11 @@ See [Evaluation pipeline](/architecture/evaluation-pipeline).
 
 ## The composition root
 
-Every service is constructed in a single composition root and injected via
-constructor injection. See [Composition root](/developer/composition-root).
+Every service is constructed in a single composition root and injected via constructor injection. See [Composition root](/developer/composition-root).
 
 ## Diagrams
 
-See [Diagrams](/architecture/diagrams) for visual renderings of the
-architecture.
+See [Diagrams](/architecture/diagrams) for visual renderings of the architecture.
 
 ## Next steps
 
