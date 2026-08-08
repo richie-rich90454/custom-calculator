@@ -8,13 +8,15 @@ import type {
 import { AngleMode } from "../../domain/model/AngleMode";
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
 import type { ConstantCatalogService } from "../../domain/services/ConstantCatalogService";
+import type { MathJsFractionValueFactory } from "./MathJsFractionValueFactory";
 import type { MathJsEvaluationScopeBuilder } from "./MathJsEvaluationScopeBuilder";
 
 export class MathJsConstantScopeBuilder
   implements MathJsEvaluationScopeBuilder
 {
   public constructor(
-    private readonly constantCatalogService: ConstantCatalogService
+    private readonly constantCatalogService: ConstantCatalogService,
+    private readonly fractionValueFactory: MathJsFractionValueFactory
   ) {}
 
   public buildScope(
@@ -39,21 +41,14 @@ export class MathJsConstantScopeBuilder
     scope: Record<string, unknown>,
     math: MathJsInstance
   ): void {
-    const parsedValues: ReadonlyArray<readonly [string, number]> =
-      this.evaluateValueTextsAsNumbers(
-        math,
-        this.constantCatalogService.getAllConstants().map((constant) => [
-          constant.id,
-          constant.value,
-        ])
-      );
+    const numberType = math.config({}).number ?? "number";
 
-    for (const [identifier, value] of parsedValues) {
-      if (Number.isNaN(value)) {
-        continue;
+    for (const constant of this.constantCatalogService.getAllConstants()) {
+      const value = this.createConfiguredValue(math, constant.value, numberType);
+
+      if (value !== null) {
+        scope[constant.id] = value;
       }
-
-      scope[identifier] = this.convertToConfiguredType(math, value);
     }
   }
 
@@ -62,60 +57,70 @@ export class MathJsConstantScopeBuilder
     math: MathJsInstance,
     sessionState: CalculatorSessionState
   ): void {
-    const parsedValues: ReadonlyArray<readonly [string, number]> =
-      this.evaluateValueTextsAsNumbers(
-        math,
-        sessionState.variables.map((variable) => [
-          variable.name,
-          variable.valueText,
-        ])
-      );
+    const numberType = math.config({}).number ?? "number";
 
-    for (const [identifier, value] of parsedValues) {
-      if (Number.isNaN(value)) {
-        continue;
+    for (const variable of sessionState.variables) {
+      const value = this.createConfiguredValue(math, variable.valueText, numberType);
+
+      if (value !== null) {
+        scope[variable.name] = value;
       }
-
-      scope[identifier] = this.convertToConfiguredType(math, value);
     }
   }
 
-  private evaluateValueTextsAsNumbers(
+  private createConfiguredValue(
     math: MathJsInstance,
-    valueTexts: ReadonlyArray<readonly [string, string]>
-  ): ReadonlyArray<readonly [string, number]> {
+    valueText: string,
+    numberType: string
+  ): unknown {
+    if (numberType === "Fraction") {
+      try {
+        return this.fractionValueFactory.createFractionFromValueText(
+          math,
+          valueText
+        );
+      } catch {
+        return null;
+      }
+    }
+
+    let numericValue: number;
+
+    try {
+      numericValue = this.evaluateValueTextAsNumber(math, valueText);
+    } catch {
+      return null;
+    }
+
+    if (Number.isNaN(numericValue)) {
+      return null;
+    }
+
+    return this.convertNumberToConfiguredType(math, numericValue, numberType);
+  }
+
+  private evaluateValueTextAsNumber(
+    math: MathJsInstance,
+    valueText: string
+  ): number {
     const originalNumberType = math.config({}).number ?? "number";
 
     math.config({ number: "number" });
 
-    const parsedValues: Array<readonly [string, number]> = [];
-
-    for (const [identifier, valueText] of valueTexts) {
-      try {
-        const numericValue = math.evaluate(valueText) as number;
-        parsedValues.push([identifier, numericValue]);
-      } catch {
-        parsedValues.push([identifier, Number.NaN]);
-      }
+    try {
+      return math.evaluate(valueText) as number;
+    } finally {
+      math.config({ number: originalNumberType });
     }
-
-    math.config({ number: originalNumberType });
-
-    return parsedValues;
   }
 
-  private convertToConfiguredType(
+  private convertNumberToConfiguredType(
     math: MathJsInstance,
-    numericValue: number
+    numericValue: number,
+    numberType: string
   ): unknown {
-    const numberType = math.config({}).number ?? "number";
-
     if (numberType === "BigNumber") {
       return math.bignumber(numericValue);
-    }
-
-    if (numberType === "Fraction") {
-      return math.fraction(numericValue);
     }
 
     if (numberType === "bigint") {
