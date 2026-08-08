@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
 import { withMermaid } from "vitepress-plugin-mermaid";
-import { MarkdownItKatex } from "@mdit/plugin-katex";
+import { katex as markdownItKatex } from "@mdit/plugin-katex";
 
 const siteDescription =
   "Documentation hub for a custom expression-based scientific calculator with calculus, CAS, keyboard-first editing, and professional math notation.";
@@ -15,7 +15,7 @@ export default withMermaid(
 
     markdown: {
       config: (markdownIt) => {
-        markdownIt.use(MarkdownItKatex, {
+        markdownIt.use(markdownItKatex, {
           output: "html",
           throwOnError: false,
         });
