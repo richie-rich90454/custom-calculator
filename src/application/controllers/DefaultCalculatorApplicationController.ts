@@ -40,246 +40,205 @@ import type { CalculatorApplicationController } from "./CalculatorApplicationCon
 import type { CalculusBlockParser } from "../calculus/CalculusBlockParser";
 import type { CalculusExpressionRouterService } from "../calculus/CalculusExpressionRouterService";
 
-export class DefaultCalculatorApplicationController
-  implements CalculatorApplicationController
-{
-  public constructor(
-    private readonly expressionEditingService: ExpressionEditingService,
-    private readonly expressionValidationService: ExpressionValidationService,
-    private readonly expressionEvaluationGateway: ExpressionEvaluationGateway,
-    private readonly numericModePolicyService: NumericModePolicyService,
-    private readonly functionCatalogService: ScientificFunctionCatalogService,
-    private readonly constantCatalogService: ConstantCatalogService,
-    private readonly casService: CasService,
-    private readonly casBlockParser: CasBlockParser,
-    private readonly casExpressionRouterService: CasExpressionRouterService,
-    private readonly calculusBlockParser: CalculusBlockParser,
-    private readonly calculusExpressionRouterService: CalculusExpressionRouterService
-  ) {}
+export class DefaultCalculatorApplicationController implements CalculatorApplicationController {
+    public constructor(
+        private readonly expressionEditingService: ExpressionEditingService,
+        private readonly expressionValidationService: ExpressionValidationService,
+        private readonly expressionEvaluationGateway: ExpressionEvaluationGateway,
+        private readonly numericModePolicyService: NumericModePolicyService,
+        private readonly functionCatalogService: ScientificFunctionCatalogService,
+        private readonly constantCatalogService: ConstantCatalogService,
+        private readonly casService: CasService,
+        private readonly casBlockParser: CasBlockParser,
+        private readonly casExpressionRouterService: CasExpressionRouterService,
+        private readonly calculusBlockParser: CalculusBlockParser,
+        private readonly calculusExpressionRouterService: CalculusExpressionRouterService,
+    ) {}
 
-  public applyInsertion(
-    currentState: CalculatorSessionState,
-    edit: ExpressionTextEdit
-  ): CalculatorSessionState {
-    return new ApplyTextEditCalculatorCommand(edit).execute(currentState);
-  }
+    public applyInsertion(
+        currentState: CalculatorSessionState,
+        edit: ExpressionTextEdit,
+    ): CalculatorSessionState {
+        return new ApplyTextEditCalculatorCommand(edit).execute(currentState);
+    }
 
-  public insertDigit(
-    currentState: CalculatorSessionState,
-    digit: string
-  ): CalculatorSessionState {
-    return new InsertDigitCalculatorCommand(
-      this.expressionEditingService,
-      digit
-    ).execute(currentState);
-  }
+    public insertDigit(
+        currentState: CalculatorSessionState,
+        digit: string,
+    ): CalculatorSessionState {
+        return new InsertDigitCalculatorCommand(this.expressionEditingService, digit).execute(
+            currentState,
+        );
+    }
 
-  public insertOperator(
-    currentState: CalculatorSessionState,
-    operator: string
-  ): CalculatorSessionState {
-    return new InsertOperatorCalculatorCommand(
-      this.expressionEditingService,
-      operator
-    ).execute(currentState);
-  }
+    public insertOperator(
+        currentState: CalculatorSessionState,
+        operator: string,
+    ): CalculatorSessionState {
+        return new InsertOperatorCalculatorCommand(this.expressionEditingService, operator).execute(
+            currentState,
+        );
+    }
 
-  public insertFunction(
-    currentState: CalculatorSessionState,
-    functionName: string
-  ): CalculatorSessionState {
-    return new InsertFunctionCalculatorCommand(
-      this.expressionEditingService,
-      functionName
-    ).execute(currentState);
-  }
+    public insertFunction(
+        currentState: CalculatorSessionState,
+        functionName: string,
+    ): CalculatorSessionState {
+        return new InsertFunctionCalculatorCommand(
+            this.expressionEditingService,
+            functionName,
+        ).execute(currentState);
+    }
 
-  public insertConstant(
-    currentState: CalculatorSessionState,
-    constantId: string
-  ): CalculatorSessionState {
-    return new InsertConstantCalculatorCommand(
-      this.expressionEditingService,
-      this.constantCatalogService,
-      constantId
-    ).execute(currentState);
-  }
+    public insertConstant(
+        currentState: CalculatorSessionState,
+        constantId: string,
+    ): CalculatorSessionState {
+        return new InsertConstantCalculatorCommand(
+            this.expressionEditingService,
+            this.constantCatalogService,
+            constantId,
+        ).execute(currentState);
+    }
 
-  public insertVariable(
-    currentState: CalculatorSessionState,
-    variableName: string
-  ): CalculatorSessionState {
-    return new InsertVariableCalculatorCommand(
-      this.expressionEditingService,
-      variableName
-    ).execute(currentState);
-  }
+    public insertVariable(
+        currentState: CalculatorSessionState,
+        variableName: string,
+    ): CalculatorSessionState {
+        return new InsertVariableCalculatorCommand(
+            this.expressionEditingService,
+            variableName,
+        ).execute(currentState);
+    }
 
-  public insertParenthesis(
-    currentState: CalculatorSessionState,
-    parenthesis: string
-  ): CalculatorSessionState {
-    return new InsertParenthesisCalculatorCommand(
-      this.expressionEditingService,
-      parenthesis
-    ).execute(currentState);
-  }
+    public insertParenthesis(
+        currentState: CalculatorSessionState,
+        parenthesis: string,
+    ): CalculatorSessionState {
+        return new InsertParenthesisCalculatorCommand(
+            this.expressionEditingService,
+            parenthesis,
+        ).execute(currentState);
+    }
 
-  public deleteBackward(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new DeleteBackwardCalculatorCommand(
-      this.expressionEditingService
-    ).execute(currentState);
-  }
+    public deleteBackward(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new DeleteBackwardCalculatorCommand(this.expressionEditingService).execute(
+            currentState,
+        );
+    }
 
-  public deleteForward(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new DeleteForwardCalculatorCommand(
-      this.expressionEditingService
-    ).execute(currentState);
-  }
+    public deleteForward(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new DeleteForwardCalculatorCommand(this.expressionEditingService).execute(
+            currentState,
+        );
+    }
 
-  public deleteWordBackward(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new DeleteWordBackwardCalculatorCommand(
-      this.expressionEditingService
-    ).execute(currentState);
-  }
+    public deleteWordBackward(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new DeleteWordBackwardCalculatorCommand(this.expressionEditingService).execute(
+            currentState,
+        );
+    }
 
-  public clearSession(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new ClearSessionCalculatorCommand().execute(currentState);
-  }
+    public clearSession(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new ClearSessionCalculatorCommand().execute(currentState);
+    }
 
-  public setExpressionText(
-    currentState: CalculatorSessionState,
-    expressionText: string
-  ): CalculatorSessionState {
-    return new SetExpressionTextCalculatorCommand(
-      expressionText
-    ).execute(currentState);
-  }
+    public setExpressionText(
+        currentState: CalculatorSessionState,
+        expressionText: string,
+    ): CalculatorSessionState {
+        return new SetExpressionTextCalculatorCommand(expressionText).execute(currentState);
+    }
 
-  public evaluateExpression(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new EvaluateExpressionCalculatorCommand(
-      this.expressionEditingService,
-      this.expressionValidationService,
-      this.expressionEvaluationGateway,
-      this.casBlockParser,
-      this.casExpressionRouterService,
-      this.casService,
-      this.calculusBlockParser,
-      this.calculusExpressionRouterService
-    ).execute(currentState);
-  }
+    public evaluateExpression(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new EvaluateExpressionCalculatorCommand(
+            this.expressionEditingService,
+            this.expressionValidationService,
+            this.expressionEvaluationGateway,
+            this.casBlockParser,
+            this.casExpressionRouterService,
+            this.casService,
+            this.calculusBlockParser,
+            this.calculusExpressionRouterService,
+        ).execute(currentState);
+    }
 
-  public cycleAngleMode(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new CycleAngleModeCalculatorCommand().execute(currentState);
-  }
+    public cycleAngleMode(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new CycleAngleModeCalculatorCommand().execute(currentState);
+    }
 
-  public changeNumericMode(
-    currentState: CalculatorSessionState,
-    numericMode: NumericMode
-  ): CalculatorSessionState {
-    return new ChangeNumericModeCalculatorCommand(
-      this.numericModePolicyService,
-      numericMode
-    ).execute(currentState);
-  }
+    public changeNumericMode(
+        currentState: CalculatorSessionState,
+        numericMode: NumericMode,
+    ): CalculatorSessionState {
+        return new ChangeNumericModeCalculatorCommand(
+            this.numericModePolicyService,
+            numericMode,
+        ).execute(currentState);
+    }
 
-  public toggleComplexNumbers(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new ToggleComplexNumbersCalculatorCommand().execute(currentState);
-  }
+    public toggleComplexNumbers(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new ToggleComplexNumbersCalculatorCommand().execute(currentState);
+    }
 
-  public toggleCasMode(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new ToggleCasModeCalculatorCommand().execute(currentState);
-  }
+    public toggleCasMode(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new ToggleCasModeCalculatorCommand().execute(currentState);
+    }
 
-  public saveVariable(
-    currentState: CalculatorSessionState,
-    variableName: string
-  ): CalculatorSessionState {
-    return new SaveVariableCalculatorCommand(
-      this.functionCatalogService,
-      this.constantCatalogService,
-      variableName
-    ).execute(currentState);
-  }
+    public saveVariable(
+        currentState: CalculatorSessionState,
+        variableName: string,
+    ): CalculatorSessionState {
+        return new SaveVariableCalculatorCommand(
+            this.functionCatalogService,
+            this.constantCatalogService,
+            variableName,
+        ).execute(currentState);
+    }
 
-  public deleteVariable(
-    currentState: CalculatorSessionState,
-    variableName: string
-  ): CalculatorSessionState {
-    return new DeleteVariableCalculatorCommand(
-      variableName
-    ).execute(currentState);
-  }
+    public deleteVariable(
+        currentState: CalculatorSessionState,
+        variableName: string,
+    ): CalculatorSessionState {
+        return new DeleteVariableCalculatorCommand(variableName).execute(currentState);
+    }
 
-  public memoryAdd(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new MemoryAddCalculatorCommand(
-      this.expressionEvaluationGateway
-    ).execute(currentState);
-  }
+    public memoryAdd(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new MemoryAddCalculatorCommand(this.expressionEvaluationGateway).execute(
+            currentState,
+        );
+    }
 
-  public memorySubtract(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new MemorySubtractCalculatorCommand(
-      this.expressionEvaluationGateway
-    ).execute(currentState);
-  }
+    public memorySubtract(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new MemorySubtractCalculatorCommand(this.expressionEvaluationGateway).execute(
+            currentState,
+        );
+    }
 
-  public memoryRecall(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new MemoryRecallCalculatorCommand(
-      this.expressionEditingService
-    ).execute(currentState);
-  }
+    public memoryRecall(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new MemoryRecallCalculatorCommand(this.expressionEditingService).execute(
+            currentState,
+        );
+    }
 
-  public memoryClear(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new MemoryClearCalculatorCommand().execute(currentState);
-  }
+    public memoryClear(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new MemoryClearCalculatorCommand().execute(currentState);
+    }
 
-  public simplifyExpression(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new SimplifyExpressionCalculatorCommand(
-      this.casService
-    ).execute(currentState);
-  }
+    public simplifyExpression(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new SimplifyExpressionCalculatorCommand(this.casService).execute(currentState);
+    }
 
-  public expandExpression(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState {
-    return new ExpandExpressionCalculatorCommand(
-      this.casService
-    ).execute(currentState);
-  }
+    public expandExpression(currentState: CalculatorSessionState): CalculatorSessionState {
+        return new ExpandExpressionCalculatorCommand(this.casService).execute(currentState);
+    }
 
-  public differentiateExpression(
-    currentState: CalculatorSessionState,
-    variableName: string
-  ): CalculatorSessionState {
-    return new DifferentiateExpressionCalculatorCommand(
-      this.casService,
-      variableName
-    ).execute(currentState);
-  }
+    public differentiateExpression(
+        currentState: CalculatorSessionState,
+        variableName: string,
+    ): CalculatorSessionState {
+        return new DifferentiateExpressionCalculatorCommand(this.casService, variableName).execute(
+            currentState,
+        );
+    }
 }
