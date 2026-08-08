@@ -18,7 +18,6 @@ function buildRootWithSettings(
     "detectBrowserFeatures"
   ).mockReturnValue({
     bigIntSupported: bigIntSupported,
-    indexedDbSupported: true,
   });
   vi.spyOn(root.orchestrationService, "saveSettings").mockImplementation(() => undefined);
 
