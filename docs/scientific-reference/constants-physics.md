@@ -5,11 +5,10 @@ description: Reference for the universal physics constants available in the cons
 
 # Physics Constants
 
-The universal physics category provides the SI-derived constants commonly used
-in physical calculations. Values follow the CODATA 2018 recommended values.
+The universal physics category provides the SI-derived constants commonly used in physical calculations. Values follow the CODATA 2018 recommended values.
 
 | Name | Value | Unit | Description |
-| ---- | ----- | ---- | ----------- |
+| --- | --- | --- | --- |
 | `speedOfLight` | `299792458` | m/s | The exact speed of light in a vacuum |
 | `planckConstant` | `6.62607015e-34` | J·s | The proportionality constant between energy and frequency |
 | `reducedPlanckConstant` | `1.054571817e-34` | J·s | The Planck constant divided by two pi |
@@ -32,7 +31,7 @@ $$
 E = h \nu
 $$
 
-$$ 
+$$
 E = \text{planckConstant} \cdot \nu
 $$
 
