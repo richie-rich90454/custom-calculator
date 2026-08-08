@@ -24,30 +24,6 @@ export function createCalculatorUiStore(
     expressionCursorService
   );
 
-  const applyInsertion = (
-    sessionState: CalculatorSessionState,
-    template: CalculatorButtonTemplate
-  ): CalculatorSessionState => {
-    const edit = expressionInsertionService.insertTemplate(
-      template,
-      sessionState.expressionText,
-      sessionState.selectionStart,
-      sessionState.selectionEnd
-    );
-
-    return controller.applyInsertion(sessionState, edit);
-  };
-
-  const resolveInsertionBaseState = (): CalculatorSessionState => {
-    const sessionState = viewModelMapper.mapUiStateToSessionState(get());
-
-    if (sessionState.resultText === null) {
-      return sessionState;
-    }
-
-    return controller.clearSession(sessionState);
-  };
-
   return create<CalculatorUiStore>()((set, get) => {
     const recordHistoryEntry = async (
       sessionState: CalculatorSessionState
@@ -67,6 +43,30 @@ export function createCalculatorUiStore(
       const updatedEntries = await orchestrationService.refreshHistoryEntries();
 
       set({ historyEntries: updatedEntries });
+    };
+
+    const applyInsertion = (
+      sessionState: CalculatorSessionState,
+      template: CalculatorButtonTemplate
+    ): CalculatorSessionState => {
+      const edit = expressionInsertionService.insertTemplate(
+        template,
+        sessionState.expressionText,
+        sessionState.selectionStart,
+        sessionState.selectionEnd
+      );
+
+      return controller.applyInsertion(sessionState, edit);
+    };
+
+    const resolveInsertionBaseState = (): CalculatorSessionState => {
+      const sessionState = viewModelMapper.mapUiStateToSessionState(get());
+
+      if (sessionState.resultText === null) {
+        return sessionState;
+      }
+
+      return controller.clearSession(sessionState);
     };
 
     return {
