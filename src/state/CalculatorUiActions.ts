@@ -1,3 +1,4 @@
+import { AngleMode } from "../domain/model/AngleMode";
 import { NumericMode } from "../domain/model/NumericMode";
 import { ThemePreference } from "../domain/model/ThemePreference";
 
@@ -14,6 +15,7 @@ export interface CalculatorUiActions {
   onClearPressed(): void;
   onEvaluatePressed(): void;
   onAngleModeTogglePressed(): void;
+  onAngleModeChanged(angleMode: AngleMode): void;
   onNumericModeChanged(numericMode: NumericMode): void;
   onComplexNumbersTogglePressed(): void;
   onCasTogglePressed(): void;

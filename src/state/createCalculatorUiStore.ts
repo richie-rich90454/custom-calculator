@@ -117,6 +117,17 @@ export function createCalculatorUiStore(
       );
     },
 
+    onAngleModeChanged: (angleMode) => {
+      set({
+        angleMode: angleMode,
+        resultText: null,
+        errorText: null,
+      });
+      orchestrationService.saveSettings(
+        viewModelMapper.mapUiStateToSettings(get())
+      );
+    },
+
     onNumericModeChanged: (numericMode) => {
       const sessionState = viewModelMapper.mapUiStateToSessionState(get());
       const nextSessionState = controller.changeNumericMode(sessionState, numericMode);
