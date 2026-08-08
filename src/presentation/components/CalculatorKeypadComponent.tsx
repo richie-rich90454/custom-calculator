@@ -1,5 +1,6 @@
 import { useCalculatorApplicationContext } from "../../app/CalculatorApplicationContext";
 import { AccessibleButtonComponent } from "../primitives/AccessibleButtonComponent";
+import { useKeypadGridNavigation } from "../hooks/useKeypadGridNavigation";
 import { cssClass } from "../utils/classNames";
 import styles from "../styles/CalculatorKeypadComponent.module.css";
 
@@ -138,30 +139,60 @@ export function CalculatorKeypadComponent() {
 
   return (
     <div className={cssClass(styles.keypad)}>
-      <div className={cssClass(styles.functionArea)} aria-label="Scientific functions">
-        {FUNCTION_KEYS.map((key) => (
-          <AccessibleButtonComponent
-            key={key.id}
-            customClassName={cssClass(styles.functionKey)}
-            aria-label={key.ariaLabel}
-            onPress={() => handleKeyPressed(key)}
-          >
-            {key.label}
-          </AccessibleButtonComponent>
-        ))}
-      </div>
-      <div className={cssClass(styles.coreArea)} aria-label="Calculator keypad">
-        {CORE_KEYS.map((key) => (
-          <AccessibleButtonComponent
-            key={key.id}
-            customClassName={resolveCoreKeyClassName(key)}
-            aria-label={key.ariaLabel}
-            onPress={() => handleKeyPressed(key)}
-          >
-            {key.label}
-          </AccessibleButtonComponent>
-        ))}
-      </div>
+      <KeypadGridSection
+        sectionClassName={cssClass(styles.functionArea)}
+        gridLabel="Scientific functions"
+        keys={FUNCTION_KEYS}
+        columnCount={6}
+        resolveKeyClassName={() => cssClass(styles.functionKey)}
+        onKeyPressed={handleKeyPressed}
+      />
+      <KeypadGridSection
+        sectionClassName={cssClass(styles.coreArea)}
+        gridLabel="Calculator keypad"
+        keys={CORE_KEYS}
+        columnCount={5}
+        resolveKeyClassName={resolveCoreKeyClassName}
+        onKeyPressed={handleKeyPressed}
+      />
+    </div>
+  );
+}
+
+interface KeypadGridSectionProperties {
+  readonly sectionClassName: string;
+  readonly gridLabel: string;
+  readonly keys: readonly KeySpec[];
+  readonly columnCount: number;
+  readonly resolveKeyClassName: (key: KeySpec) => string;
+  readonly onKeyPressed: (key: KeySpec) => void;
+}
+
+function KeypadGridSection(props: KeypadGridSectionProperties) {
+  const itemIds = props.keys.map((key) => key.id);
+
+  const navigation = useKeypadGridNavigation(itemIds, props.columnCount);
+
+  return (
+    <div
+      role="grid"
+      aria-label={props.gridLabel}
+      className={cssClass(props.sectionClassName)}
+      onKeyDown={navigation.handleGridKeyDown}
+    >
+      {props.keys.map((key) => (
+        <AccessibleButtonComponent
+          key={key.id}
+          ref={(element) => navigation.registerItemRef(key.id, element)}
+          customClassName={props.resolveKeyClassName(key)}
+          aria-label={key.ariaLabel}
+          tabIndex={navigation.getTabIndex(key.id)}
+          onFocus={() => navigation.handleItemFocus(key.id)}
+          onPress={() => props.onKeyPressed(key)}
+        >
+          {key.label}
+        </AccessibleButtonComponent>
+      ))}
     </div>
   );
 }
