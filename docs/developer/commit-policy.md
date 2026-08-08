@@ -5,8 +5,7 @@ description: The commit conventions used in this repository.
 
 # Commit Policy
 
-The repository follows a strict one-file-per-commit policy with imperative
-American English commit messages.
+The repository follows a strict one-file-per-commit policy with imperative American English commit messages.
 
 ## One file per commit
 
@@ -16,18 +15,17 @@ American English commit messages.
 
 ## Message style
 
-Commit messages use the conventional commit prefix and an imperative American
-English summary.
+Commit messages use the conventional commit prefix and an imperative American English summary.
 
-| Prefix | Use for |
-| ------ | ------- |
-| `feat:` | A new feature |
-| `fix:` | A bug fix |
-| `docs:` | Documentation |
-| `test:` | Tests |
+| Prefix      | Use for                                    |
+| ----------- | ------------------------------------------ |
+| `feat:`     | A new feature                              |
+| `fix:`      | A bug fix                                  |
+| `docs:`     | Documentation                              |
+| `test:`     | Tests                                      |
 | `refactor:` | Code restructuring without behavior change |
-| `style:` | Formatting and non-functional changes |
-| `chore:` | Tooling and maintenance |
+| `style:`    | Formatting and non-functional changes      |
+| `chore:`    | Tooling and maintenance                    |
 
 ## Examples
 
@@ -41,8 +39,7 @@ refactor: extract button insertion template service
 
 ## American English
 
-All commit messages use American English spellings: `behavior`, `color`,
-`customize`, `initialize`, `organization`, `license`.
+All commit messages use American English spellings: `behavior`, `color`, `customize`, `initialize`, `organization`, `license`.
 
 ## Verification before commit
 
