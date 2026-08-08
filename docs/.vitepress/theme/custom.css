@@ -1,0 +1,195 @@
+:root {
+  /* Typography aligned with the calculator product */
+  --vp-font-family-base: "Noto Sans", "Segoe UI", system-ui, -apple-system,
+    sans-serif;
+  --vp-font-family-mono: "Noto Sans Mono", "Cascadia Code", Consolas, monospace;
+
+  /* Light theme aligned with the calculator design system */
+  --vp-c-brand-1: #1f6feb;
+  --vp-c-brand-2: #1d5cc9;
+  --vp-c-brand-3: #1f6feb;
+  --vp-c-brand-soft: #dbe7ff;
+
+  --vp-c-bg: #f4f5f7;
+  --vp-c-bg-alt: #eef0f3;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-bg-soft: #eef0f3;
+
+  --vp-c-text-1: #15181d;
+  --vp-c-text-2: #5b6470;
+  --vp-c-text-3: #8a93a0;
+
+  --vp-c-border: #d7dbe0;
+  --vp-c-divider: #d7dbe0;
+
+  --vp-c-gutter: #e4e7ec;
+  --vp-c-mute: #eef0f3;
+  --vp-c-mute-dark: #e8ebef;
+
+  --vp-c-danger-1: #b42318;
+  --vp-c-danger-soft: #fdf1f0;
+  --vp-c-warning-1: #b07a13;
+  --vp-c-warning-soft: #fbf4e4;
+  --vp-c-tip-1: #1e8a44;
+  --vp-c-tip-soft: #e9f6ee;
+
+  --vp-radius-sm: 4px;
+  --vp-radius-md: 6px;
+  --vp-radius-lg: 8px;
+
+  --vp-nav-height: 56px;
+  --vp-sidebar-width: 284px;
+
+  --vp-code-block-bg: #f8f9fb;
+  --vp-code-copy-code-bg: #eef0f3;
+  --vp-code-copy-code-hover-bg: #e8ebef;
+  --vp-code-line-highlight-color: #dbe7ff;
+  --vp-code-copy-code-active-text: #38414d;
+  --vp-code-copy-code-hover-text: #15181d;
+}
+
+.dark {
+  /* Dark theme aligned with the calculator design system */
+  --vp-c-brand-1: #4c8dff;
+  --vp-c-brand-2: #9fc0ff;
+  --vp-c-brand-3: #4c8dff;
+  --vp-c-brand-soft: #1b2b47;
+
+  --vp-c-bg: #101318;
+  --vp-c-bg-alt: #14181e;
+  --vp-c-bg-elv: #181c23;
+  --vp-c-bg-soft: #202632;
+
+  --vp-c-text-1: #e8ebf0;
+  --vp-c-text-2: #98a2b3;
+  --vp-c-text-3: #6b7686;
+
+  --vp-c-border: #2c3442;
+  --vp-c-divider: #2c3442;
+
+  --vp-c-gutter: #14181e;
+  --vp-c-mute: #202632;
+  --vp-c-mute-dark: #262d3a;
+
+  --vp-c-danger-1: #ff6b6b;
+  --vp-c-danger-soft: #2b1718;
+  --vp-c-warning-1: #f5c76b;
+  --vp-c-warning-soft: #3a2f1a;
+  --vp-c-tip-1: #6bdb8c;
+  --vp-c-tip-soft: #173025;
+
+  --vp-code-block-bg: #0d1015;
+  --vp-code-copy-code-bg: #202632;
+  --vp-code-copy-code-hover-bg: #262d3a;
+  --vp-code-line-highlight-color: #1b2b47;
+  --vp-code-copy-code-active-text: #b6c0cc;
+  --vp-code-copy-code-hover-text: #e8ebf0;
+}
+
+/* Professional typography baseline */
+.vp-doc h1 {
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4 {
+  letter-spacing: -0.01em;
+}
+
+/* Clean table styling */
+.vp-doc table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+}
+
+.vp-doc th,
+.vp-doc td {
+  border: 1px solid var(--vp-c-divider);
+  padding: 0.5rem 0.75rem;
+}
+
+.vp-doc th {
+  background-color: var(--vp-c-bg-soft);
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Readable code blocks */
+.vp-doc div[class*="language-"] {
+  border-radius: var(--vp-radius-md);
+}
+
+.vp-doc :not(pre) > code {
+  border-radius: 4px;
+  padding: 0.15em 0.35em;
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-brand-1);
+}
+
+/* Readable sidebar styling */
+.VPSidebarItem.level-0 > .item {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.VPSidebarItem.level-0 > .item .text {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Accessible focus states */
+:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Calm link transitions */
+.vp-doc a {
+  transition: color 0.12s ease;
+}
+
+/* KaTeX display math spacing */
+.vp-doc .katex-display {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+/* Mermaid diagram containers */
+.mermaid {
+  margin: 1.25rem 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+/* Home hero polish */
+.VPHero .name,
+.VPHero .text {
+  letter-spacing: -0.03em;
+}
+
+.VPHero .actions {
+  gap: 0.75rem;
+}
+
+/* Local search box alignment */
+.DocSearch-Button {
+  border-radius: var(--vp-radius-sm);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
