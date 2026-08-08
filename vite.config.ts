@@ -6,6 +6,7 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
+    testTimeout: 30000,
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.test.{ts,tsx}"],
     coverage: {
@@ -17,10 +18,10 @@ export default defineConfig({
         "src/test/**/*.{ts,tsx}",
       ],
       thresholds: {
-        statements: 95,
-        branches: 85,
-        functions: 95,
-        lines: 95,
+        statements: 100,
+        branches: 100,
+        functions: 100,
+        lines: 100,
       },
     },
   },
