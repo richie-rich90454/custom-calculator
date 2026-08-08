@@ -1,0 +1,57 @@
+.textField {
+  display: block;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.editorRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 2.2rem;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.5;
+  padding: 0;
+  outline: none;
+  caret-color: var(--color-focus-ring);
+  text-align: left;
+  white-space: pre;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.input::-webkit-scrollbar {
+  display: none;
+}
+
+.input::selection {
+  background-color: var(--color-accent-muted);
+  color: var(--color-text-primary);
+}
+
+.input:focus-visible {
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+  text-align: left;
+}
