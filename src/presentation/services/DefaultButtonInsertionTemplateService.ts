@@ -108,14 +108,10 @@ export class DefaultButtonInsertionTemplateService
         functionName
       ];
     const text = templateText ?? `${functionName}(`;
-    const openingParenthesisIndex = text.indexOf("(");
 
     return {
       text: text,
-      cursorOffset:
-        openingParenthesisIndex >= 0
-          ? openingParenthesisIndex + 1
-          : text.length,
+      cursorOffset: text.indexOf("(") + 1,
       wrapsSelection: false,
       wrapOpenText: "",
       wrapCloseText: "",
