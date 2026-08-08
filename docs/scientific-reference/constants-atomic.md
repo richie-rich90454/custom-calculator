@@ -5,11 +5,10 @@ description: Reference for the atomic and particle constants available in the co
 
 # Atomic Constants
 
-The atomic and particle category provides the constants used in quantum
-mechanics, atomic physics, and particle physics, following CODATA 2018 values.
+The atomic and particle category provides the constants used in quantum mechanics, atomic physics, and particle physics, following CODATA 2018 values.
 
 | Name | Value | Unit | Description |
-| ---- | ----- | ---- | ----------- |
+| --- | --- | --- | --- |
 | `electronMass` | `9.1093837015e-31` | kg | The rest mass of an electron |
 | `protonMass` | `1.67262192369e-27` | kg | The rest mass of a proton |
 | `neutronMass` | `1.67492749804e-27` | kg | The rest mass of a neutron |
