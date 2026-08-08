@@ -134,4 +134,43 @@ describe("CalculatorShellComponent", () => {
     ).toBeInTheDocument();
     expect(screen.getByLabelText("Variable name")).toBeInTheDocument();
   });
+
+  it("renders the memory panel when opened", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorShellComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "Open memory panel" })
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Memory" })
+    ).toBeInTheDocument();
+    expect(screen.getByText("Memory is empty.")).toBeInTheDocument();
+  });
+
+  it("closes the active panel through the dialog close button", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorShellComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "Open history panel" })
+    );
+
+    expect(harness.store.getState().activePanel).toBe("HISTORY");
+
+    await user.click(screen.getByRole("button", { name: "Close" }));
+
+    expect(harness.store.getState().activePanel).toBe("NONE");
+  });
 });
