@@ -1,5 +1,6 @@
 import { CalculatorKeyKind, type CalculatorKeyDefinition } from "./CalculatorKeyDefinition";
 import type { CasOperationCatalogService } from "../../application/cas/CasOperationCatalogService";
+import type { CalculusOperationCatalogService } from "../../application/calculus/CalculusOperationCatalogService";
 import type { KeypadDefinitionRepository } from "./KeypadDefinitionRepository";
 
 /**
@@ -80,7 +81,8 @@ export class DefaultKeypadDefinitionRepository
   ];
 
   public constructor(
-    private readonly casOperationCatalogService: CasOperationCatalogService
+    private readonly casOperationCatalogService: CasOperationCatalogService,
+    private readonly calculusOperationCatalogService: CalculusOperationCatalogService
   ) {}
 
   public getScientificFunctionKeys(): readonly CalculatorKeyDefinition[] {
@@ -97,6 +99,16 @@ export class DefaultKeypadDefinitionRepository
       label: operation.label,
       ariaLabel: operation.ariaLabel,
       kind: CalculatorKeyKind.CAS_OPERATION,
+      value: operation.functionName,
+    }));
+  }
+
+  public getCalculusOperationKeys(): readonly CalculatorKeyDefinition[] {
+    return this.calculusOperationCatalogService.getOperations().map((operation) => ({
+      id: operation.functionName,
+      label: operation.label,
+      ariaLabel: operation.ariaLabel,
+      kind: CalculatorKeyKind.CALCULUS_OPERATION,
       value: operation.functionName,
     }));
   }
