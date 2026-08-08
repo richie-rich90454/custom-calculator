@@ -5,25 +5,22 @@ description: How standard, exact decimal, fraction, and BigInt numeric modes dif
 
 # Numeric Modes
 
-The numeric mode controls how results are computed and displayed. There are
-four modes.
+The numeric mode controls how results are computed and displayed. There are four modes.
 
-| Mode | Behavior |
-| ---- | -------- |
-| STANDARD | Floating-point evaluation with the default math.js precision |
-| EXACT_DECIMAL | Keeps exact decimal arithmetic where supported |
-| FRACTION | Presents rational results as fractions |
-| BIGINT | Uses integer arithmetic with BigInt when available |
+| Mode          | Behavior                                                     |
+| ------------- | ------------------------------------------------------------ |
+| STANDARD      | Floating-point evaluation with the default math.js precision |
+| EXACT_DECIMAL | Keeps exact decimal arithmetic where supported               |
+| FRACTION      | Presents rational results as fractions                       |
+| BIGINT        | Uses integer arithmetic with BigInt when available           |
 
 ## Selecting a mode
 
-Open the settings panel and choose the numeric mode. The status bar shows the
-active mode.
+Open the settings panel and choose the numeric mode. The status bar shows the active mode.
 
 ## Standard mode
 
-The default mode. Results are computed in floating point and formatted
-compactly.
+The default mode. Results are computed in floating point and formatted compactly.
 
 ```
 10 / 4  ->  2.5
@@ -48,9 +45,7 @@ Presents rational results as fractions when possible.
 
 ## BigInt mode
 
-Uses arbitrary-precision integer arithmetic when the browser supports BigInt.
-If BigInt is not supported, the calculator detects this and falls back
-gracefully to standard numeric behavior.
+Uses arbitrary-precision integer arithmetic when the browser supports BigInt. If BigInt is not supported, the calculator detects this and falls back gracefully to standard numeric behavior.
 
 ```
 2^100  ->  1267650600228229401496703205376
@@ -58,8 +53,7 @@ gracefully to standard numeric behavior.
 
 ## BigInt feature detection
 
-BigInt support is detected at startup. The status message reports whether
-BigInt is available. See [BigInt mode](/user-guide/bigint-mode).
+BigInt support is detected at startup. The status message reports whether BigInt is available. See [BigInt mode](/user-guide/bigint-mode).
 
 ## Persistence
 
