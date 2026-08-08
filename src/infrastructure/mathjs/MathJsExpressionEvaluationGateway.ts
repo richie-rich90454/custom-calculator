@@ -1,0 +1,303 @@
+import type { MathJsInstance } from "mathjs";
+import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
+import { CalculationError } from "../../domain/model/CalculationError";
+import { CalculationErrorCode } from "../../domain/model/CalculationErrorCode";
+import { EvaluationResult } from "../../domain/model/EvaluationResult";
+import { NumericMode } from "../../domain/model/NumericMode";
+import { ExpressionEvaluationGateway } from "../../domain/services/ExpressionEvaluationGateway";
+import { ResultFormattingService } from "../../domain/services/ResultFormattingService";
+import { MathJsInstanceProvider } from "./MathJsInstanceProvider";
+import { MathJsEvaluationScopeBuilder } from "./MathJsEvaluationScopeBuilder";
+import { MathJsFunctionWhitelist } from "./MathJsFunctionWhitelist";
+
+export class MathJsExpressionEvaluationGateway
+  implements ExpressionEvaluationGateway
+{
+  private static readonly LOGARITHM_FUNCTION_PATTERN =
+    /(?:^|[^a-zA-Z])(?:log|log10|log2|ln)\s*\(/;
+  private static readonly DIVISION_OPERATOR_PATTERN = /\//;
+  private static readonly DISPLAY_PRECISION = 15;
+
+  public constructor(
+    private readonly instanceProvider: MathJsInstanceProvider,
+    private readonly scopeBuilder: MathJsEvaluationScopeBuilder,
+    private readonly functionWhitelist: MathJsFunctionWhitelist,
+    private readonly resultFormattingService: ResultFormattingService
+  ) {}
+
+  public evaluateExpression(
+    sessionState: CalculatorSessionState
+  ): EvaluationResult {
+    const math = this.instanceProvider.getInstance();
+
+    this.configureMathInstance(math, sessionState);
+
+    const scope = this.scopeBuilder.buildScope(math, sessionState);
+
+    let node;
+    try {
+      node = math.parse(sessionState.expressionText);
+    } catch (error) {
+      throw this.mapParseError(error);
+    }
+
+    this.validateExpressionNode(node, scope);
+
+    let result: unknown;
+    try {
+      result = node.compile().evaluate(scope);
+    } catch (error) {
+      throw this.mapEvaluationError(error);
+    }
+
+    this.validateResultType(result, sessionState.numericMode);
+    this.rejectNonFiniteResults(result, math, sessionState);
+
+    const resultText = this.formatResult(result, math, sessionState.numericMode);
+
+    return new EvaluationResult(
+      sessionState.expressionText,
+      this.resultFormattingService.normalizeResultText(resultText),
+      result
+    );
+  }
+
+  private configureMathInstance(
+    math: MathJsInstance,
+    sessionState: CalculatorSessionState
+  ): void {
+    const predictable = !sessionState.complexNumbersEnabled;
+
+    if (sessionState.numericMode === NumericMode.EXACT_DECIMAL) {
+      math.config({
+        number: "BigNumber",
+        precision: 30,
+        predictable: predictable,
+      });
+      return;
+    }
+
+    if (sessionState.numericMode === NumericMode.FRACTION) {
+      math.config({
+        number: "Fraction",
+        predictable: predictable,
+      });
+      return;
+    }
+
+    if (sessionState.numericMode === NumericMode.BIGINT) {
+      math.config({
+        number: "bigint",
+        predictable: predictable,
+      });
+      return;
+    }
+
+    math.config({
+      number: "number",
+      predictable: predictable,
+    });
+  }
+
+  private validateExpressionNode(
+    node: unknown,
+    scope: Record<string, unknown>
+  ): void {
+    const mathNode = node as {
+      traverse(callback: (child: { type: string }) => void): void;
+    };
+
+    mathNode.traverse((child) => {
+      if (child.type === "FunctionNode") {
+        const functionName = (child as { fn: { name: string } }).fn.name;
+
+        if (!this.functionWhitelist.isFunctionAllowed(functionName)) {
+          throw new CalculationError(
+            CalculationErrorCode.UNKNOWN_FUNCTION,
+            `Unknown function: ${functionName}.`
+          );
+        }
+      } else if (child.type === "SymbolNode") {
+        const symbolName = (child as { name: string }).name;
+
+        if (!(symbolName in scope)) {
+          throw new CalculationError(
+            CalculationErrorCode.UNKNOWN_VARIABLE,
+            `Unknown variable or constant: ${symbolName}.`
+          );
+        }
+      }
+    });
+  }
+
+  private validateResultType(
+    result: unknown,
+    numericMode: NumericMode
+  ): void {
+    if (numericMode !== NumericMode.BIGINT) {
+      return;
+    }
+
+    if (typeof result !== "bigint") {
+      throw new CalculationError(
+        CalculationErrorCode.UNSUPPORTED_NUMERIC_MODE,
+        "This operation does not produce an integer result and is not supported in BigInt mode."
+      );
+    }
+  }
+
+  private rejectNonFiniteResults(
+    result: unknown,
+    math: MathJsInstance,
+    sessionState: CalculatorSessionState
+  ): void {
+    if (math.isNaN(result)) {
+      throw this.createDomainErrorForResult(sessionState.expressionText);
+    }
+
+    if (math.isInfinity(result)) {
+      throw this.createInfinityErrorForResult(sessionState.expressionText);
+    }
+  }
+
+  private createDomainErrorForResult(expressionText: string): CalculationError {
+    if (
+      MathJsExpressionEvaluationGateway.LOGARITHM_FUNCTION_PATTERN.test(
+        expressionText
+      )
+    ) {
+      return new CalculationError(
+        CalculationErrorCode.DOMAIN_ERROR,
+        "Domain error: the logarithm is undefined for zero or negative values."
+      );
+    }
+
+    return new CalculationError(
+      CalculationErrorCode.DOMAIN_ERROR,
+      "Domain error: the result is undefined for the given input."
+    );
+  }
+
+  private createInfinityErrorForResult(
+    expressionText: string
+  ): CalculationError {
+    if (
+      MathJsExpressionEvaluationGateway.LOGARITHM_FUNCTION_PATTERN.test(
+        expressionText
+      )
+    ) {
+      return new CalculationError(
+        CalculationErrorCode.DOMAIN_ERROR,
+        "Domain error: the logarithm is undefined for zero or negative values."
+      );
+    }
+
+    if (
+      MathJsExpressionEvaluationGateway.DIVISION_OPERATOR_PATTERN.test(
+        expressionText
+      )
+    ) {
+      return new CalculationError(
+        CalculationErrorCode.DIVISION_BY_ZERO,
+        "Division by zero produced a non-finite result."
+      );
+    }
+
+    return new CalculationError(
+      CalculationErrorCode.OVERFLOW,
+      "Result is too large to represent."
+    );
+  }
+
+  private formatResult(
+    result: unknown,
+    math: MathJsInstance,
+    numericMode: NumericMode
+  ): string {
+    if (numericMode === NumericMode.FRACTION) {
+      return math.format(result, {
+        fraction: "ratio",
+        precision: MathJsExpressionEvaluationGateway.DISPLAY_PRECISION,
+      });
+    }
+
+    if (numericMode === NumericMode.BIGINT) {
+      return String(result);
+    }
+
+    return math.format(result, {
+      precision: MathJsExpressionEvaluationGateway.DISPLAY_PRECISION,
+    });
+  }
+
+  private mapParseError(error: unknown): CalculationError {
+    const message = this.extractErrorMessage(error);
+
+    if (message.includes("Unexpected end of expression")) {
+      return new CalculationError(
+        CalculationErrorCode.MISSING_PARENTHESES,
+        "Missing parentheses: the expression is incomplete."
+      );
+    }
+
+    if (message.includes("Parenthesis")) {
+      return new CalculationError(
+        CalculationErrorCode.MISSING_PARENTHESES,
+        "Missing parentheses: the expression has unbalanced parentheses."
+      );
+    }
+
+    return new CalculationError(
+      CalculationErrorCode.SYNTAX_ERROR,
+      `Syntax error: ${message}`
+    );
+  }
+
+  private mapEvaluationError(error: unknown): CalculationError {
+    const message = this.extractErrorMessage(error);
+
+    if (message.includes("Division by zero") || message.includes("Division by Zero")) {
+      return new CalculationError(
+        CalculationErrorCode.DIVISION_BY_ZERO,
+        "Division by zero is not defined."
+      );
+    }
+
+    if (message.includes("Undefined function")) {
+      return new CalculationError(
+        CalculationErrorCode.UNKNOWN_FUNCTION,
+        `Unknown function: ${message.replace("Undefined function ", "")}.`
+      );
+    }
+
+    if (message.includes("Undefined symbol")) {
+      return new CalculationError(
+        CalculationErrorCode.UNKNOWN_VARIABLE,
+        `Unknown variable or constant: ${message.replace(
+          "Undefined symbol ",
+          ""
+        )}.`
+      );
+    }
+
+    if (message.includes("Unexpected")) {
+      return new CalculationError(
+        CalculationErrorCode.SYNTAX_ERROR,
+        `Syntax error: ${message}`
+      );
+    }
+
+    return new CalculationError(
+      CalculationErrorCode.EVALUATION_FAILED,
+      `Evaluation failed: ${message}`
+    );
+  }
+
+  private extractErrorMessage(error: unknown): string {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    return String(error);
+  }
+}
