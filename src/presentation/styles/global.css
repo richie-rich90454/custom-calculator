@@ -12,13 +12,16 @@ body,
 
 body {
   margin: 0;
-  font-family: var(--font-family-sans);
+  font-family: var(--font-ui);
   color: var(--color-text-primary);
   background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
 }
 
-button {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
 }
 
