@@ -5,56 +5,56 @@ import { NumericMode } from "../../domain/model/NumericMode";
 import { InMemoryHistoryRepository } from "./InMemoryHistoryRepository";
 
 function buildEntry(id: string, expressionText: string): HistoryEntry {
-  return new HistoryEntry(
-    id,
-    expressionText,
-    "4",
-    AngleMode.DEG,
-    NumericMode.STANDARD,
-    false,
-    "2026-01-01T00:00:00.000Z"
-  );
+    return new HistoryEntry(
+        id,
+        expressionText,
+        "4",
+        AngleMode.DEG,
+        NumericMode.STANDARD,
+        false,
+        "2026-01-01T00:00:00.000Z",
+    );
 }
 
 describe("InMemoryHistoryRepository", () => {
-  it("loads entries newest first", async () => {
-    const repository = new InMemoryHistoryRepository();
+    it("loads entries newest first", async () => {
+        const repository = new InMemoryHistoryRepository();
 
-    await repository.saveHistoryEntry(buildEntry("a", "1+1"));
-    await repository.saveHistoryEntry(buildEntry("b", "2+2"));
+        await repository.saveHistoryEntry(buildEntry("a", "1+1"));
+        await repository.saveHistoryEntry(buildEntry("b", "2+2"));
 
-    const entries = await repository.loadHistoryEntries();
+        const entries = await repository.loadHistoryEntries();
 
-    expect(entries.map((entry) => entry.id)).toEqual(["b", "a"]);
-  });
+        expect(entries.map((entry) => entry.id)).toEqual(["b", "a"]);
+    });
 
-  it("deletes an existing entry", async () => {
-    const repository = new InMemoryHistoryRepository();
+    it("deletes an existing entry", async () => {
+        const repository = new InMemoryHistoryRepository();
 
-    await repository.saveHistoryEntry(buildEntry("a", "1+1"));
-    await repository.saveHistoryEntry(buildEntry("b", "2+2"));
-    await repository.deleteHistoryEntry("a");
+        await repository.saveHistoryEntry(buildEntry("a", "1+1"));
+        await repository.saveHistoryEntry(buildEntry("b", "2+2"));
+        await repository.deleteHistoryEntry("a");
 
-    const entries = await repository.loadHistoryEntries();
+        const entries = await repository.loadHistoryEntries();
 
-    expect(entries.map((entry) => entry.id)).toEqual(["b"]);
-  });
+        expect(entries.map((entry) => entry.id)).toEqual(["b"]);
+    });
 
-  it("ignores deleting an unknown entry", async () => {
-    const repository = new InMemoryHistoryRepository();
+    it("ignores deleting an unknown entry", async () => {
+        const repository = new InMemoryHistoryRepository();
 
-    await repository.saveHistoryEntry(buildEntry("a", "1+1"));
-    await repository.deleteHistoryEntry("missing");
+        await repository.saveHistoryEntry(buildEntry("a", "1+1"));
+        await repository.deleteHistoryEntry("missing");
 
-    expect(await repository.loadHistoryEntries()).toHaveLength(1);
-  });
+        expect(await repository.loadHistoryEntries()).toHaveLength(1);
+    });
 
-  it("clears all entries", async () => {
-    const repository = new InMemoryHistoryRepository();
+    it("clears all entries", async () => {
+        const repository = new InMemoryHistoryRepository();
 
-    await repository.saveHistoryEntry(buildEntry("a", "1+1"));
-    await repository.clearHistory();
+        await repository.saveHistoryEntry(buildEntry("a", "1+1"));
+        await repository.clearHistory();
 
-    expect(await repository.loadHistoryEntries()).toHaveLength(0);
-  });
+        expect(await repository.loadHistoryEntries()).toHaveLength(0);
+    });
 });
