@@ -29,6 +29,8 @@ import { MemoryRecallCalculatorCommand } from "../commands/MemoryRecallCalculato
 import { MemorySubtractCalculatorCommand } from "../commands/MemorySubtractCalculatorCommand";
 import { SaveVariableCalculatorCommand } from "../commands/SaveVariableCalculatorCommand";
 import { SetExpressionTextCalculatorCommand } from "../commands/SetExpressionTextCalculatorCommand";
+import type { CasBlockParser } from "../cas/CasBlockParser";
+import type { CasExpressionRouterService } from "../cas/CasExpressionRouterService";
 import { SimplifyExpressionCalculatorCommand } from "../commands/SimplifyExpressionCalculatorCommand";
 import { ToggleCasModeCalculatorCommand } from "../commands/ToggleCasModeCalculatorCommand";
 import { ToggleComplexNumbersCalculatorCommand } from "../commands/ToggleComplexNumbersCalculatorCommand";
@@ -44,7 +46,9 @@ export class DefaultCalculatorApplicationController
     private readonly numericModePolicyService: NumericModePolicyService,
     private readonly functionCatalogService: ScientificFunctionCatalogService,
     private readonly constantCatalogService: ConstantCatalogService,
-    private readonly casService: CasService
+    private readonly casService: CasService,
+    private readonly casBlockParser: CasBlockParser,
+    private readonly casExpressionRouterService: CasExpressionRouterService
   ) {}
 
   public insertDigit(
@@ -153,7 +157,10 @@ export class DefaultCalculatorApplicationController
     return new EvaluateExpressionCalculatorCommand(
       this.expressionEditingService,
       this.expressionValidationService,
-      this.expressionEvaluationGateway
+      this.expressionEvaluationGateway,
+      this.casBlockParser,
+      this.casExpressionRouterService,
+      this.casService
     ).execute(currentState);
   }
 
