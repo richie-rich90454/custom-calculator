@@ -1,0 +1,12 @@
+{
+  "name": "scientific-calculator-docs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Isolated VitePress documentation hub for the custom scientific calculator.",
+  "scripts": {
+    "dev": "vitepress dev .",
+    "build": "vitepress build .",
+    "preview": "vitepress preview ."
+  }
+}
