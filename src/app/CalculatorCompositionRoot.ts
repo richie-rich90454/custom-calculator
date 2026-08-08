@@ -47,6 +47,21 @@ import { DefaultCasBlockParser } from "../application/cas/DefaultCasBlockParser"
 import { DefaultCasExpressionRouterService } from "../application/cas/DefaultCasExpressionRouterService";
 import { DefaultCasOperationCatalogService } from "../application/cas/DefaultCasOperationCatalogService";
 import type { CasOperationCatalogService } from "../application/cas/CasOperationCatalogService";
+import { DefaultCalculusBlockParser } from "../application/calculus/DefaultCalculusBlockParser";
+import { DefaultCalculusAngleModePolicyService } from "../application/calculus/DefaultCalculusAngleModePolicyService";
+import { DefaultCalculusExpressionRouterService } from "../application/calculus/DefaultCalculusExpressionRouterService";
+import { DefaultFiniteProductService } from "../application/calculus/DefaultFiniteProductService";
+import { DefaultFiniteSummationService } from "../application/calculus/DefaultFiniteSummationService";
+import { DefaultLimitEstimationService } from "../application/calculus/DefaultLimitEstimationService";
+import { DefaultNumericDifferentiationService } from "../application/calculus/DefaultNumericDifferentiationService";
+import { DefaultNumericIntegrationService } from "../application/calculus/DefaultNumericIntegrationService";
+import type { CalculusExpressionRouterService } from "../application/calculus/CalculusExpressionRouterService";
+import { DefaultCalculusOperationCatalogService } from "../application/calculus/DefaultCalculusOperationCatalogService";
+import type { CalculusOperationCatalogService } from "../application/calculus/CalculusOperationCatalogService";
+import { DefaultSymbolicDifferentiationService } from "../infrastructure/calculus/DefaultSymbolicDifferentiationService";
+import { DefaultSymbolicIntegrationService } from "../infrastructure/calculus/DefaultSymbolicIntegrationService";
+import { DefaultTaylorSeriesService } from "../infrastructure/calculus/DefaultTaylorSeriesService";
+import { MathJsCalculusExpressionEvaluator } from "../infrastructure/calculus/MathJsCalculusExpressionEvaluator";
 
 const DATABASE_NAME = "custom-calculator";
 
@@ -71,6 +86,8 @@ export class CalculatorCompositionRoot {
   public readonly calculatorApplicationController: CalculatorApplicationController;
   public readonly uniqueIdentifierFactory: UniqueIdentifierFactory;
   public readonly casOperationCatalogService: CasOperationCatalogService;
+  public readonly calculusExpressionRouterService: CalculusExpressionRouterService;
+  public readonly calculusOperationCatalogService: CalculusOperationCatalogService;
 
   public constructor() {
     this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
@@ -112,9 +129,47 @@ export class CalculatorCompositionRoot {
       this.resultFormattingService
     );
     this.casOperationCatalogService = new DefaultCasOperationCatalogService();
+    this.calculusOperationCatalogService =
+      new DefaultCalculusOperationCatalogService();
     const casBlockParser = new DefaultCasBlockParser();
     const casExpressionRouterService = new DefaultCasExpressionRouterService();
     this.settingsRepository = new LocalStorageSettingsRepository();
+
+    const calculusExpressionEvaluator = new MathJsCalculusExpressionEvaluator(
+      this.mathJsInstanceProvider
+    );
+    const calculusAngleModePolicyService =
+      new DefaultCalculusAngleModePolicyService();
+    const symbolicDifferentiationService =
+      new DefaultSymbolicDifferentiationService(
+        this.mathJsInstanceProvider,
+        calculusAngleModePolicyService,
+        this.resultFormattingService
+      );
+    const symbolicIntegrationService = new DefaultSymbolicIntegrationService(
+      this.mathJsInstanceProvider,
+      this.resultFormattingService
+    );
+    const taylorSeriesService = new DefaultTaylorSeriesService(
+      this.mathJsInstanceProvider,
+      symbolicDifferentiationService,
+      calculusExpressionEvaluator,
+      this.resultFormattingService
+    );
+    const calculusBlockParser = new DefaultCalculusBlockParser();
+    this.calculusExpressionRouterService =
+      new DefaultCalculusExpressionRouterService(
+        new DefaultNumericDifferentiationService(calculusExpressionEvaluator),
+        new DefaultNumericIntegrationService(calculusExpressionEvaluator),
+        new DefaultLimitEstimationService(calculusExpressionEvaluator),
+        new DefaultFiniteSummationService(calculusExpressionEvaluator),
+        new DefaultFiniteProductService(calculusExpressionEvaluator),
+        symbolicDifferentiationService,
+        symbolicIntegrationService,
+        taylorSeriesService,
+        calculusAngleModePolicyService,
+        this.resultFormattingService
+      );
 
     const persistence = this.createPersistenceRepositories();
 
@@ -136,7 +191,9 @@ export class CalculatorCompositionRoot {
         this.constantCatalogService,
         this.casService,
         casBlockParser,
-        casExpressionRouterService
+        casExpressionRouterService,
+        calculusBlockParser,
+        this.calculusExpressionRouterService
       );
     this.uniqueIdentifierFactory = new DefaultUniqueIdentifierFactory();
   }
