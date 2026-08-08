@@ -334,7 +334,7 @@ describe("CalculatorKeypadComponent", () => {
     ).toBeInTheDocument();
   });
 
-  it("inserts a derivative block when the calculus key is pressed", async () => {
+  it("inserts a derivative block with a template when the calculus key is pressed", async () => {
     const user = userEvent.setup();
     const harness = createCalculatorTestHarness();
 
@@ -347,6 +347,7 @@ describe("CalculatorKeypadComponent", () => {
       screen.getByRole("button", { name: "Insert symbolic derivative block" })
     );
 
-    expect(harness.store.getState().expressionText).toBe("derivative(");
+    expect(harness.store.getState().expressionText).toBe("derivative(, x)");
+    expect(harness.store.getState().cursorPosition).toBe(11);
   });
 });
