@@ -12,9 +12,9 @@ import { arithmeticFunctionDefinitions } from "./arithmeticFunctionDefinitions";
  * touching the catalog service itself.
  */
 export const scientificFunctionDefinitionRegistry: readonly ScientificFunctionDefinition[] = [
-  ...trigonometricFunctionDefinitions,
-  ...logarithmicFunctionDefinitions,
-  ...powerAndRootFunctionDefinitions,
-  ...roundingFunctionDefinitions,
-  ...arithmeticFunctionDefinitions,
+    ...trigonometricFunctionDefinitions,
+    ...logarithmicFunctionDefinitions,
+    ...powerAndRootFunctionDefinitions,
+    ...roundingFunctionDefinitions,
+    ...arithmeticFunctionDefinitions,
 ];
