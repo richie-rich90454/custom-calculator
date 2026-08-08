@@ -266,4 +266,39 @@ describe("CalculatorDisplayComponent keyboard input", () => {
 
     expect(harness.store.getState().expressionText).toBe("");
   });
+
+  it("keeps the caret at the keyboard insertion point", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    await user.type(input, "42{ArrowLeft}9");
+
+    expect(harness.store.getState().expressionText).toBe("492");
+    expect(harness.store.getState().cursorPosition).toBe(2);
+  });
+
+  it("deletes a whole function group when backspace follows its parenthesis", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <CalculatorDisplayComponent />
+    );
+
+    const input = screen.getByLabelText("Calculator expression input");
+
+    await user.type(input, "2+sin(");
+    await user.keyboard("{Backspace}");
+
+    expect(harness.store.getState().expressionText).toBe("2+");
+    expect(harness.store.getState().cursorPosition).toBe(2);
+  });
 });
