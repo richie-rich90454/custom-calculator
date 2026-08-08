@@ -2,7 +2,5 @@ import { CalculatorSessionState } from "../../domain/model/CalculatorSessionStat
 import type { CalculatorCommand } from "./CalculatorCommand";
 
 export abstract class AbstractCalculatorCommand implements CalculatorCommand {
-  public abstract execute(
-    currentState: CalculatorSessionState
-  ): CalculatorSessionState;
+    public abstract execute(currentState: CalculatorSessionState): CalculatorSessionState;
 }
