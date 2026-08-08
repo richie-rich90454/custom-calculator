@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import { ThemePreference } from "../../domain/model/ThemePreference";
 import { createCalculatorTestHarness, renderWithCalculatorContext } from "../../test/calculatorTestHarness";
@@ -45,5 +45,41 @@ describe("useCalculatorTheme", () => {
     renderWithCalculatorContext(harness, <ThemeProbe />);
 
     expect(screen.getByText("theme probe")).toBeInTheDocument();
+  });
+
+  it("reapplies the theme when the system preference changes", async () => {
+    const listeners = new Map<string, () => void>();
+
+    const originalMatchMedia = globalThis.matchMedia;
+
+    Object.defineProperty(globalThis, "matchMedia", {
+      value: vi.fn(() => ({
+        matches: false,
+        addEventListener: (event: string, handler: () => void) => {
+          listeners.set(event, handler);
+        },
+        removeEventListener: () => undefined,
+      })),
+      configurable: true,
+    });
+
+    try {
+      const harness = createCalculatorTestHarness({
+        themePreference: ThemePreference.SYSTEM,
+      });
+
+      renderWithCalculatorContext(harness, <ThemeProbe />);
+
+      listeners.get("change")?.();
+
+      expect(["light", "dark"]).toContain(
+        document.documentElement.getAttribute("data-theme")
+      );
+    } finally {
+      Object.defineProperty(globalThis, "matchMedia", {
+        value: originalMatchMedia,
+        configurable: true,
+      });
+    }
   });
 });
