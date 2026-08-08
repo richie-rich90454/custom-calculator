@@ -141,4 +141,103 @@ describe("DefaultCalculusBlockParser", () => {
     expect(block.lowerBound).toBe(0);
     expect(block.upperBound).toBe(1);
   });
+
+  it("rejects a numeric derivative with a missing point", () => {
+    expect(() => parser.parseBlock("numericDerivative(sin(x), x)")).toThrow(
+      /point/
+    );
+  });
+
+  it("defaults the variable and rejects a single argument numeric derivative", () => {
+    expect(() => parser.parseBlock("numericDerivative(x^2)")).toThrow(/point/);
+  });
+
+  it("defaults the variable for a numeric derivative without one", () => {
+    const block = parser.parseBlock("numericDerivative(x^2, , 1)")!;
+
+    expect(block.variableName).toBe("x");
+    expect(block.limitTarget).toBe(1);
+  });
+
+  it("rejects a bounded block with missing bounds", () => {
+    expect(() => parser.parseBlock("integral(x^2, x)")).toThrow(/bounds/);
+  });
+
+  it("defaults the variable and rejects a single argument bounded block", () => {
+    expect(() => parser.parseBlock("integral(x^2)")).toThrow(/bounds/);
+  });
+
+  it("defaults the variable for a bounded block without one", () => {
+    const block = parser.parseBlock("integral(x^2, , 0, 1)")!;
+
+    expect(block.variableName).toBe("x");
+    expect(block.lowerBound).toBe(0);
+    expect(block.upperBound).toBe(1);
+  });
+
+  it("rejects a limit with a missing target", () => {
+    expect(() => parser.parseBlock("limit(sin(x), x)")).toThrow(/target/);
+  });
+
+  it("defaults the variable and rejects a single argument limit", () => {
+    expect(() => parser.parseBlock("limit(sin(x))")).toThrow(/target/);
+  });
+
+  it("defaults the variable for a limit without one", () => {
+    const block = parser.parseBlock("limit(x^2, , 1)")!;
+
+    expect(block.variableName).toBe("x");
+    expect(block.limitTarget).toBe(1);
+  });
+
+  it("rejects a Taylor series with a missing center", () => {
+    expect(() => parser.parseBlock("taylor(sin(x), x)")).toThrow(/center/);
+  });
+
+  it("defaults the variable and rejects a single argument Taylor series", () => {
+    expect(() => parser.parseBlock("taylor(sin(x))")).toThrow(/center/);
+  });
+
+  it("defaults the variable for a Taylor series without one", () => {
+    const block = parser.parseBlock("taylor(x^2, , 0, 2)")!;
+
+    expect(block.variableName).toBe("x");
+    expect(block.center).toBe(0);
+    expect(block.order).toBe(2);
+  });
+
+  it("classifies every supported function name", () => {
+    expect(parser.resolveOperationKind("derivative")).toBe(
+      CalculusOperationKind.DERIVATIVE
+    );
+    expect(parser.resolveOperationKind("diff")).toBe(
+      CalculusOperationKind.DERIVATIVE
+    );
+    expect(parser.resolveOperationKind("numericDerivative")).toBe(
+      CalculusOperationKind.NUMERIC_DERIVATIVE
+    );
+    expect(parser.resolveOperationKind("nderivative")).toBe(
+      CalculusOperationKind.NUMERIC_DERIVATIVE
+    );
+    expect(parser.resolveOperationKind("integral")).toBe(
+      CalculusOperationKind.INTEGRAL
+    );
+    expect(parser.resolveOperationKind("integrate")).toBe(
+      CalculusOperationKind.INTEGRATE
+    );
+    expect(parser.resolveOperationKind("limit")).toBe(
+      CalculusOperationKind.LIMIT
+    );
+    expect(parser.resolveOperationKind("taylor")).toBe(
+      CalculusOperationKind.TAYLOR
+    );
+    expect(parser.resolveOperationKind("sum")).toBe(CalculusOperationKind.SUM);
+    expect(parser.resolveOperationKind("product")).toBe(
+      CalculusOperationKind.PRODUCT
+    );
+  });
+
+  it("rejects unknown calculus function names", () => {
+    expect(() => parser.resolveOperationKind("nope")).toThrow(/Unknown/);
+  });
 });
