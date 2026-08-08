@@ -18,10 +18,8 @@ export function AccessibleDialogComponent(
     <ModalOverlay
       isOpen={props.isOpen}
       className={cssClass(styles.overlay)}
-      onOpenChange={(isOpen) => {
-        if (!isOpen) {
-          props.onClose();
-        }
+      onOpenChange={() => {
+        props.onClose();
       }}
     >
       <Modal className={cssClass(styles.modal)}>
