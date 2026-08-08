@@ -54,7 +54,11 @@ export function CalculatorExpressionEditorComponent(
     };
   }, []);
 
-  const caretOffsetX = caretMeasureRef.current?.offsetWidth ?? 0;
+  const [caretOffsetX, setCaretOffsetX] = useState<number>(0);
+
+  useEffect(() => {
+    setCaretOffsetX(caretMeasureRef.current?.offsetWidth ?? 0);
+  }, [selectionStart, expressionText]);
 
   useEffect(() => {
     const input = inputRef.current!;
