@@ -53,6 +53,27 @@ describe("ConstantsPanelComponent", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("filters constants by category through the selector", async () => {
+    const user = userEvent.setup();
+    const harness = createCalculatorTestHarness();
+
+    renderWithCalculatorContext(
+      harness,
+      <ConstantsPanelComponent />
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: /constant category/i })
+    );
+    await user.click(
+      await screen.findByRole("option", { name: "Chemistry" })
+    );
+
+    expect(
+      screen.queryByRole("button", { name: "Insert constant Pi" })
+    ).not.toBeInTheDocument();
+  });
+
   it("shows an empty state when no constants match the search", async () => {
     const user = userEvent.setup();
     const harness = createCalculatorTestHarness();
