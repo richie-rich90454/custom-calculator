@@ -4,11 +4,11 @@ import { CalculationError } from "../../domain/model/CalculationError";
 import { CalculationErrorCode } from "../../domain/model/CalculationErrorCode";
 import { EvaluationResult } from "../../domain/model/EvaluationResult";
 import { NumericMode } from "../../domain/model/NumericMode";
-import { ExpressionEvaluationGateway } from "../../domain/services/ExpressionEvaluationGateway";
-import { ResultFormattingService } from "../../domain/services/ResultFormattingService";
-import { MathJsInstanceProvider } from "./MathJsInstanceProvider";
-import { MathJsEvaluationScopeBuilder } from "./MathJsEvaluationScopeBuilder";
-import { MathJsFunctionWhitelist } from "./MathJsFunctionWhitelist";
+import type { ExpressionEvaluationGateway } from "../../domain/services/ExpressionEvaluationGateway";
+import type { ResultFormattingService } from "../../domain/services/ResultFormattingService";
+import type { MathJsInstanceProvider } from "./MathJsInstanceProvider";
+import type { MathJsEvaluationScopeBuilder } from "./MathJsEvaluationScopeBuilder";
+import type { MathJsFunctionWhitelist } from "./MathJsFunctionWhitelist";
 
 export class MathJsExpressionEvaluationGateway
   implements ExpressionEvaluationGateway
@@ -109,7 +109,8 @@ export class MathJsExpressionEvaluationGateway
 
     mathNode.traverse((child) => {
       if (child.type === "FunctionNode") {
-        const functionName = (child as { fn: { name: string } }).fn.name;
+        const functionNode = child as unknown as { fn: { name: string } };
+        const functionName = functionNode.fn.name;
 
         if (!this.functionWhitelist.isFunctionAllowed(functionName)) {
           throw new CalculationError(
@@ -118,7 +119,8 @@ export class MathJsExpressionEvaluationGateway
           );
         }
       } else if (child.type === "SymbolNode") {
-        const symbolName = (child as { name: string }).name;
+        const symbolNode = child as unknown as { name: string };
+        const symbolName = symbolNode.name;
 
         if (!(symbolName in scope)) {
           throw new CalculationError(
@@ -151,11 +153,16 @@ export class MathJsExpressionEvaluationGateway
     math: MathJsInstance,
     sessionState: CalculatorSessionState
   ): void {
-    if (math.isNaN(result)) {
+    if (math.isNaN(result as never)) {
       throw this.createDomainErrorForResult(sessionState.expressionText);
     }
 
-    if (math.isInfinity(result)) {
+    const formattedResult = math.format(result);
+
+    if (
+      formattedResult.includes("Infinity") ||
+      formattedResult.includes("NaN")
+    ) {
       throw this.createInfinityErrorForResult(sessionState.expressionText);
     }
   }
