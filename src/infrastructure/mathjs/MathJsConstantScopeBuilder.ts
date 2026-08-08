@@ -1,8 +1,8 @@
-import type { MathJsInstance } from "mathjs";
+import type { MathJsInstance, MathType } from "mathjs";
 import { AngleMode } from "../../domain/model/AngleMode";
 import { CalculatorSessionState } from "../../domain/model/CalculatorSessionState";
-import { ConstantCatalogService } from "../../domain/services/ConstantCatalogService";
-import { MathJsEvaluationScopeBuilder } from "./MathJsEvaluationScopeBuilder";
+import type { ConstantCatalogService } from "../../domain/services/ConstantCatalogService";
+import type { MathJsEvaluationScopeBuilder } from "./MathJsEvaluationScopeBuilder";
 
 export class MathJsConstantScopeBuilder
   implements MathJsEvaluationScopeBuilder
@@ -53,26 +53,26 @@ export class MathJsConstantScopeBuilder
     math: MathJsInstance,
     angleMode: AngleMode
   ): void {
-    const radiansPerUnit =
+    const radiansPerUnit: MathType =
       angleMode === AngleMode.DEG
         ? math.divide(math.pi, 180)
         : angleMode === AngleMode.GON
           ? math.divide(math.pi, 200)
           : math.number(1);
 
-    const toRadians = (value: unknown): unknown =>
+    const toRadians = (value: MathType): MathType =>
       math.multiply(value, radiansPerUnit);
-    const fromRadians = (value: unknown): unknown =>
+    const fromRadians = (value: MathType): MathType =>
       math.divide(value, radiansPerUnit);
 
-    scope["sin"] = (value: unknown): unknown => math.sin(toRadians(value));
-    scope["cos"] = (value: unknown): unknown => math.cos(toRadians(value));
-    scope["tan"] = (value: unknown): unknown => math.tan(toRadians(value));
-    scope["asin"] = (value: unknown): unknown =>
+    scope["sin"] = (value: MathType): MathType => math.sin(toRadians(value));
+    scope["cos"] = (value: MathType): MathType => math.cos(toRadians(value));
+    scope["tan"] = (value: MathType): MathType => math.tan(toRadians(value));
+    scope["asin"] = (value: MathType): MathType =>
       fromRadians(math.asin(value));
-    scope["acos"] = (value: unknown): unknown =>
+    scope["acos"] = (value: MathType): MathType =>
       fromRadians(math.acos(value));
-    scope["atan"] = (value: unknown): unknown =>
+    scope["atan"] = (value: MathType): MathType =>
       fromRadians(math.atan(value));
   }
 
