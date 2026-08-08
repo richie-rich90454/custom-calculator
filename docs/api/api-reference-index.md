@@ -207,6 +207,22 @@ Maps between UI state and session state.
 
 Maps a key definition to a store action.
 
+### ButtonInsertionTemplateService
+
+Resolves the insertion template for a button, including the text to insert and
+the cursor offset. The default implementation covers digits, operators,
+functions, constants, variables, and calculus templates.
+
+### ExpressionCursorService
+
+Resolves the cursor position produced by inserting a button template,
+including selection wrapping.
+
+### ExpressionInsertionService
+
+Applies a button insertion template to the current expression and produces the
+final text edit.
+
 ### ExpressionEditorKeyboardService
 
 Decides editor key behavior.
@@ -215,9 +231,18 @@ Decides editor key behavior.
 
 Resolves the native selection range.
 
-### ExpressionEditorCaretService
+### ExpressionEditorCaretRenderingService
 
-Decides whether to show the synthetic caret.
+Decides whether to show the synthetic caret and at which offset.
+
+### ExpressionEditorScrollService
+
+Scrolls the editor horizontally to keep the caret visible.
+
+### FocusPreservationService
+
+Restores focus to the expression editor after pointer button presses and keeps
+it on the button for keyboard grid navigation.
 
 ### CalculatorKeyboardShortcutRegistry
 
