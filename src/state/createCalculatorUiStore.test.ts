@@ -170,4 +170,134 @@ describe("calculator UI store", () => {
     store.getState().onPanelOpened("HISTORY");
     expect(store.getState().activePanel).toBe("NONE");
   });
+
+  it("deletes forward with the delete forward action", () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onExpressionTextChanged("52", 1, 1, 1);
+    store.getState().onDeleteForwardPressed();
+
+    expect(store.getState().expressionText).toBe("5");
+  });
+
+  it("deletes a word backward with the delete word action", () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onExpressionTextChanged("x+abc", 5, 5, 5);
+    store.getState().onDeleteWordBackwardPressed();
+
+    expect(store.getState().expressionText).toBe("x+");
+  });
+
+  it("changes the angle mode and theme through actions", () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onAngleModeChanged(AngleMode.RAD);
+    expect(store.getState().angleMode).toBe(AngleMode.RAD);
+
+    store.getState().onThemeChanged("dark");
+    expect(store.getState().themePreference).toBe("dark");
+  });
+
+  it("updates the expression text with cursor positions", () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onExpressionTextChanged("12+34", 3, 3, 3);
+
+    expect(store.getState().expressionText).toBe("12+34");
+    expect(store.getState().cursorPosition).toBe(3);
+    expect(store.getState().selectionStart).toBe(3);
+    expect(store.getState().selectionEnd).toBe(3);
+  });
+
+  it("selects a history entry into the expression and closes the panel", async () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onDigitPressed("6");
+    store.getState().onEvaluatePressed();
+
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    store.getState().onPanelOpened("HISTORY");
+    const entryId = store.getState().historyEntries[0]?.id as string;
+
+    store.getState().onHistoryEntrySelected(entryId);
+
+    expect(store.getState().expressionText).toBe("6");
+    expect(store.getState().activePanel).toBe("NONE");
+  });
+
+  it("ignores selecting an unknown history entry", () => {
+    const { store } = createCalculatorTestHarness();
+
+    expect(() => store.getState().onHistoryEntrySelected("missing")).not.toThrow();
+  });
+
+  it("deletes and clears history entries", async () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onDigitPressed("6");
+    store.getState().onEvaluatePressed();
+
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    const entryId = store.getState().historyEntries[0]?.id as string;
+
+    store.getState().onHistoryEntryDeleted(entryId);
+    expect(store.getState().historyEntries).toHaveLength(0);
+
+    store.getState().onDigitPressed("6");
+    store.getState().onEvaluatePressed();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    store.getState().onHistoryCleared();
+    expect(store.getState().historyEntries).toHaveLength(0);
+  });
+
+  it("deletes a saved variable", () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onDigitPressed("9");
+    store.getState().onEvaluatePressed();
+    store.getState().onSaveVariablePressed("a");
+
+    store.getState().onVariableDeleted("a");
+
+    expect(store.getState().variables).toHaveLength(0);
+  });
+
+  it("performs memory subtract and clear", () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onDigitPressed("5");
+    store.getState().onEvaluatePressed();
+    store.getState().onMemoryAddPressed();
+
+    store.getState().onClearPressed();
+    store.getState().onDigitPressed("3");
+    store.getState().onEvaluatePressed();
+    store.getState().onMemorySubtractPressed();
+
+    expect(store.getState().memoryValueText).toBe("2");
+
+    store.getState().onMemoryClearPressed();
+    expect(store.getState().memoryValueText).toBeNull();
+  });
+
+  it("runs CAS simplify, expand, and differentiate actions", () => {
+    const { store } = createCalculatorTestHarness();
+
+    store.getState().onCasTogglePressed();
+    store.getState().onExpressionTextChanged("x+x", 3, 3, 3);
+    store.getState().onSimplifyPressed();
+    expect(store.getState().resultText).toBe("2*x");
+
+    store.getState().onExpressionTextChanged("(x+1)^2", 8, 8, 8);
+    store.getState().onExpandPressed();
+    expect(store.getState().resultText).toBe("x^2+2*x+1");
+
+    store.getState().onExpressionTextChanged("x^2+x", 5, 5, 5);
+    store.getState().onDifferentiatePressed("x");
+    expect(store.getState().resultText).toBe("2*x+1");
+  });
 });
