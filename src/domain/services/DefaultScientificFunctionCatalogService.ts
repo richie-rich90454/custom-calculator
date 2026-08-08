@@ -1,8 +1,8 @@
-import {
+import type {
   ScientificFunctionCategory,
   ScientificFunctionDefinition,
 } from "./ScientificFunctionDefinition";
-import { ScientificFunctionCatalogService } from "./ScientificFunctionCatalogService";
+import type { ScientificFunctionCatalogService } from "./ScientificFunctionCatalogService";
 
 export class DefaultScientificFunctionCatalogService
   implements ScientificFunctionCatalogService
