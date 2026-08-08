@@ -20,6 +20,22 @@ describe("DefaultCalculatorApplicationController", () => {
     expect(nextState.expressionText).toBe("5");
   });
 
+  it("applies a text edit with its cursor position", () => {
+    const nextState = controller.applyInsertion(
+      createState({ resultText: "42" }),
+      {
+        text: "sin(",
+        cursorPosition: 4,
+        selectionStart: 4,
+        selectionEnd: 4,
+      }
+    );
+
+    expect(nextState.expressionText).toBe("sin(");
+    expect(nextState.cursorPosition).toBe(4);
+    expect(nextState.resultText).toBeNull();
+  });
+
   it("inserts an operator", () => {
     const nextState = controller.insertOperator(
       createState({ expressionText: "5", selectionStart: 1, selectionEnd: 1 }),
