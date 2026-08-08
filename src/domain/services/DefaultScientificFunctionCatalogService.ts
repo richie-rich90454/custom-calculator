@@ -8,36 +8,32 @@ import { scientificFunctionDefinitionRegistry } from "../../infrastructure/funct
  * The definitions themselves live in data modules under the infrastructure
  * layer; this service exposes query helpers over that data.
  */
-export class DefaultScientificFunctionCatalogService
-  implements ScientificFunctionCatalogService
-{
-  private readonly functionNames: readonly string[];
+export class DefaultScientificFunctionCatalogService implements ScientificFunctionCatalogService {
+    private readonly functionNames: readonly string[];
 
-  public constructor() {
-    this.functionNames = scientificFunctionDefinitionRegistry.map(
-      (definition) => definition.name
-    );
-  }
+    public constructor() {
+        this.functionNames = scientificFunctionDefinitionRegistry.map(
+            (definition) => definition.name,
+        );
+    }
 
-  public getAllFunctions(): readonly ScientificFunctionDefinition[] {
-    return scientificFunctionDefinitionRegistry;
-  }
+    public getAllFunctions(): readonly ScientificFunctionDefinition[] {
+        return scientificFunctionDefinitionRegistry;
+    }
 
-  public getFunction(
-    functionName: string
-  ): ScientificFunctionDefinition | null {
-    const definition = scientificFunctionDefinitionRegistry.find(
-      (candidate) => candidate.name === functionName
-    );
+    public getFunction(functionName: string): ScientificFunctionDefinition | null {
+        const definition = scientificFunctionDefinitionRegistry.find(
+            (candidate) => candidate.name === functionName,
+        );
 
-    return definition ?? null;
-  }
+        return definition ?? null;
+    }
 
-  public hasFunction(functionName: string): boolean {
-    return this.getFunction(functionName) !== null;
-  }
+    public hasFunction(functionName: string): boolean {
+        return this.getFunction(functionName) !== null;
+    }
 
-  public getFunctionNames(): readonly string[] {
-    return this.functionNames;
-  }
+    public getFunctionNames(): readonly string[] {
+        return this.functionNames;
+    }
 }
