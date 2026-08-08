@@ -8,10 +8,10 @@ import type { CalculatorButtonTemplate } from "./CalculatorButtonTemplate";
  * the application layer applies to the session state.
  */
 export interface ExpressionInsertionService {
-  insertTemplate(
-    template: CalculatorButtonTemplate,
-    currentText: string,
-    selectionStart: number,
-    selectionEnd: number
-  ): ExpressionTextEdit;
+    insertTemplate(
+        template: CalculatorButtonTemplate,
+        currentText: string,
+        selectionStart: number,
+        selectionEnd: number,
+    ): ExpressionTextEdit;
 }
