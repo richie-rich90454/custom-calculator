@@ -1,6 +1,6 @@
 import type {
-  ExpressionEditorCaretRenderingService,
-  ExpressionEditorCaretRenderingState,
+    ExpressionEditorCaretRenderingService,
+    ExpressionEditorCaretRenderingState,
 } from "./ExpressionEditorCaretRenderingService";
 
 /**
@@ -9,16 +9,14 @@ import type {
  * The synthetic caret appears only when the editor is not focused and is
  * positioned at the measured offset of the text that precedes the cursor.
  */
-export class DefaultExpressionEditorCaretRenderingService
-  implements ExpressionEditorCaretRenderingService
-{
-  public getCaretRenderingState(
-    hasFocus: boolean,
-    offsetX: number
-  ): ExpressionEditorCaretRenderingState {
-    return {
-      showIndicator: !hasFocus,
-      offsetX: offsetX,
-    };
-  }
+export class DefaultExpressionEditorCaretRenderingService implements ExpressionEditorCaretRenderingService {
+    public getCaretRenderingState(
+        hasFocus: boolean,
+        offsetX: number,
+    ): ExpressionEditorCaretRenderingState {
+        return {
+            showIndicator: !hasFocus,
+            offsetX: offsetX,
+        };
+    }
 }
