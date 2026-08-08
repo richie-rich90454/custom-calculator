@@ -101,6 +101,11 @@ export class CalculatorKeyboardShortcutRegistry {
       return { handled: true };
     }
 
+    if (shortcutKey === "l") {
+      target.onPanelOpened(CalculatorPanelName.CALCULUS);
+      return { handled: true };
+    }
+
     return { handled: false };
   }
 }
