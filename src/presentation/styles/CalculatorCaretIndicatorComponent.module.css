@@ -10,10 +10,14 @@
 }
 
 .caretIndicator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   display: inline-block;
   width: 2px;
   height: 1.4em;
-  margin-left: 2px;
   background-color: var(--color-focus-ring);
   animation: caret-blink 1s step-end infinite;
+  pointer-events: none;
 }
