@@ -140,6 +140,17 @@ describe("CalculatorKeyboardShortcutRegistry", () => {
     expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.SETTINGS);
   });
 
+  it("opens the calculus panel with Control+L", () => {
+    const target = buildTarget({ onPanelOpened: vi.fn() });
+
+    registry.resolveKeyDown(
+      { key: "l", ctrlKey: true, metaKey: false },
+      target
+    );
+
+    expect(target.onPanelOpened).toHaveBeenCalledWith(CalculatorPanelName.CALCULUS);
+  });
+
   it("leaves unrelated keys unhandled", () => {
     const target = buildTarget({ onPanelOpened: vi.fn() });
 
