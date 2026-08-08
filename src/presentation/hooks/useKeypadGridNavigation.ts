@@ -77,11 +77,7 @@ export function useKeypadGridNavigation(
       return;
     }
 
-    const nextItemId = itemIds[nextIndex];
-
-    if (nextItemId === undefined) {
-      return;
-    }
+    const nextItemId = itemIds[nextIndex]!;
 
     event.preventDefault();
     focusItem(nextItemId);
