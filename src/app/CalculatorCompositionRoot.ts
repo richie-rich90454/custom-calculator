@@ -66,161 +66,154 @@ import { MathJsCalculusExpressionEvaluator } from "../infrastructure/calculus/Ma
 const DATABASE_NAME = "custom-calculator";
 
 export class CalculatorCompositionRoot {
-  public readonly bigIntSupportDetector: BigIntSupportDetector;
-  public readonly browserFeatureDetectionService: BrowserFeatureDetectionService;
-  public readonly numericModePolicyService: NumericModePolicyService;
-  public readonly scientificConstantRepository: ScientificConstantRepository;
-  public readonly constantCatalogService: ConstantCatalogService;
-  public readonly functionCatalogService: ScientificFunctionCatalogService;
-  public readonly expressionEditingService: ExpressionEditingService;
-  public readonly expressionValidationService: ExpressionValidationService;
-  public readonly resultFormattingService: ResultFormattingService;
-  public readonly angleConversionService: AngleConversionService;
-  public readonly mathJsInstanceProvider: MathJsInstanceProvider;
-  public readonly expressionEvaluationGateway: ExpressionEvaluationGateway;
-  public readonly casService: CasService;
-  public readonly settingsRepository: SettingsRepository;
-  public readonly historyRepository: HistoryRepository;
-  public readonly variablesRepository: VariablesRepository;
-  public readonly orchestrationService: CalculatorSessionOrchestrationService;
-  public readonly calculatorApplicationController: CalculatorApplicationController;
-  public readonly uniqueIdentifierFactory: UniqueIdentifierFactory;
-  public readonly casOperationCatalogService: CasOperationCatalogService;
-  public readonly calculusExpressionRouterService: CalculusExpressionRouterService;
-  public readonly calculusOperationCatalogService: CalculusOperationCatalogService;
+    public readonly bigIntSupportDetector: BigIntSupportDetector;
+    public readonly browserFeatureDetectionService: BrowserFeatureDetectionService;
+    public readonly numericModePolicyService: NumericModePolicyService;
+    public readonly scientificConstantRepository: ScientificConstantRepository;
+    public readonly constantCatalogService: ConstantCatalogService;
+    public readonly functionCatalogService: ScientificFunctionCatalogService;
+    public readonly expressionEditingService: ExpressionEditingService;
+    public readonly expressionValidationService: ExpressionValidationService;
+    public readonly resultFormattingService: ResultFormattingService;
+    public readonly angleConversionService: AngleConversionService;
+    public readonly mathJsInstanceProvider: MathJsInstanceProvider;
+    public readonly expressionEvaluationGateway: ExpressionEvaluationGateway;
+    public readonly casService: CasService;
+    public readonly settingsRepository: SettingsRepository;
+    public readonly historyRepository: HistoryRepository;
+    public readonly variablesRepository: VariablesRepository;
+    public readonly orchestrationService: CalculatorSessionOrchestrationService;
+    public readonly calculatorApplicationController: CalculatorApplicationController;
+    public readonly uniqueIdentifierFactory: UniqueIdentifierFactory;
+    public readonly casOperationCatalogService: CasOperationCatalogService;
+    public readonly calculusExpressionRouterService: CalculusExpressionRouterService;
+    public readonly calculusOperationCatalogService: CalculusOperationCatalogService;
 
-  public constructor() {
-    this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
-    this.browserFeatureDetectionService = new DefaultBrowserFeatureDetectionService(
-      this.bigIntSupportDetector
-    );
-    this.numericModePolicyService = new DefaultNumericModePolicyService(
-      this.bigIntSupportDetector
-    );
-    this.scientificConstantRepository = new StaticScientificConstantRepository();
-    this.constantCatalogService = new DefaultConstantCatalogService(
-      this.scientificConstantRepository
-    );
-    this.functionCatalogService = new DefaultScientificFunctionCatalogService();
-    this.expressionEditingService = new DefaultExpressionEditingService(
-      this.functionCatalogService
-    );
-    this.expressionValidationService = new DefaultExpressionValidationService(
-      this.functionCatalogService,
-      this.constantCatalogService
-    );
-    this.resultFormattingService = new DefaultResultFormattingService();
-    this.angleConversionService = new DefaultAngleConversionService();
-    this.mathJsInstanceProvider = new DefaultMathJsInstanceProvider();
-    this.expressionEvaluationGateway = new MathJsExpressionEvaluationGateway(
-      this.mathJsInstanceProvider,
-      new MathJsConstantScopeBuilder(
-        this.constantCatalogService,
-        new DefaultMathJsFractionValueFactory()
-      ),
-      new MathJsFunctionWhitelist(
-        this.functionCatalogService.getFunctionNames()
-      ),
-      this.resultFormattingService,
-      new MathJsCalculationErrorMapper()
-    );
-    this.casService = new MathJsCasService(
-      this.mathJsInstanceProvider,
-      this.resultFormattingService
-    );
-    this.casOperationCatalogService = new DefaultCasOperationCatalogService();
-    this.calculusOperationCatalogService =
-      new DefaultCalculusOperationCatalogService();
-    const casBlockParser = new DefaultCasBlockParser();
-    const casExpressionRouterService = new DefaultCasExpressionRouterService();
-    this.settingsRepository = new LocalStorageSettingsRepository();
+    public constructor() {
+        this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
+        this.browserFeatureDetectionService = new DefaultBrowserFeatureDetectionService(
+            this.bigIntSupportDetector,
+        );
+        this.numericModePolicyService = new DefaultNumericModePolicyService(
+            this.bigIntSupportDetector,
+        );
+        this.scientificConstantRepository = new StaticScientificConstantRepository();
+        this.constantCatalogService = new DefaultConstantCatalogService(
+            this.scientificConstantRepository,
+        );
+        this.functionCatalogService = new DefaultScientificFunctionCatalogService();
+        this.expressionEditingService = new DefaultExpressionEditingService(
+            this.functionCatalogService,
+        );
+        this.expressionValidationService = new DefaultExpressionValidationService(
+            this.functionCatalogService,
+            this.constantCatalogService,
+        );
+        this.resultFormattingService = new DefaultResultFormattingService();
+        this.angleConversionService = new DefaultAngleConversionService();
+        this.mathJsInstanceProvider = new DefaultMathJsInstanceProvider();
+        this.expressionEvaluationGateway = new MathJsExpressionEvaluationGateway(
+            this.mathJsInstanceProvider,
+            new MathJsConstantScopeBuilder(
+                this.constantCatalogService,
+                new DefaultMathJsFractionValueFactory(),
+            ),
+            new MathJsFunctionWhitelist(this.functionCatalogService.getFunctionNames()),
+            this.resultFormattingService,
+            new MathJsCalculationErrorMapper(),
+        );
+        this.casService = new MathJsCasService(
+            this.mathJsInstanceProvider,
+            this.resultFormattingService,
+        );
+        this.casOperationCatalogService = new DefaultCasOperationCatalogService();
+        this.calculusOperationCatalogService = new DefaultCalculusOperationCatalogService();
+        const casBlockParser = new DefaultCasBlockParser();
+        const casExpressionRouterService = new DefaultCasExpressionRouterService();
+        this.settingsRepository = new LocalStorageSettingsRepository();
 
-    const calculusExpressionEvaluator = new MathJsCalculusExpressionEvaluator(
-      this.mathJsInstanceProvider
-    );
-    const calculusAngleModePolicyService =
-      new DefaultCalculusAngleModePolicyService();
-    const symbolicDifferentiationService =
-      new DefaultSymbolicDifferentiationService(
-        this.mathJsInstanceProvider,
-        calculusAngleModePolicyService,
-        this.resultFormattingService
-      );
-    const symbolicIntegrationService = new DefaultSymbolicIntegrationService(
-      this.mathJsInstanceProvider,
-      this.resultFormattingService
-    );
-    const taylorSeriesService = new DefaultTaylorSeriesService(
-      this.mathJsInstanceProvider,
-      symbolicDifferentiationService,
-      calculusExpressionEvaluator,
-      this.resultFormattingService
-    );
-    const calculusBlockParser = new DefaultCalculusBlockParser();
-    this.calculusExpressionRouterService =
-      new DefaultCalculusExpressionRouterService(
-        new DefaultNumericDifferentiationService(calculusExpressionEvaluator),
-        new DefaultNumericIntegrationService(calculusExpressionEvaluator),
-        new DefaultLimitEstimationService(calculusExpressionEvaluator),
-        new DefaultFiniteSummationService(calculusExpressionEvaluator),
-        new DefaultFiniteProductService(calculusExpressionEvaluator),
-        symbolicDifferentiationService,
-        symbolicIntegrationService,
-        taylorSeriesService,
-        calculusAngleModePolicyService,
-        this.resultFormattingService
-      );
+        const calculusExpressionEvaluator = new MathJsCalculusExpressionEvaluator(
+            this.mathJsInstanceProvider,
+        );
+        const calculusAngleModePolicyService = new DefaultCalculusAngleModePolicyService();
+        const symbolicDifferentiationService = new DefaultSymbolicDifferentiationService(
+            this.mathJsInstanceProvider,
+            calculusAngleModePolicyService,
+            this.resultFormattingService,
+        );
+        const symbolicIntegrationService = new DefaultSymbolicIntegrationService(
+            this.mathJsInstanceProvider,
+            this.resultFormattingService,
+        );
+        const taylorSeriesService = new DefaultTaylorSeriesService(
+            this.mathJsInstanceProvider,
+            symbolicDifferentiationService,
+            calculusExpressionEvaluator,
+            this.resultFormattingService,
+        );
+        const calculusBlockParser = new DefaultCalculusBlockParser();
+        this.calculusExpressionRouterService = new DefaultCalculusExpressionRouterService(
+            new DefaultNumericDifferentiationService(calculusExpressionEvaluator),
+            new DefaultNumericIntegrationService(calculusExpressionEvaluator),
+            new DefaultLimitEstimationService(calculusExpressionEvaluator),
+            new DefaultFiniteSummationService(calculusExpressionEvaluator),
+            new DefaultFiniteProductService(calculusExpressionEvaluator),
+            symbolicDifferentiationService,
+            symbolicIntegrationService,
+            taylorSeriesService,
+            calculusAngleModePolicyService,
+            this.resultFormattingService,
+        );
 
-    const persistence = this.createPersistenceRepositories();
+        const persistence = this.createPersistenceRepositories();
 
-    this.historyRepository = persistence.historyRepository;
-    this.variablesRepository = persistence.variablesRepository;
+        this.historyRepository = persistence.historyRepository;
+        this.variablesRepository = persistence.variablesRepository;
 
-    this.orchestrationService = new DefaultCalculatorSessionOrchestrationService(
-      this.historyRepository,
-      this.variablesRepository,
-      this.settingsRepository
-    );
-    this.calculatorApplicationController =
-      new DefaultCalculatorApplicationController(
-        this.expressionEditingService,
-        this.expressionValidationService,
-        this.expressionEvaluationGateway,
-        this.numericModePolicyService,
-        this.functionCatalogService,
-        this.constantCatalogService,
-        this.casService,
-        casBlockParser,
-        casExpressionRouterService,
-        calculusBlockParser,
-        this.calculusExpressionRouterService
-      );
-    this.uniqueIdentifierFactory = new DefaultUniqueIdentifierFactory();
-  }
-
-  private createPersistenceRepositories(): {
-    readonly historyRepository: HistoryRepository;
-    readonly variablesRepository: VariablesRepository;
-  } {
-    if (typeof globalThis.indexedDB === "undefined") {
-      return {
-        historyRepository: new InMemoryHistoryRepository(),
-        variablesRepository: new InMemoryVariablesRepository(),
-      };
+        this.orchestrationService = new DefaultCalculatorSessionOrchestrationService(
+            this.historyRepository,
+            this.variablesRepository,
+            this.settingsRepository,
+        );
+        this.calculatorApplicationController = new DefaultCalculatorApplicationController(
+            this.expressionEditingService,
+            this.expressionValidationService,
+            this.expressionEvaluationGateway,
+            this.numericModePolicyService,
+            this.functionCatalogService,
+            this.constantCatalogService,
+            this.casService,
+            casBlockParser,
+            casExpressionRouterService,
+            calculusBlockParser,
+            this.calculusExpressionRouterService,
+        );
+        this.uniqueIdentifierFactory = new DefaultUniqueIdentifierFactory();
     }
 
-    try {
-      const database = new CalculatorDexieDatabase(DATABASE_NAME);
+    private createPersistenceRepositories(): {
+        readonly historyRepository: HistoryRepository;
+        readonly variablesRepository: VariablesRepository;
+    } {
+        if (typeof globalThis.indexedDB === "undefined") {
+            return {
+                historyRepository: new InMemoryHistoryRepository(),
+                variablesRepository: new InMemoryVariablesRepository(),
+            };
+        }
 
-      return {
-        historyRepository: new IndexedDbHistoryRepository(database),
-        variablesRepository: new IndexedDbVariablesRepository(database),
-      };
-    } catch {
-      return {
-        historyRepository: new InMemoryHistoryRepository(),
-        variablesRepository: new InMemoryVariablesRepository(),
-      };
+        try {
+            const database = new CalculatorDexieDatabase(DATABASE_NAME);
+
+            return {
+                historyRepository: new IndexedDbHistoryRepository(database),
+                variablesRepository: new IndexedDbVariablesRepository(database),
+            };
+        } catch {
+            return {
+                historyRepository: new InMemoryHistoryRepository(),
+                variablesRepository: new InMemoryVariablesRepository(),
+            };
+        }
     }
-  }
 }
