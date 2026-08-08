@@ -21,6 +21,8 @@ export interface CalculatorUiState {
   selectionEnd: number;
   resultText: string | null;
   errorText: string | null;
+  lastResultText: string | null;
+  lastResultValue: unknown;
   angleMode: AngleMode;
   numericMode: NumericMode;
   complexNumbersEnabled: boolean;
