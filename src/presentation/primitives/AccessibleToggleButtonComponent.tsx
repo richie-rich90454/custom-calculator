@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { ToggleButton, type ToggleButtonProps } from "react-aria-components";
-import styles from "./AccessibleToggleButtonComponent.module.css";
+import styles from "../styles/AccessibleToggleButtonComponent.module.css";
 
 export interface AccessibleToggleButtonComponentProperties
   extends Omit<ToggleButtonProps, "className"> {
