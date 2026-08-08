@@ -130,6 +130,12 @@ describe("DefaultExpressionEditingService", () => {
 
       expect(edit.text).toBe("");
     });
+
+    it("treats an unknown function name as a plain token group", () => {
+      const edit = service.deleteBackward("x+foo(", 6, 6);
+
+      expect(edit.text).toBe("x+foo");
+    });
   });
 
   describe("autoCloseParentheses", () => {
