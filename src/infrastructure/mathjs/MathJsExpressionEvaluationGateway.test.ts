@@ -211,4 +211,54 @@ describe("MathJsExpressionEvaluationGateway", () => {
       CalculationError
     );
   });
+
+  it("reports a missing parentheses error for an incomplete expression", () => {
+    try {
+      evaluateExpression(gateway, "2+");
+      expect.unreachable();
+    } catch (error) {
+      expect((error as CalculationError).code).toBe(
+        CalculationErrorCode.MISSING_PARENTHESES
+      );
+    }
+  });
+
+  it("reports a missing parentheses error for unbalanced parentheses", () => {
+    try {
+      evaluateExpression(gateway, "(2+3");
+      expect.unreachable();
+    } catch (error) {
+      expect((error as CalculationError).code).toBe(
+        CalculationErrorCode.MISSING_PARENTHESES
+      );
+    }
+  });
+
+  it("reports a syntax error for an unexpected token", () => {
+    try {
+      evaluateExpression(gateway, "2+*3");
+      expect.unreachable();
+    } catch (error) {
+      expect((error as CalculationError).code).toBe(
+        CalculationErrorCode.SYNTAX_ERROR
+      );
+    }
+  });
+
+  it("reports a generic evaluation failure for an unsupported operation", () => {
+    try {
+      evaluateExpression(gateway, "factorial(-1)");
+      expect.unreachable();
+    } catch (error) {
+      expect((error as CalculationError).code).toBe(
+        CalculationErrorCode.EVALUATION_FAILED
+      );
+    }
+  });
+
+  it("reports a domain error for a square root of a negative number", () => {
+    expect(() => evaluateExpression(gateway, "sqrt(-4)")).toThrowError(
+      CalculationError
+    );
+  });
 });
