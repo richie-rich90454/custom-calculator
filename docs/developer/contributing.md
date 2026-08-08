@@ -5,8 +5,7 @@ description: How to contribute to the calculator repository.
 
 # Contributing
 
-Thank you for contributing. This page explains the workflow, standards, and
-expectations for contributions.
+Thank you for contributing. This page explains the workflow, standards, and expectations for contributions.
 
 ## Workflow
 
@@ -27,8 +26,7 @@ npm run lint
 npm run test
 ```
 
-The test suite enforces 100 percent coverage. See
-[Coverage policy](/developer/coverage-policy).
+The test suite enforces 100 percent coverage. See [Coverage policy](/developer/coverage-policy).
 
 ## What to include
 
