@@ -44,7 +44,7 @@ export class DefaultCasBlockParser implements CasBlockParser {
     };
   }
 
-  private resolveOperationKind(functionName: string): CasOperationKind {
+  public resolveOperationKind(functionName: string): CasOperationKind {
     switch (functionName) {
       case "cas":
       case "casSimplify":
