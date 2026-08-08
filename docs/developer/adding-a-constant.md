@@ -5,26 +5,24 @@ description: How to add a new scientific constant to the catalog.
 
 # Adding a Constant
 
-Constants are data. Adding one requires a definition entry and a catalog
-aggregation.
+Constants are data. Adding one requires a definition entry and a catalog aggregation.
 
 ## Step one: create the constant
 
-Constants live in `src/infrastructure/constants`. Add a new `ScientificConstant`
-to the appropriate category file.
+Constants live in `src/infrastructure/constants`. Add a new `ScientificConstant` to the appropriate category file.
 
 ```ts
 new ScientificConstant(
-  "solarConstant",
-  "S",
-  "Solar constant",
-  ScientificConstantCategory.UNIVERSAL_PHYSICS,
-  "1361",
-  "W/m²",
-  "The average irradiance of the Sun at Earth's orbit.",
-  "CODATA 2018",
-  ["solar"]
-)
+    "solarConstant",
+    "S",
+    "Solar constant",
+    ScientificConstantCategory.UNIVERSAL_PHYSICS,
+    "1361",
+    "W/m²",
+    "The average irradiance of the Sun at Earth's orbit.",
+    "CODATA 2018",
+    ["solar"],
+);
 ```
 
 The constructor takes:
@@ -45,14 +43,14 @@ The registry aggregates all category modules:
 
 ```ts
 export class ScientificConstantRegistry {
-  public static createAllConstants(): readonly ScientificConstant[] {
-    return [
-      ...mathConstants,
-      ...physicsConstants,
-      ...atomicParticleConstants,
-      ...chemistryConstants,
-    ];
-  }
+    public static createAllConstants(): readonly ScientificConstant[] {
+        return [
+            ...mathConstants,
+            ...physicsConstants,
+            ...atomicParticleConstants,
+            ...chemistryConstants,
+        ];
+    }
 }
 ```
 
@@ -66,8 +64,7 @@ Add your category module to the list.
 
 ## Insertion behavior
 
-Inserting a constant inserts its insertion text (usually the id or the first
-alias) and places the cursor after the token.
+Inserting a constant inserts its insertion text (usually the id or the first alias) and places the cursor after the token.
 
 ## Next steps
 
