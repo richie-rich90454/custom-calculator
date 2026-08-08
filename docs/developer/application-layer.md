@@ -1,6 +1,6 @@
 ---
 title: Application Layer
-description: The application layer: commands, controllers, and orchestration services.
+description: "The application layer: commands, controllers, and orchestration services."
 ---
 
 # Application Layer
