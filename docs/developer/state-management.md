@@ -5,13 +5,11 @@ description: How Zustand is used as a thin UI state layer.
 
 # State Management
 
-The calculator uses Zustand as a thin UI state layer. All real logic stays in
-the application and domain layers.
+The calculator uses Zustand as a thin UI state layer. All real logic stays in the application and domain layers.
 
 ## The store
 
-`createCalculatorUiStore` creates the Zustand store. The store combines UI
-state with UI actions:
+`createCalculatorUiStore` creates the Zustand store. The store combines UI state with UI actions:
 
 ```ts
 export type CalculatorUiStore = CalculatorUiState & CalculatorUiActions;
@@ -53,8 +51,7 @@ Keeping the store thin keeps the architecture clean:
 
 ## Theme and settings
 
-Settings changes flow through the store to the orchestration service, which
-persists them. See [Persistence](/architecture/persistence).
+Settings changes flow through the store to the orchestration service, which persists them. See [Persistence](/architecture/persistence).
 
 ## Next steps
 
