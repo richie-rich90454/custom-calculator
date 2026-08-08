@@ -88,6 +88,26 @@ describe("DefaultExpressionValidationService", () => {
     expect(service.validateExpression(sessionState)).toBeNull();
   });
 
+  it("accepts a CAS function invocation when CAS is enabled", () => {
+    const sessionState = CalculatorSessionState.createInitial().copyWith({
+      expressionText: "cas(x+x)",
+      casEnabled: true,
+    });
+
+    expect(service.validateExpression(sessionState)).toBeNull();
+  });
+
+  it("rejects a CAS function invocation when CAS is disabled", () => {
+    const sessionState = CalculatorSessionState.createInitial().copyWith({
+      expressionText: "cas(x+x)",
+      casEnabled: false,
+    });
+
+    const error = service.validateExpression(sessionState);
+
+    expect(error?.code).toBe(CalculationErrorCode.UNKNOWN_FUNCTION);
+  });
+
   it("accepts a user-defined variable", () => {
     const sessionState = CalculatorSessionState.createInitial().copyWith({
       expressionText: "x+1",
