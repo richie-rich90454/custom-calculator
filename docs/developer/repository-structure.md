@@ -5,8 +5,7 @@ description: The layout of the repository and where every layer lives.
 
 # Repository Structure
 
-The repository is organized into a root application and an isolated
-documentation package.
+The repository is organized into a root application and an isolated documentation package.
 
 ```
 custom-calculator/
@@ -28,19 +27,18 @@ custom-calculator/
 
 ## Root files
 
-| File | Purpose |
-| ---- | ------- |
-| `package.json` | Root dependencies and scripts |
-| `vite.config.ts` | Vite and Vitest configuration |
-| `tsconfig.json` | Strict TypeScript configuration |
-| `index.html` | HTML entry point |
-| `.prettierrc.json` | Prettier formatting rules |
-| `eslint.config.js` | ESLint configuration |
+| File               | Purpose                         |
+| ------------------ | ------------------------------- |
+| `package.json`     | Root dependencies and scripts   |
+| `vite.config.ts`   | Vite and Vitest configuration   |
+| `tsconfig.json`    | Strict TypeScript configuration |
+| `index.html`       | HTML entry point                |
+| `.prettierrc.json` | Prettier formatting rules       |
+| `eslint.config.js` | ESLint configuration            |
 
 ## Documentation package
 
-The `docs` directory is a fully isolated package with its own `package.json`,
-dependencies, and scripts. It never shares dependencies with the root.
+The `docs` directory is a fully isolated package with its own `package.json`, dependencies, and scripts. It never shares dependencies with the root.
 
 ```
 cd docs
@@ -52,17 +50,13 @@ See the [installation](/getting-started/installation) page.
 
 ## The source tree
 
-Each layer has a single responsibility. The dependency direction is strict:
-presentation -> state -> application -> domain, with infrastructure at the
-bottom.
+Each layer has a single responsibility. The dependency direction is strict: presentation -> state -> application -> domain, with infrastructure at the bottom.
 
 - `src/domain` — pure TypeScript, no React, no math.js.
 - `src/application` — commands and controllers that orchestrate the domain.
-- `src/infrastructure` — math.js gateway, persistence, feature detection, and
-  static constant data.
+- `src/infrastructure` — math.js gateway, persistence, feature detection, and static constant data.
 - `src/presentation` — React components, view models, services, and styles.
-- `src/state` — the thin Zustand store that connects UI actions to the
-  application controller.
+- `src/state` — the thin Zustand store that connects UI actions to the application controller.
 
 ## Layer documentation
 
@@ -74,6 +68,5 @@ bottom.
 
 ## Next steps
 
-- [Architecture overview](/developer/architecture-overview) explains the
-  layering.
+- [Architecture overview](/developer/architecture-overview) explains the layering.
 - [Composition root](/developer/composition-root) explains dependency wiring.
