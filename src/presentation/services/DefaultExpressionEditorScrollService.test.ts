@@ -43,7 +43,7 @@ describe("DefaultExpressionEditorScrollService", () => {
     expect(input.scrollLeft).toBe(10);
   });
 
-  it("does not scroll below zero when the caret is near the start", () => {
+  it("scrolls left to reveal the caret when it is behind the visible area", () => {
     const input = createInput(10, 100);
 
     service.scrollCaretIntoView({
@@ -52,6 +52,6 @@ describe("DefaultExpressionEditorScrollService", () => {
       scrollPadding: 8,
     });
 
-    expect(input.scrollLeft).toBe(0);
+    expect(input.scrollLeft).toBe(4);
   });
 });
