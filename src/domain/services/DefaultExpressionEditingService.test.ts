@@ -136,6 +136,20 @@ describe("DefaultExpressionEditingService", () => {
 
       expect(edit.text).toBe("x+foo");
     });
+
+    it("deletes a calculus template block as a function group", () => {
+      const edit = service.deleteBackward("derivative(, x)", 11, 11);
+
+      expect(edit.text).toBe("");
+      expect(edit.cursorPosition).toBe(0);
+    });
+
+    it("deletes an integral template block as a function group", () => {
+      const edit = service.deleteBackward("integral(, x, a, b)", 9, 9);
+
+      expect(edit.text).toBe("");
+      expect(edit.cursorPosition).toBe(0);
+    });
   });
 
   describe("autoCloseParentheses", () => {
