@@ -7,7 +7,7 @@ import { CasOperationKind } from "./CasOperationKind";
  * requested symbolic operation on the inner expression.
  */
 export interface CasBlockDescriptor {
-  readonly operationKind: CasOperationKind;
-  readonly innerExpressionText: string;
-  readonly derivativeVariableName: string | null;
+    readonly operationKind: CasOperationKind;
+    readonly innerExpressionText: string;
+    readonly derivativeVariableName: string | null;
 }
