@@ -3,6 +3,9 @@ import { useCalculatorApplicationContext } from "../../app/CalculatorApplication
 import { useCalculatorViewModel } from "../hooks/useCalculatorViewModel";
 import { AccessibleButtonComponent } from "../primitives/AccessibleButtonComponent";
 import { AccessibleTextFieldComponent } from "../primitives/AccessibleTextFieldComponent";
+import { PanelComponent } from "../primitives/PanelComponent";
+import { PanelEmptyStateComponent } from "../primitives/PanelEmptyStateComponent";
+import { PanelSectionComponent } from "../primitives/PanelSectionComponent";
 import { cssClass } from "../utils/classNames";
 import styles from "../styles/VariablesPanelComponent.module.css";
 
@@ -27,9 +30,8 @@ export function VariablesPanelComponent() {
   };
 
   return (
-    <div className={cssClass(styles.panel)}>
-      <section className={cssClass(styles.saveSection)}>
-        <h3 className={cssClass(styles.sectionHeading)}>Save current result</h3>
+    <PanelComponent title="Variables">
+      <PanelSectionComponent heading="Save current result">
         <div className={cssClass(styles.saveRow)}>
           <AccessibleTextFieldComponent
             label="Variable name"
@@ -52,14 +54,11 @@ export function VariablesPanelComponent() {
             Evaluate an expression first to have a result to save.
           </p>
         ) : null}
-      </section>
+      </PanelSectionComponent>
 
-      <section className={cssClass(styles.listSection)}>
-        <h3 className={cssClass(styles.sectionHeading)}>Saved variables</h3>
+      <PanelSectionComponent heading="Saved variables">
         {viewModel.variables.length === 0 ? (
-          <p className={cssClass(styles.emptyMessage)}>
-            No variables saved yet.
-          </p>
+          <PanelEmptyStateComponent message="No variables saved yet." />
         ) : (
           <ul className={cssClass(styles.variableList)} aria-label="Saved variables">
             {viewModel.variables.map((variable) => (
@@ -94,7 +93,7 @@ export function VariablesPanelComponent() {
             ))}
           </ul>
         )}
-      </section>
-    </div>
+      </PanelSectionComponent>
+    </PanelComponent>
   );
 }
