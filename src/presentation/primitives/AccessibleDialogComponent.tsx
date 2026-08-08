@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Dialog, Modal, ModalOverlay } from "react-aria-components";
 import { AccessibleButtonComponent } from "./AccessibleButtonComponent";
-import styles from "./AccessibleDialogComponent.module.css";
+import styles from "../styles/AccessibleDialogComponent.module.css";
 
 export interface AccessibleDialogComponentProperties {
   readonly title: string;
