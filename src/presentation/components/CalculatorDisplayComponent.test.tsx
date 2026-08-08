@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { screen } from "@testing-library/react";
+import { act, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createCalculatorTestHarness, renderWithCalculatorContext } from "../../test/calculatorTestHarness";
 import { CalculatorDisplayComponent } from "./CalculatorDisplayComponent";
@@ -159,6 +159,7 @@ describe("CalculatorDisplayComponent caret behavior", () => {
   });
 
   it("renders the synthetic caret after a function insertion while the editor is blurred", async () => {
+    const user = userEvent.setup();
     const harness = createCalculatorTestHarness();
 
     renderWithCalculatorContext(
@@ -168,10 +169,12 @@ describe("CalculatorDisplayComponent caret behavior", () => {
 
     const input = screen.getByLabelText("Calculator expression input");
 
-    input.focus();
-    input.blur();
+    await user.click(input);
+    await user.tab();
 
-    harness.store.getState().onFunctionPressed("sin");
+    act(() => {
+      harness.store.getState().onFunctionPressed("sin");
+    });
 
     expect(
       document.querySelectorAll('[data-testid="caret-indicator"]')
