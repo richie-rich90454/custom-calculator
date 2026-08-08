@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useCalculatorApplicationContext } from "../../app/CalculatorApplicationContext";
-import { CalculatorPanelName } from "../../state/CalculatorUiState";
+import { CalculatorKeyboardShortcutRegistry } from "../services/CalculatorKeyboardShortcutRegistry";
+
+const keyboardShortcutRegistry = new CalculatorKeyboardShortcutRegistry();
 
 export function useCalculatorKeyboardBindings(): void {
   const { store } = useCalculatorApplicationContext();
@@ -15,46 +17,17 @@ export function useCalculatorKeyboardBindings(): void {
           target.tagName === "TEXTAREA" ||
           target.isContentEditable);
 
-      if (event.key === "Escape") {
-        if (actions.activePanel !== CalculatorPanelName.NONE) {
-          event.preventDefault();
-          actions.onPanelOpened(actions.activePanel);
-          return;
-        }
+      const resolution = keyboardShortcutRegistry.resolveKeyDown(event, {
+        activePanel: actions.activePanel,
+        isTypingContext: isTypingContext,
+        onPanelOpened: actions.onPanelOpened,
+        onClearPressed: actions.onClearPressed,
+        onEvaluatePressed: actions.onEvaluatePressed,
+        onAngleModeTogglePressed: actions.onAngleModeTogglePressed,
+      });
 
-        if (!isTypingContext) {
-          event.preventDefault();
-          actions.onClearPressed();
-        }
-
-        return;
-      }
-
-      if (event.key === "Enter" && !isTypingContext) {
+      if (resolution.handled) {
         event.preventDefault();
-        actions.onEvaluatePressed();
-        return;
-      }
-
-      if (event.ctrlKey || event.metaKey) {
-        const shortcutKey = event.key.toLowerCase();
-
-        if (shortcutKey === "d") {
-          event.preventDefault();
-          actions.onAngleModeTogglePressed();
-        } else if (shortcutKey === "h") {
-          event.preventDefault();
-          actions.onPanelOpened(CalculatorPanelName.HISTORY);
-        } else if (shortcutKey === "m") {
-          event.preventDefault();
-          actions.onPanelOpened(CalculatorPanelName.MEMORY);
-        } else if (shortcutKey === "e") {
-          event.preventDefault();
-          actions.onPanelOpened(CalculatorPanelName.CONSTANTS);
-        } else if (shortcutKey === ",") {
-          event.preventDefault();
-          actions.onPanelOpened(CalculatorPanelName.SETTINGS);
-        }
       }
     };
 
