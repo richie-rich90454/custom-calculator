@@ -96,6 +96,7 @@ describe("LocalStorageSettingsRepository", () => {
           ThemePreference.LIGHT
         )
       )).not.toThrow();
+      expect(() => repository.clearSettings()).not.toThrow();
     } finally {
       if (originalDescriptor !== undefined) {
         Object.defineProperty(globalThis, "localStorage", originalDescriptor);
