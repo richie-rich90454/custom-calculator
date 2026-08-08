@@ -5,23 +5,21 @@ description: How to add a new scientific function to the calculator.
 
 # Adding a Function
 
-Adding a function involves a data definition, a math.js whitelist check, and
-optional keypad placement.
+Adding a function involves a data definition, a math.js whitelist check, and optional keypad placement.
 
 ## Step one: add the definition
 
-Function definitions live in data modules under `src/infrastructure/functions`.
-Pick the file for the matching category or create a new one.
+Function definitions live in data modules under `src/infrastructure/functions`. Pick the file for the matching category or create a new one.
 
 ```ts
 new ScientificFunctionDefinition(
-  "cot",
-  "cot",
-  "Cotangent of an angle",
-  ScientificFunctionCategory.TRIGONOMETRIC,
-  1,
-  1
-)
+    "cot",
+    "cot",
+    "Cotangent of an angle",
+    ScientificFunctionCategory.TRIGONOMETRIC,
+    1,
+    1,
+);
 ```
 
 The constructor takes:
@@ -35,20 +33,18 @@ The constructor takes:
 
 ## Step two: register the data module
 
-Add the module to `scientificFunctionDefinitionRegistry` so the catalog
-service picks it up.
+Add the module to `scientificFunctionDefinitionRegistry` so the catalog service picks it up.
 
 ```ts
 export const scientificFunctionDefinitionRegistry: readonly ScientificFunctionDefinition[] = [
-  ...trigonometricFunctionDefinitions,
-  // ...
+    ...trigonometricFunctionDefinitions,
+    // ...
 ];
 ```
 
 ## Step three: add the key
 
-Add a key definition in `DefaultKeypadDefinitionRepository` for the scientific
-pad:
+Add a key definition in `DefaultKeypadDefinitionRepository` for the scientific pad:
 
 ```ts
 {
@@ -62,9 +58,7 @@ pad:
 
 ## Step four: whitelist the function
 
-The math.js whitelist is built from the function catalog, so registering the
-definition automatically allows the function through the gateway. Verify the
-whitelist behavior with a test.
+The math.js whitelist is built from the function catalog, so registering the definition automatically allows the function through the gateway. Verify the whitelist behavior with a test.
 
 ## Step five: test
 
@@ -76,8 +70,7 @@ See [Testing guide](/developer/testing-guide).
 
 ## Evaluation security
 
-Every function must be parseable by math.js and allowed by the whitelist.
-User input is never executed as code. See [Security policy](/developer/security-policy).
+Every function must be parseable by math.js and allowed by the whitelist. User input is never executed as code. See [Security policy](/developer/security-policy).
 
 ## Next steps
 
