@@ -85,6 +85,11 @@ export default withMermaid(
                     {
                         text: "User Guide",
                         items: [
+                            {
+                                text: "Interface Overview",
+                                link: "/user-guide/interface-overview",
+                            },
+                            { text: "Keymap Reference", link: "/user-guide/keymap-reference" },
                             { text: "Expression Editing", link: "/user-guide/expression-editing" },
                             { text: "Smart Backspace", link: "/user-guide/smart-backspace" },
                             { text: "Parentheses", link: "/user-guide/parentheses" },
@@ -238,6 +243,7 @@ export default withMermaid(
                     {
                         text: "Architecture",
                         items: [
+                            { text: "App Shell", link: "/architecture/app-shell" },
                             { text: "Layers", link: "/architecture/layers" },
                             {
                                 text: "Evaluation Pipeline",
@@ -261,6 +267,7 @@ export default withMermaid(
                     {
                         text: "Design System",
                         items: [
+                            { text: "Visual Language", link: "/design-system/visual-language" },
                             { text: "Color Tokens", link: "/design-system/color-tokens" },
                             { text: "Typography", link: "/design-system/typography" },
                             { text: "Spacing", link: "/design-system/spacing" },
