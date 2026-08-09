@@ -1,0 +1,45 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.optionGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.optionButton {
+    min-height: 38px;
+    padding: 4px 12px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-align: left;
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-primary);
+    cursor: pointer;
+}
+
+.optionButton:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.optionButtonActive {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.digitsRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.digitsLabel {
+    font-size: 0.84rem;
+    color: var(--color-text-secondary);
+}
