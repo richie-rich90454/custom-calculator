@@ -20,6 +20,9 @@ export class DefaultButtonInsertionTemplateService implements ButtonInsertionTem
         taylor: "taylor(, x, 0, 5)",
         sum: "sum(, n, 1, 10)",
         product: "product(, n, 1, 5)",
+        logBase: "log(, )",
+        fraction: "/",
+        mixedFraction: "+/",
     };
 
     public resolveTemplate(button: CalculatorButtonDefinition): CalculatorButtonTemplate {
