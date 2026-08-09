@@ -1,6 +1,8 @@
 import { AngleMode } from "../domain/model/AngleMode";
 import { NumericMode } from "../domain/model/NumericMode";
+import { ResultFormatMode } from "../domain/model/ResultFormatMode";
 import { ThemePreference } from "../domain/model/ThemePreference";
+import type { CursorMoveDirection } from "../domain/model/CursorMoveDirection";
 
 export interface CalculatorUiActions {
     onDigitPressed(digit: string): void;
@@ -39,4 +41,31 @@ export interface CalculatorUiActions {
     onSimplifyPressed(): void;
     onExpandPressed(): void;
     onDifferentiatePressed(variableName: string): void;
+
+    onShiftPressed(): void;
+    onAlphaPressed(): void;
+    onModifierDisarmed(): void;
+    onInsertTextPressed(value: string): void;
+    onInsertFunctionPressed(functionName: string): void;
+    onInsertTemplatePressed(templateName: string): void;
+    onInsertExponent10Pressed(): void;
+    onEvaluateApproximatePressed(): void;
+    onMenuOpened(): void;
+    onOptnOpened(): void;
+    onCalcPressed(): void;
+    onSolvePressed(): void;
+    onSDCyclePressed(): void;
+    onEngTogglePressed(direction: "forward" | "reverse"): void;
+    onFixSciMenuOpened(): void;
+    onStoreModeArmed(): void;
+    onRecallModeArmed(): void;
+    onHyperbolicMenuOpened(inverse: boolean): void;
+    onCursorMovePressed(direction: CursorMoveDirection): void;
+    onConfirmPressed(): void;
+    onHistoryStepBackPressed(): void;
+    onHistoryStepForwardPressed(): void;
+    onAppModeSelected(appModeId: string): void;
+    onResultFormatChanged(resultFormatMode: ResultFormatMode, digits: number): void;
+    onVariablePromptSubmitted(values: Readonly<Record<string, string>>): void;
+    onVariablePromptCancelled(): void;
 }
