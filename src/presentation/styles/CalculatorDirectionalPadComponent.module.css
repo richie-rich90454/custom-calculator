@@ -1,0 +1,36 @@
+.directionalPad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 6px;
+    width: 156px;
+}
+
+.up {
+    grid-area: 1 / 2;
+    border-radius: 50% 50% 10px 10px;
+}
+
+.left {
+    grid-area: 2 / 1;
+    border-radius: 50% 10px 10px 50%;
+}
+
+.confirm {
+    grid-area: 2 / 2;
+    border-radius: 50%;
+}
+
+.right {
+    grid-area: 2 / 3;
+    border-radius: 10px 50% 50% 10px;
+}
+
+.down {
+    grid-area: 3 / 2;
+    border-radius: 10px 10px 50% 50%;
+}
+
+.emptyCell {
+    pointer-events: none;
+}
