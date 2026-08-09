@@ -7,6 +7,7 @@ import { AccessibleDialogComponent } from "../primitives/AccessibleDialogCompone
 import { CalculatorStatusBarComponent } from "./CalculatorStatusBarComponent";
 import { CalculatorDisplayComponent } from "./CalculatorDisplayComponent";
 import { CalculatorKeypadComponent } from "./CalculatorKeypadComponent";
+import { CalculatorAppViewComponent } from "./apps/CalculatorAppViewComponent";
 import { CasPanelComponent } from "./CasPanelComponent";
 import { CalculusPanelComponent } from "./CalculusPanelComponent";
 import { ConstantsPanelComponent } from "./ConstantsPanelComponent";
@@ -50,8 +51,14 @@ export function CalculatorShellComponent() {
                 <CalculatorStatusBarComponent />
 
                 <div className={cssClass(styles.main)}>
-                    <CalculatorDisplayComponent />
-                    <CalculatorKeypadComponent />
+                    {viewModel.activeAppMode === "calculate" ? (
+                        <>
+                            <CalculatorDisplayComponent />
+                            <CalculatorKeypadComponent />
+                        </>
+                    ) : (
+                        <CalculatorAppViewComponent />
+                    )}
                 </div>
             </div>
 
