@@ -68,4 +68,5 @@ export interface CalculatorUiActions {
     onResultFormatChanged(resultFormatMode: ResultFormatMode, digits: number): void;
     onVariablePromptSubmitted(values: Readonly<Record<string, string>>): void;
     onVariablePromptCancelled(): void;
+    onKaTeXPreviewToggled(): void;
 }
