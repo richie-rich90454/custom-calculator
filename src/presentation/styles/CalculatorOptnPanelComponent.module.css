@@ -1,0 +1,68 @@
+.tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tabList {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tab {
+    min-height: 34px;
+    padding: 4px 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.tab[data-selected] {
+    color: var(--color-text-primary);
+    border-bottom-color: var(--color-accent);
+}
+
+.tabPanel {
+    outline: none;
+}
+
+.optionGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.optionHeading {
+    margin: 0 0 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.optionButton {
+    min-height: 36px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-primary);
+    cursor: pointer;
+}
+
+.optionButton:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.optionButtonActive {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 600;
+}
