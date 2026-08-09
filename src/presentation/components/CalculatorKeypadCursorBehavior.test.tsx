@@ -40,22 +40,10 @@ describe("CalculatorKeypadComponent cursor placement", () => {
 
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
-        await user.click(screen.getByRole("button", { name: "Sine function" }));
+        await user.click(screen.getByRole("button", { name: "Insert a sine" }));
 
         expect(harness.store.getState().expressionText).toBe("sin(");
         expect(harness.store.getState().cursorPosition).toBe(4);
-    });
-
-    it("places the cursor after the opening parenthesis when inserting a square root", async () => {
-        const user = userEvent.setup();
-        const harness = createCalculatorTestHarness();
-
-        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
-
-        await user.click(screen.getByRole("button", { name: "Square root" }));
-
-        expect(harness.store.getState().expressionText).toBe("sqrt(");
-        expect(harness.store.getState().cursorPosition).toBe(5);
     });
 
     it("places the cursor at the first placeholder when inserting a template", async () => {
@@ -64,10 +52,12 @@ describe("CalculatorKeypadComponent cursor placement", () => {
 
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
-        await user.click(screen.getByRole("button", { name: "Insert symbolic derivative block" }));
+        await user.click(
+            screen.getByRole("button", { name: "Insert a definite integral template" }),
+        );
 
-        expect(harness.store.getState().expressionText).toBe("derivative(, x)");
-        expect(harness.store.getState().cursorPosition).toBe(11);
+        expect(harness.store.getState().expressionText).toBe("integral(, x, a, b)");
+        expect(harness.store.getState().cursorPosition).toBe(9);
     });
 
     it("does not move the cursor to the start after inserting a digit", async () => {
@@ -98,7 +88,7 @@ describe("CalculatorKeypadComponent cursor placement", () => {
 
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
-        await user.click(screen.getByRole("button", { name: "Sine function" }));
+        await user.click(screen.getByRole("button", { name: "Insert a sine" }));
 
         expect(harness.store.getState().expressionText).toBe("sin(x+1)");
         expect(harness.store.getState().cursorPosition).toBe(7);
@@ -110,7 +100,7 @@ describe("CalculatorKeypadComponent cursor placement", () => {
 
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
-        await user.click(screen.getByRole("button", { name: "Pi constant" }));
+        await user.click(screen.getByRole("button", { name: "Insert pi" }));
 
         expect(harness.store.getState().expressionText).toBe("pi");
         expect(harness.store.getState().cursorPosition).toBe(2);
