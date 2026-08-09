@@ -87,10 +87,32 @@
     --color-error-background: #2b1718;
     --color-success: #6bdb8c;
     --color-warning: #f5c76b;
-    --color-focus-ring: #4c8dff;
+    --color-focus-ring: #2f6db3;
     --color-shadow: rgba(0, 0, 0, 0.35);
     --color-shadow-strong: rgba(0, 0, 0, 0.5);
     --color-calculator-body: #14181e;
     --color-calculator-edge: #0a0d11;
     --color-panel-background: #181c23;
+}
+
+/* Instrument palette: brand-agnostic scientific instrument. The calculator
+   body always wears this palette regardless of the surrounding theme. */
+:root,
+[data-theme="dark"] {
+    --color-shell: #24272c;
+    --color-shell-edge: #3a3e45;
+    --color-key-primary: #edebe4;
+    --color-key-primary-ink: #1c1e21;
+    --color-key-function: #343b42;
+    --color-key-function-ink: #e8eaed;
+    --color-key-delete: #1f6f6b;
+    --color-key-clear: #a6512d;
+    --color-silk-shift: #c98a3a;
+    --color-silk-alpha: #3e8e88;
+    --color-display-paper: #f4f2eb;
+    --color-display-ink: #17191b;
+    --color-focus-ring: #2f6db3;
+    --color-calculator-body: #24272c;
+    --color-calculator-edge: #3a3e45;
+    --color-display-background: #f4f2eb;
 }
