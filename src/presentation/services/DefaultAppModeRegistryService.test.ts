@@ -43,15 +43,19 @@ describe("DefaultAppModeRegistryService", () => {
         expect(registry.getDefaultAppId()).toBe("calculate");
     });
 
-    it("makes only the calculate app available", () => {
-        const unavailable = registry.getAllApps().filter((app) => !app.isAvailable);
+    it("marks the shipped apps available and the rest unavailable", () => {
+        const availableApps = ["calculate", "complex", "base-n", "matrix", "vector"];
+        const apps = registry.getAllApps();
 
-        expect(unavailable.length).toBe(9);
-        for (const app of unavailable) {
-            expect(app.availabilityReason).not.toBeNull();
+        for (const app of apps) {
+            if (availableApps.includes(app.id)) {
+                expect(app.isAvailable).toBe(true);
+                expect(app.availabilityReason).toBeNull();
+            } else {
+                expect(app.isAvailable).toBe(false);
+                expect(app.availabilityReason).not.toBeNull();
+            }
         }
-
-        expect(registry.getApp("calculate")?.isAvailable).toBe(true);
     });
 
     it("looks up an app by id", () => {
