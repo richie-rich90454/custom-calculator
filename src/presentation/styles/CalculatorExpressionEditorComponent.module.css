@@ -35,7 +35,7 @@
     width: 100%;
     border: none;
     background: transparent;
-    color: var(--color-text-primary);
+    color: var(--color-display-ink);
     font-family: var(--font-display);
     font-size: 1.35rem;
     line-height: 1.5;
