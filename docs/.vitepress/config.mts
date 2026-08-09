@@ -110,6 +110,7 @@ export default withMermaid(
                             { text: "Constants", link: "/user-guide/constants" },
                             { text: "Variables", link: "/user-guide/variables" },
                             { text: "Memory", link: "/user-guide/memory" },
+                            { text: "Display Formats", link: "/user-guide/display-formats" },
                             { text: "History", link: "/user-guide/history" },
                             { text: "Themes", link: "/user-guide/themes" },
                             { text: "Settings", link: "/user-guide/settings" },
