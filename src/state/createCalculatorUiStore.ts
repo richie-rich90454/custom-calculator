@@ -126,29 +126,39 @@ export function createCalculatorUiStore(
 
         const stepHistory = (direction: "back" | "forward"): void => {
             const state = get();
-            const entries = state.historyEntries;
+            const resolution =
+                direction === "back"
+                    ? compositionRoot.replayHistoryService.resolveBack(
+                          state.expressionText,
+                          state.historyEntries,
+                          state.historyReplayIndex,
+                      )
+                    : compositionRoot.replayHistoryService.resolveForward(
+                          state.expressionText,
+                          state.historyEntries,
+                          state.historyReplayIndex,
+                      );
 
-            if (entries.length === 0) {
+            if (!resolution.changed) {
                 return;
             }
 
-            const currentIndex = state.historyReplayIndex;
-            const nextIndex =
-                direction === "back"
-                    ? currentIndex === null
-                        ? 0
-                        : Math.min(entries.length - 1, currentIndex + 1)
-                    : currentIndex === null
-                      ? 0
-                      : Math.max(0, currentIndex - 1);
-
-            applyHistoryEntry(entries[nextIndex] as HistoryEntry, nextIndex);
+            set({
+                expressionText: resolution.expressionText,
+                cursorPosition: resolution.expressionText.length,
+                selectionStart: resolution.expressionText.length,
+                selectionEnd: resolution.expressionText.length,
+                historyReplayIndex: resolution.replayIndex,
+                resultText: null,
+                errorText: null,
+            });
         };
 
         const submitEvaluatedResult = (nextSessionState: CalculatorSessionState): void => {
             set({
                 ...viewModelMapper.mapSessionStateToUiState(nextSessionState, get()),
                 isFractionResultDisplayed: false,
+                isApproximateResult: false,
             });
 
             if (nextSessionState.resultText !== null) {
@@ -599,14 +609,22 @@ export function createCalculatorUiStore(
                     const conversion = compositionRoot.resultFormatService.convertToDecimal(
                         state.lastResultValue,
                     );
-                    set({ resultText: conversion.text, isFractionResultDisplayed: false });
+                    set({
+                        resultText: conversion.text,
+                        isFractionResultDisplayed: false,
+                        isApproximateResult: !conversion.isExact,
+                    });
                     return;
                 }
 
                 const conversion = compositionRoot.resultFormatService.convertToFraction(
                     state.lastResultValue,
                 );
-                set({ resultText: conversion.text, isFractionResultDisplayed: true });
+                set({
+                    resultText: conversion.text,
+                    isFractionResultDisplayed: true,
+                    isApproximateResult: !conversion.isExact,
+                });
             },
 
             onEngTogglePressed: (_direction) => {
@@ -763,6 +781,10 @@ export function createCalculatorUiStore(
 
             onVariablePromptCancelled: () => {
                 set({ pendingVariablePrompts: [], activePanel: CalculatorPanelName.NONE });
+            },
+
+            onKaTeXPreviewToggled: () => {
+                set({ isKaTeXPreviewEnabled: !get().isKaTeXPreviewEnabled });
             },
         };
     });
