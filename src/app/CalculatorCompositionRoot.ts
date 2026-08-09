@@ -32,6 +32,14 @@ import { MathJsExpressionEvaluationGateway } from "../infrastructure/mathjs/Math
 import { MathJsFunctionWhitelist } from "../infrastructure/mathjs/MathJsFunctionWhitelist";
 import { NewtonRaphsonEquationSolvingGateway } from "../infrastructure/mathjs/NewtonRaphsonEquationSolvingGateway";
 import { MathJsResultFormatGateway } from "../infrastructure/mathjs/MathJsResultFormatGateway";
+import { MathJsComplexOperationsGateway } from "../infrastructure/mathjs/MathJsComplexOperationsGateway";
+import { MathJsMatrixOperationsGateway } from "../infrastructure/mathjs/MathJsMatrixOperationsGateway";
+import { MathJsVectorOperationsGateway } from "../infrastructure/mathjs/MathJsVectorOperationsGateway";
+import type { ComplexOperationsGateway } from "../domain/services/ComplexOperationsGateway";
+import type { MatrixOperationsGateway } from "../domain/services/MatrixOperationsGateway";
+import type { VectorOperationsGateway } from "../domain/services/VectorOperationsGateway";
+import type { BigIntBaseNArithmeticService } from "../application/services/BigIntBaseNArithmeticService";
+import { DefaultBigIntBaseNArithmeticService } from "../application/services/DefaultBigIntBaseNArithmeticService";
 import { CalculatorDexieDatabase } from "../infrastructure/persistence/CalculatorDexieDatabase";
 import { IndexedDbHistoryRepository } from "../infrastructure/persistence/IndexedDbHistoryRepository";
 import { IndexedDbVariablesRepository } from "../infrastructure/persistence/IndexedDbVariablesRepository";
@@ -117,6 +125,10 @@ export class CalculatorCompositionRoot {
     public readonly physicalKeyboardBindingService: PhysicalKeyboardBindingServiceContract;
     public readonly expressionVariablePromptService: ExpressionVariablePromptService;
     public readonly replayHistoryService: ReplayHistoryService;
+    public readonly complexOperationsGateway: ComplexOperationsGateway;
+    public readonly bigIntBaseNArithmeticService: BigIntBaseNArithmeticService;
+    public readonly matrixOperationsGateway: MatrixOperationsGateway;
+    public readonly vectorOperationsGateway: VectorOperationsGateway;
 
     public constructor() {
         this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
@@ -234,6 +246,16 @@ export class CalculatorCompositionRoot {
             this.constantCatalogService,
         );
         this.replayHistoryService = new DefaultReplayHistoryService();
+        this.complexOperationsGateway = new MathJsComplexOperationsGateway(
+            this.mathJsInstanceProvider,
+        );
+        this.bigIntBaseNArithmeticService = new DefaultBigIntBaseNArithmeticService();
+        this.matrixOperationsGateway = new MathJsMatrixOperationsGateway(
+            this.mathJsInstanceProvider,
+        );
+        this.vectorOperationsGateway = new MathJsVectorOperationsGateway(
+            this.mathJsInstanceProvider,
+        );
     }
 
     private createPersistenceRepositories(): {
