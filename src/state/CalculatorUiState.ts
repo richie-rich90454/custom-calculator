@@ -53,4 +53,6 @@ export interface CalculatorUiState {
     resultFormatDigits: number;
     hyperbolicMenuInverse: boolean;
     historyReplayIndex: number | null;
+    isKaTeXPreviewEnabled: boolean;
+    isApproximateResult: boolean;
 }
