@@ -1,4 +1,5 @@
 import { useCalculatorApplicationContext } from "../../app/CalculatorApplicationContext";
+import { NumericMode } from "../../domain/model/NumericMode";
 import { useCalculatorViewModel } from "../hooks/useCalculatorViewModel";
 import { AccessibleButtonComponent } from "../primitives/AccessibleButtonComponent";
 import { cssClass, joinClassNames } from "../utils/classNames";
@@ -24,27 +25,74 @@ export function CalculatorStatusBarComponent() {
     const { store } = useCalculatorApplicationContext();
     const viewModel = useCalculatorViewModel();
 
+    const status = viewModel.status;
+
     return (
         <div className={cssClass(styles.statusBar)}>
-            <div className={cssClass(styles.modes)}>
+            <div className={cssClass(styles.indicators)}>
+                <span className={cssClass(styles.appName)} aria-label="Active app">
+                    {status.activeAppName}
+                </span>
+
                 <AccessibleButtonComponent
                     customClassName={cssClass(styles.angleButton)}
                     aria-label="Cycle angle mode"
                     onPress={() => store.getState().onAngleModeTogglePressed()}
                 >
-                    {viewModel.angleMode}
+                    {status.angleModeLabel}
                 </AccessibleButtonComponent>
 
-                <span className={cssClass(styles.modeLabel)} aria-label="Numeric mode">
-                    {viewModel.numericMode}
+                <span className={cssClass(styles.modeLabel)} aria-label="Numeric format">
+                    {resolveNumericModeLabel(status.numericMode)}
                 </span>
 
-                {viewModel.hasMemory ? (
+                <span
+                    className={joinClassNames(
+                        styles.modifierIndicator,
+                        status.shiftArmed ? styles.modifierIndicatorActive : undefined,
+                    )}
+                    aria-label={status.shiftArmed ? "Shift layer armed" : "Shift layer"}
+                >
+                    △ SHIFT
+                </span>
+
+                <span
+                    className={joinClassNames(
+                        styles.modifierIndicator,
+                        status.alphaArmed ? styles.modifierIndicatorActive : undefined,
+                    )}
+                    aria-label={status.alphaArmed ? "Alpha layer armed" : "Alpha layer"}
+                >
+                    α ALPHA
+                </span>
+
+                {status.hasMemory ? (
                     <span
-                        className={cssClass(styles.memoryIndicator)}
+                        className={cssClass(styles.flagIndicator)}
                         aria-label="Memory contains a value"
                     >
                         M
+                    </span>
+                ) : null}
+
+                {status.casEnabled ? (
+                    <span className={cssClass(styles.flagIndicator)} aria-label="CAS enabled">
+                        CAS
+                    </span>
+                ) : null}
+
+                {status.complexNumbersEnabled ? (
+                    <span
+                        className={cssClass(styles.flagIndicator)}
+                        aria-label="Complex numbers enabled"
+                    >
+                        CMPLX
+                    </span>
+                ) : null}
+
+                {!status.bigIntSupported ? (
+                    <span className={cssClass(styles.warningIndicator)} role="status">
+                        BIG-INT UNAVAILABLE
                     </span>
                 ) : null}
             </div>
@@ -77,4 +125,17 @@ export function CalculatorStatusBarComponent() {
             ) : null}
         </div>
     );
+}
+
+function resolveNumericModeLabel(numericMode: NumericMode): string {
+    switch (numericMode) {
+        case NumericMode.EXACT_DECIMAL:
+            return "EXACT";
+        case NumericMode.FRACTION:
+            return "FRAC";
+        case NumericMode.BIGINT:
+            return "BIG";
+        default:
+            return "NORM";
+    }
 }
