@@ -2,6 +2,7 @@ import { useCalculatorApplicationContext } from "../../app/CalculatorApplication
 import { useCalculatorViewModel } from "../hooks/useCalculatorViewModel";
 import { CalculatorErrorLineComponent } from "./CalculatorErrorLineComponent";
 import { CalculatorExpressionEditorComponent } from "./CalculatorExpressionEditorComponent";
+import { CalculatorKaTeXPreviewComponent } from "./CalculatorKaTeXPreviewComponent";
 import { CalculatorResultLineComponent } from "./CalculatorResultLineComponent";
 import { cssClass } from "../utils/classNames";
 import styles from "../styles/CalculatorDisplayComponent.module.css";
@@ -19,7 +20,11 @@ export function CalculatorDisplayComponent() {
                 errorText={viewModel.errorText}
                 actions={store.getState()}
             />
-            <CalculatorResultLineComponent resultText={viewModel.resultText} />
+            <CalculatorKaTeXPreviewComponent />
+            <CalculatorResultLineComponent
+                resultText={viewModel.resultText}
+                isApproximateResult={viewModel.isApproximateResult}
+            />
             <CalculatorErrorLineComponent errorText={viewModel.errorText} />
         </div>
     );
