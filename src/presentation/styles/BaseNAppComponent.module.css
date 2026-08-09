@@ -1,0 +1,65 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-2);
+}
+
+.controlsRow {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+}
+
+.fieldsRow {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+}
+
+.actionGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.actionButton {
+    min-height: 36px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-primary);
+    cursor: pointer;
+}
+
+.actionButton:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.statusArea {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.resultLine {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+}
+
+.errorLine {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-danger);
+}
+
+.unavailableMessage {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
