@@ -80,6 +80,8 @@ import type { PhysicalKeyboardBindingService as PhysicalKeyboardBindingServiceCo
 import { PhysicalKeyboardBindingService } from "../presentation/services/PhysicalKeyboardBindingService";
 import type { ExpressionVariablePromptService } from "../presentation/services/ExpressionVariablePromptService";
 import { DefaultExpressionVariablePromptService } from "../presentation/services/DefaultExpressionVariablePromptService";
+import type { ReplayHistoryService } from "../presentation/services/ReplayHistoryService";
+import { DefaultReplayHistoryService } from "../presentation/services/DefaultReplayHistoryService";
 
 const DATABASE_NAME = "custom-calculator";
 
@@ -114,6 +116,7 @@ export class CalculatorCompositionRoot {
     public readonly appModeRegistryService: AppModeRegistryService;
     public readonly physicalKeyboardBindingService: PhysicalKeyboardBindingServiceContract;
     public readonly expressionVariablePromptService: ExpressionVariablePromptService;
+    public readonly replayHistoryService: ReplayHistoryService;
 
     public constructor() {
         this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
@@ -230,6 +233,7 @@ export class CalculatorCompositionRoot {
             this.functionCatalogService,
             this.constantCatalogService,
         );
+        this.replayHistoryService = new DefaultReplayHistoryService();
     }
 
     private createPersistenceRepositories(): {
