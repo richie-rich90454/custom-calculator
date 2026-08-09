@@ -78,6 +78,20 @@ export function CalculatorOptnPanelComponent() {
                         </AccessibleButtonComponent>
                     ))}
                 </div>
+                <div className={cssClass(styles.optionGroup)}>
+                    <h3 className={cssClass(styles.optionHeading)}>Expression preview</h3>
+                    <AccessibleButtonComponent
+                        customClassName={joinClassNames(
+                            styles.optionButton,
+                            viewModel.isKaTeXPreviewEnabled ? styles.optionButtonActive : undefined,
+                        )}
+                        aria-label="Toggle pretty expression preview"
+                        aria-pressed={viewModel.isKaTeXPreviewEnabled}
+                        onPress={() => store.getState().onKaTeXPreviewToggled()}
+                    >
+                        {viewModel.isKaTeXPreviewEnabled ? "Preview on" : "Preview off"}
+                    </AccessibleButtonComponent>
+                </div>
             </TabPanel>
         </Tabs>
     );
