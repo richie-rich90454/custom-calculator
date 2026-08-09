@@ -40,6 +40,8 @@ function buildUiState(): CalculatorUiState {
         resultFormatDigits: 2,
         hyperbolicMenuInverse: false,
         historyReplayIndex: null,
+        isKaTeXPreviewEnabled: true,
+        isApproximateResult: false,
     };
 }
 
