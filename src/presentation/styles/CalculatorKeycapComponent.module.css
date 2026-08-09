@@ -1,0 +1,105 @@
+.keycap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border: 1px solid var(--color-shell-edge);
+    border-radius: 6px;
+    padding: 0;
+    color: var(--color-key-primary-ink);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.09),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.28);
+    transition: filter 0.06s ease;
+}
+
+.keycap:active {
+    filter: brightness(0.92);
+}
+
+.primaryLabel {
+    pointer-events: none;
+}
+
+.shiftLabel,
+.alphaLabel {
+    position: absolute;
+    top: 3px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+}
+
+.shiftLabel {
+    left: 5px;
+    color: var(--color-silk-shift);
+    opacity: 0.9;
+}
+
+.shiftLabelActive {
+    opacity: 1;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.alphaLabel {
+    right: 5px;
+    color: var(--color-silk-alpha);
+    opacity: 0.9;
+}
+
+.alphaLabelActive {
+    opacity: 1;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.digitKey {
+    background-color: var(--color-key-primary);
+    color: var(--color-key-primary-ink);
+}
+
+.operatorKey {
+    background-color: var(--color-key-primary);
+    color: var(--color-key-primary-ink);
+}
+
+.functionKey {
+    background-color: var(--color-key-function);
+    color: var(--color-key-function-ink);
+}
+
+.utilityKey {
+    background-color: var(--color-key-function);
+    color: var(--color-key-function-ink);
+}
+
+.deleteKey {
+    background-color: var(--color-key-delete);
+    color: #eef5f4;
+}
+
+.clearKey {
+    background-color: var(--color-key-clear);
+    color: #fdf0e7;
+}
+
+.navigationKey {
+    background-color: var(--color-key-function);
+    color: var(--color-key-function-ink);
+    min-height: 40px;
+}
+
+.evaluateKey {
+    background-color: var(--color-key-primary);
+    color: var(--color-key-primary-ink);
+    font-size: 20px;
+}
