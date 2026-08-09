@@ -1,6 +1,8 @@
 import { AngleMode } from "../domain/model/AngleMode";
 import { HistoryEntry } from "../domain/model/HistoryEntry";
+import { ModifierLayer } from "../domain/model/ModifierLayer";
 import { NumericMode } from "../domain/model/NumericMode";
+import { ResultFormatMode } from "../domain/model/ResultFormatMode";
 import { ThemePreference } from "../domain/model/ThemePreference";
 import { VariableAssignment } from "../domain/model/VariableAssignment";
 
@@ -13,6 +15,11 @@ export enum CalculatorPanelName {
     SETTINGS = "SETTINGS",
     CAS = "CAS",
     CALCULUS = "CALCULUS",
+    HOME_MENU = "HOME_MENU",
+    OPTN = "OPTN",
+    VARIABLE_PROMPT = "VARIABLE_PROMPT",
+    HYPERBOLIC = "HYPERBOLIC",
+    FIX_SCI = "FIX_SCI",
 }
 
 export interface CalculatorUiState {
@@ -35,4 +42,15 @@ export interface CalculatorUiState {
     memoryValueText: string | null;
     activePanel: CalculatorPanelName;
     statusMessage: string | null;
+    activeModifierLayer: ModifierLayer;
+    activeAppMode: string;
+    pendingVariablePrompts: readonly string[];
+    isStoreModeArmed: boolean;
+    isRecallModeArmed: boolean;
+    isEngineeringEnabled: boolean;
+    isFractionResultDisplayed: boolean;
+    resultFormatMode: ResultFormatMode;
+    resultFormatDigits: number;
+    hyperbolicMenuInverse: boolean;
+    historyReplayIndex: number | null;
 }
