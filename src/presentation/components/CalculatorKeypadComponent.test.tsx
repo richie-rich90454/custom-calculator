@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { ModifierLayer } from "../../domain/model/ModifierLayer";
 import {
     createCalculatorTestHarness,
     renderWithCalculatorContext,
@@ -39,7 +40,7 @@ describe("CalculatorKeypadComponent", () => {
 
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
-        await user.click(screen.getByRole("button", { name: "Sine function" }));
+        await user.click(screen.getByRole("button", { name: "Insert a sine" }));
 
         expect(harness.store.getState().expressionText).toBe("sin(");
     });
@@ -65,7 +66,7 @@ describe("CalculatorKeypadComponent", () => {
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
         await user.click(screen.getByRole("button", { name: "Digit nine" }));
-        await user.click(screen.getByRole("button", { name: "Clear expression" }));
+        await user.click(screen.getByRole("button", { name: "Clear the expression and result" }));
 
         expect(harness.store.getState().expressionText).toBe("");
     });
@@ -78,7 +79,7 @@ describe("CalculatorKeypadComponent", () => {
 
         await user.click(screen.getByRole("button", { name: "Digit four" }));
         await user.click(screen.getByRole("button", { name: "Digit two" }));
-        await user.click(screen.getByRole("button", { name: "Backspace" }));
+        await user.click(screen.getByRole("button", { name: "Delete the token before the caret" }));
 
         expect(harness.store.getState().expressionText).toBe("4");
     });
@@ -89,9 +90,13 @@ describe("CalculatorKeypadComponent", () => {
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
         expect(screen.getByRole("button", { name: "Digit zero" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Sine function" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Pi constant" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Previous answer" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Insert a sine" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Insert pi" })).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", { name: "Insert the previous answer" }),
+        ).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Open the app menu" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Arm the shift layer" })).toBeInTheDocument();
     });
 
     it("activates keys with the Enter key via keyboard", async () => {
@@ -153,65 +158,18 @@ describe("CalculatorKeypadComponent", () => {
         expect(sevenButton).toHaveFocus();
     });
 
-    it("moves focus up a row with the up arrow", async () => {
-        const user = userEvent.setup();
-        const harness = createCalculatorTestHarness();
-
-        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
-
-        const sevenButton = screen.getByRole("button", { name: "Digit seven" });
-        const fourButton = screen.getByRole("button", { name: "Digit four" });
-
-        fourButton.focus();
-        await user.keyboard("{ArrowUp}");
-
-        expect(sevenButton).toHaveFocus();
-    });
-
     it("keeps focus on the grid edge when moving left of the first column", async () => {
         const user = userEvent.setup();
         const harness = createCalculatorTestHarness();
 
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
-        const clearButton = screen.getByRole("button", {
-            name: "Clear expression",
-        });
+        const sevenButton = screen.getByRole("button", { name: "Digit seven" });
 
-        clearButton.focus();
+        sevenButton.focus();
         await user.keyboard("{ArrowLeft}");
 
-        expect(clearButton).toHaveFocus();
-    });
-
-    it("keeps focus on the grid edge when moving above the first row", async () => {
-        const user = userEvent.setup();
-        const harness = createCalculatorTestHarness();
-
-        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
-
-        const clearButton = screen.getByRole("button", {
-            name: "Clear expression",
-        });
-
-        clearButton.focus();
-        await user.keyboard("{ArrowUp}");
-
-        expect(clearButton).toHaveFocus();
-    });
-
-    it("keeps focus on the grid edge when moving below the last row", async () => {
-        const user = userEvent.setup();
-        const harness = createCalculatorTestHarness();
-
-        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
-
-        const equalsButton = screen.getByRole("button", { name: "Evaluate" });
-
-        equalsButton.focus();
-        await user.keyboard("{ArrowDown}");
-
-        expect(equalsButton).toHaveFocus();
+        expect(sevenButton).toHaveFocus();
     });
 
     it("exposes exactly one tab stop per keypad grid", () => {
@@ -220,64 +178,34 @@ describe("CalculatorKeypadComponent", () => {
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
         const grid = screen.getByRole("grid", { name: "Calculator keypad" });
-        const buttonsInCoreGrid = Array.from(
-            grid.querySelectorAll("button"),
-        ) as HTMLButtonElement[];
+        const buttonsInGrid = Array.from(grid.querySelectorAll("button")) as HTMLButtonElement[];
 
-        const tabStops = buttonsInCoreGrid.filter((button) => button.tabIndex === 0);
+        const tabStops = buttonsInGrid.filter((button) => button.tabIndex === 0);
 
         expect(tabStops).toHaveLength(1);
     });
 
-    it("renders CAS operation keys when CAS is enabled", () => {
-        const harness = createCalculatorTestHarness({ casEnabled: true });
-
-        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
-
-        expect(screen.getByRole("button", { name: "Insert CAS block" })).toBeInTheDocument();
-        expect(
-            screen.getByRole("button", { name: "Insert CAS derivative block" }),
-        ).toBeInTheDocument();
-    });
-
-    it("hides CAS operation keys when CAS is disabled", () => {
-        const harness = createCalculatorTestHarness({ casEnabled: false });
-
-        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
-
-        expect(screen.queryByRole("button", { name: "Insert CAS block" })).not.toBeInTheDocument();
-    });
-
-    it("inserts a CAS block when the CAS key is pressed", async () => {
-        const user = userEvent.setup();
-        const harness = createCalculatorTestHarness({ casEnabled: true });
-
-        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
-
-        await user.click(screen.getByRole("button", { name: "Insert CAS block" }));
-
-        expect(harness.store.getState().expressionText).toBe("cas(");
-    });
-
-    it("renders calculus operation keys regardless of CAS mode", () => {
-        const harness = createCalculatorTestHarness({ casEnabled: false });
-
-        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
-
-        expect(
-            screen.getByRole("button", { name: "Insert symbolic derivative block" }),
-        ).toBeInTheDocument();
-    });
-
-    it("inserts a derivative block with a template when the calculus key is pressed", async () => {
+    it("arms the shift layer with the shift key", async () => {
         const user = userEvent.setup();
         const harness = createCalculatorTestHarness();
 
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
-        await user.click(screen.getByRole("button", { name: "Insert symbolic derivative block" }));
+        await user.click(screen.getByRole("button", { name: "Arm the shift layer" }));
 
-        expect(harness.store.getState().expressionText).toBe("derivative(, x)");
-        expect(harness.store.getState().cursorPosition).toBe(11);
+        expect(harness.store.getState().activeModifierLayer).toBe(ModifierLayer.SHIFT);
+    });
+
+    it("consumes the shift layer after a layered key press", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness();
+
+        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
+
+        await user.click(screen.getByRole("button", { name: "Arm the shift layer" }));
+        await user.click(screen.getByRole("button", { name: "Insert an arcsine, shift layer" }));
+
+        expect(harness.store.getState().activeModifierLayer).toBe(ModifierLayer.NONE);
+        expect(harness.store.getState().expressionText).toBe("asin(");
     });
 });
