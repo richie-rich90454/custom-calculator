@@ -319,6 +319,95 @@ describe("calculator UI store keypad actions", () => {
         expect(store.getState().isFractionResultDisplayed).toBe(true);
     });
 
+    it("keeps the exact indicator off for a rational S-D conversion", () => {
+        const { store } = createCalculatorTestHarness();
+
+        store.getState().onExpressionTextChanged("0.5", 3, 3, 3);
+        store.getState().onEvaluatePressed();
+        store.getState().onSDCyclePressed();
+
+        expect(store.getState().isApproximateResult).toBe(false);
+    });
+
+    it("converts 0.75 to 3/4 with S-D", () => {
+        const { store } = createCalculatorTestHarness();
+
+        store.getState().onExpressionTextChanged("0.75", 4, 4, 4);
+        store.getState().onEvaluatePressed();
+        store.getState().onSDCyclePressed();
+
+        expect(store.getState().resultText).toBe("3/4");
+    });
+
+    it("shows the approximate indicator for an irrational S-D conversion", () => {
+        const { store } = createCalculatorTestHarness();
+
+        store.getState().onExpressionTextChanged("sqrt(2)", 7, 7, 7);
+        store.getState().onEvaluatePressed();
+        store.getState().onSDCyclePressed();
+
+        expect(store.getState().isFractionResultDisplayed).toBe(true);
+        expect(store.getState().isApproximateResult).toBe(true);
+    });
+
+    it("resets the approximate indicator after a fresh evaluation", () => {
+        const { store } = createCalculatorTestHarness({
+            isApproximateResult: true,
+        });
+
+        store.getState().onExpressionTextChanged("2+2", 3, 3, 3);
+        store.getState().onEvaluatePressed();
+
+        expect(store.getState().isApproximateResult).toBe(false);
+    });
+
+    it("applies a fixed display format of pi to four decimal places", () => {
+        const { store } = createCalculatorTestHarness();
+
+        store.getState().onExpressionTextChanged("pi", 2, 2, 2);
+        store.getState().onEvaluatePressed();
+        store.getState().onResultFormatChanged(ResultFormatMode.FIX, 4);
+
+        expect(store.getState().resultText).toBe("3.1416");
+    });
+
+    it("inserts the boundary entry into the current expression when replaying back past the oldest entry", () => {
+        const { store } = createCalculatorTestHarness({
+            historyReplayIndex: 1,
+            expressionText: "2+2",
+            historyEntries: [createHistoryEntry("1", "1+1"), createHistoryEntry("2", "2+2")],
+        });
+
+        store.getState().onHistoryStepBackPressed();
+
+        expect(store.getState().expressionText).toBe("2+22+2");
+        expect(store.getState().historyReplayIndex).toBe(1);
+    });
+
+    it("inserts the boundary entry into the current expression when replaying forward past the newest entry", () => {
+        const { store } = createCalculatorTestHarness({
+            historyReplayIndex: 0,
+            expressionText: "1+1",
+            historyEntries: [createHistoryEntry("1", "1+1"), createHistoryEntry("2", "2+2")],
+        });
+
+        store.getState().onHistoryStepForwardPressed();
+
+        expect(store.getState().expressionText).toBe("1+11+1");
+        expect(store.getState().historyReplayIndex).toBe(0);
+    });
+
+    it("does not change the expression when replaying empty history", () => {
+        const { store } = createCalculatorTestHarness({
+            expressionText: "2+2",
+        });
+
+        store.getState().onHistoryStepBackPressed();
+
+        expect(store.getState().expressionText).toBe("2+2");
+        expect(store.getState().historyReplayIndex).toBeNull();
+    });
+
     it("converts a fraction result back to decimal with S-D", () => {
         const { store } = createCalculatorTestHarness({
             resultText: "1/2",
