@@ -30,6 +30,8 @@ import { DefaultMathJsFractionValueFactory } from "../infrastructure/mathjs/Math
 import { MathJsCalculationErrorMapper } from "../infrastructure/mathjs/MathJsCalculationErrorMapper";
 import { MathJsExpressionEvaluationGateway } from "../infrastructure/mathjs/MathJsExpressionEvaluationGateway";
 import { MathJsFunctionWhitelist } from "../infrastructure/mathjs/MathJsFunctionWhitelist";
+import { NewtonRaphsonEquationSolvingGateway } from "../infrastructure/mathjs/NewtonRaphsonEquationSolvingGateway";
+import { MathJsResultFormatGateway } from "../infrastructure/mathjs/MathJsResultFormatGateway";
 import { CalculatorDexieDatabase } from "../infrastructure/persistence/CalculatorDexieDatabase";
 import { IndexedDbHistoryRepository } from "../infrastructure/persistence/IndexedDbHistoryRepository";
 import { IndexedDbVariablesRepository } from "../infrastructure/persistence/IndexedDbVariablesRepository";
@@ -62,6 +64,22 @@ import { DefaultSymbolicDifferentiationService } from "../infrastructure/calculu
 import { DefaultSymbolicIntegrationService } from "../infrastructure/calculus/DefaultSymbolicIntegrationService";
 import { DefaultTaylorSeriesService } from "../infrastructure/calculus/DefaultTaylorSeriesService";
 import { MathJsCalculusExpressionEvaluator } from "../infrastructure/calculus/MathJsCalculusExpressionEvaluator";
+import type { EquationSolvingService } from "../application/services/EquationSolvingService";
+import { DefaultEquationSolvingService } from "../application/services/DefaultEquationSolvingService";
+import type { ResultFormatService } from "../domain/services/ResultFormatService";
+import { DefaultResultFormatService } from "../domain/services/ResultFormatService";
+import type { ModifierLayerService } from "../presentation/services/ModifierLayerService";
+import { DefaultModifierLayerService } from "../presentation/services/DefaultModifierLayerService";
+import type { KeymapDefinitionService } from "../presentation/services/KeymapDefinitionService";
+import { DefaultKeymapDefinitionService } from "../presentation/services/DefaultKeymapDefinitionService";
+import type { KeyActionDispatcherService } from "../presentation/services/KeyActionDispatcherService";
+import { DefaultKeyActionDispatcherService } from "../presentation/services/DefaultKeyActionDispatcherService";
+import type { AppModeRegistryService } from "../presentation/services/AppModeRegistryService";
+import { DefaultAppModeRegistryService } from "../presentation/services/DefaultAppModeRegistryService";
+import type { PhysicalKeyboardBindingService as PhysicalKeyboardBindingServiceContract } from "../presentation/services/PhysicalKeyboardBindingService";
+import { PhysicalKeyboardBindingService } from "../presentation/services/PhysicalKeyboardBindingService";
+import type { ExpressionVariablePromptService } from "../presentation/services/ExpressionVariablePromptService";
+import { DefaultExpressionVariablePromptService } from "../presentation/services/DefaultExpressionVariablePromptService";
 
 const DATABASE_NAME = "custom-calculator";
 
@@ -88,6 +106,14 @@ export class CalculatorCompositionRoot {
     public readonly casOperationCatalogService: CasOperationCatalogService;
     public readonly calculusExpressionRouterService: CalculusExpressionRouterService;
     public readonly calculusOperationCatalogService: CalculusOperationCatalogService;
+    public readonly resultFormatService: ResultFormatService;
+    public readonly equationSolvingService: EquationSolvingService;
+    public readonly modifierLayerService: ModifierLayerService;
+    public readonly keymapDefinitionService: KeymapDefinitionService;
+    public readonly keyActionDispatcherService: KeyActionDispatcherService;
+    public readonly appModeRegistryService: AppModeRegistryService;
+    public readonly physicalKeyboardBindingService: PhysicalKeyboardBindingServiceContract;
+    public readonly expressionVariablePromptService: ExpressionVariablePromptService;
 
     public constructor() {
         this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
@@ -189,6 +215,21 @@ export class CalculatorCompositionRoot {
             this.calculusExpressionRouterService,
         );
         this.uniqueIdentifierFactory = new DefaultUniqueIdentifierFactory();
+        this.resultFormatService = new DefaultResultFormatService(
+            new MathJsResultFormatGateway(this.mathJsInstanceProvider),
+        );
+        this.equationSolvingService = new DefaultEquationSolvingService(
+            new NewtonRaphsonEquationSolvingGateway(this.mathJsInstanceProvider),
+        );
+        this.modifierLayerService = new DefaultModifierLayerService();
+        this.keymapDefinitionService = new DefaultKeymapDefinitionService();
+        this.keyActionDispatcherService = new DefaultKeyActionDispatcherService();
+        this.appModeRegistryService = new DefaultAppModeRegistryService();
+        this.physicalKeyboardBindingService = new PhysicalKeyboardBindingService();
+        this.expressionVariablePromptService = new DefaultExpressionVariablePromptService(
+            this.functionCatalogService,
+            this.constantCatalogService,
+        );
     }
 
     private createPersistenceRepositories(): {
