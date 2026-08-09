@@ -1,12 +1,16 @@
 import type { CalculatorCompositionRoot } from "../../app/CalculatorCompositionRoot";
 import type { AngleMode } from "../../domain/model/AngleMode";
 import type { HistoryEntry } from "../../domain/model/HistoryEntry";
+import { ModifierLayer } from "../../domain/model/ModifierLayer";
 import type { NumericMode } from "../../domain/model/NumericMode";
+import type { ResultFormatMode } from "../../domain/model/ResultFormatMode";
 import type { ScientificConstant } from "../../domain/model/ScientificConstant";
 import type { ThemePreference } from "../../domain/model/ThemePreference";
 import type { VariableAssignment } from "../../domain/model/VariableAssignment";
 import type { ScientificFunctionDefinition } from "../../domain/services/ScientificFunctionDefinition";
 import type { CalculatorPanelName, CalculatorUiState } from "../../state/CalculatorUiState";
+import type { AppModeDescriptor } from "../services/AppModeDescriptor";
+import { DisplayStatusModel } from "./DisplayStatusModel";
 
 export class CalculatorViewModel {
     public constructor(
@@ -96,5 +100,70 @@ export class CalculatorViewModel {
 
     public get hasMemory(): boolean {
         return this.uiState.memoryValueText !== null;
+    }
+
+    public get activeModifierLayer(): ModifierLayer {
+        return this.uiState.activeModifierLayer;
+    }
+
+    public get activeAppMode(): string {
+        return this.uiState.activeAppMode;
+    }
+
+    public get activeAppName(): string {
+        return (
+            this.compositionRoot.appModeRegistryService.getApp(this.uiState.activeAppMode)?.name ??
+            "Calculator"
+        );
+    }
+
+    public get appModes(): readonly AppModeDescriptor[] {
+        return this.compositionRoot.appModeRegistryService.getAllApps();
+    }
+
+    public get isEngineeringEnabled(): boolean {
+        return this.uiState.isEngineeringEnabled;
+    }
+
+    public get isFractionResultDisplayed(): boolean {
+        return this.uiState.isFractionResultDisplayed;
+    }
+
+    public get resultFormatMode(): ResultFormatMode {
+        return this.uiState.resultFormatMode;
+    }
+
+    public get resultFormatDigits(): number {
+        return this.uiState.resultFormatDigits;
+    }
+
+    public get pendingVariablePrompts(): readonly string[] {
+        return this.uiState.pendingVariablePrompts;
+    }
+
+    public get isStoreModeArmed(): boolean {
+        return this.uiState.isStoreModeArmed;
+    }
+
+    public get isRecallModeArmed(): boolean {
+        return this.uiState.isRecallModeArmed;
+    }
+
+    public get hyperbolicMenuInverse(): boolean {
+        return this.uiState.hyperbolicMenuInverse;
+    }
+
+    public get status(): DisplayStatusModel {
+        return new DisplayStatusModel(
+            this.activeAppName,
+            this.uiState.angleMode,
+            this.uiState.numericMode,
+            this.uiState.activeModifierLayer === ModifierLayer.SHIFT,
+            this.uiState.activeModifierLayer === ModifierLayer.ALPHA,
+            this.hasMemory,
+            this.uiState.casEnabled,
+            this.uiState.complexNumbersEnabled,
+            this.uiState.bigIntSupported,
+        );
     }
 }
