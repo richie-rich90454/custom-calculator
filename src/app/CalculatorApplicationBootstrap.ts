@@ -7,9 +7,12 @@ export interface CalculatorApplicationBootstrapResult {
     readonly bigIntSupported: boolean;
     readonly settings: CalculatorSettings;
     readonly statusMessage: string | null;
+    readonly activeAppMode: string;
 }
 
 export type ResolvedThemeName = "light" | "dark";
+
+const ACTIVE_APP_MODE_STORAGE_KEY = "calculator.activeAppMode";
 
 export class CalculatorApplicationBootstrap {
     public constructor(private readonly compositionRoot: CalculatorCompositionRoot) {}
@@ -41,7 +44,18 @@ export class CalculatorApplicationBootstrap {
             bigIntSupported: featureSnapshot.bigIntSupported,
             settings: resolvedSettings,
             statusMessage: statusMessage,
+            activeAppMode: this.resolveActiveAppMode(),
         };
+    }
+
+    public resolveActiveAppMode(): string {
+        const storedAppMode = globalThis.localStorage?.getItem(ACTIVE_APP_MODE_STORAGE_KEY);
+
+        if (storedAppMode !== null && storedAppMode !== undefined) {
+            return storedAppMode;
+        }
+
+        return this.compositionRoot.appModeRegistryService.getDefaultAppId();
     }
 
     public applyThemeToDocument(themePreference: ThemePreference): void {
