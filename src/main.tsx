@@ -34,6 +34,7 @@ function bootstrapCalculatorApplication(): void {
         bootstrapResult.settings,
         bootstrapResult.bigIntSupported,
         bootstrapResult.statusMessage,
+        bootstrapResult.activeAppMode,
     );
 
     const store = createCalculatorUiStore(
