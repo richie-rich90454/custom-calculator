@@ -213,4 +213,15 @@ describe("CalculatorShellComponent", () => {
         expect(harness.store.getState().activePanel).toBe("NONE");
         expect(harness.store.getState().pendingVariablePrompts).toEqual([]);
     });
+
+    it("renders the app component instead of the keypad for a non-calculate app", () => {
+        const harness = createCalculatorTestHarness({
+            activeAppMode: "vector",
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorShellComponent />);
+
+        expect(screen.getByText("VecA")).toBeInTheDocument();
+        expect(screen.queryByLabelText("Calculator expression input")).not.toBeInTheDocument();
+    });
 });
