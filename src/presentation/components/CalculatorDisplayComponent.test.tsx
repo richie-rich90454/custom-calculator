@@ -99,6 +99,27 @@ describe("CalculatorDisplayComponent", () => {
 
         expect(resultOutput).toHaveAttribute("aria-live", "polite");
     });
+
+    it("renders the pretty preview row between the editor and the result", () => {
+        const harness = createCalculatorTestHarness({
+            expressionText: "x^2",
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorDisplayComponent />);
+
+        expect(screen.getByLabelText("Pretty preview")).toBeInTheDocument();
+    });
+
+    it("marks the result with an approximate symbol after an irrational S-D conversion", () => {
+        const harness = createCalculatorTestHarness({
+            resultText: "1.4142135623731",
+            isApproximateResult: true,
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorDisplayComponent />);
+
+        expect(screen.getByText("≈ 1.4142135623731")).toBeInTheDocument();
+    });
 });
 
 describe("CalculatorDisplayComponent caret behavior", () => {
