@@ -153,6 +153,14 @@ export class CalculatorViewModel {
         return this.uiState.hyperbolicMenuInverse;
     }
 
+    public get isKaTeXPreviewEnabled(): boolean {
+        return this.uiState.isKaTeXPreviewEnabled;
+    }
+
+    public get isApproximateResult(): boolean {
+        return this.uiState.isApproximateResult;
+    }
+
     public get status(): DisplayStatusModel {
         return new DisplayStatusModel(
             this.activeAppName,
