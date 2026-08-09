@@ -67,6 +67,36 @@ describe("CalculatorApplicationBootstrap", () => {
         expect(result.settings).toEqual(CalculatorSettings.createDefault());
     });
 
+    it("resolves the stored active app mode", () => {
+        const root = new CalculatorCompositionRoot();
+
+        globalThis.localStorage.setItem("calculator.activeAppMode", "matrix");
+
+        const bootstrap = new CalculatorApplicationBootstrap(root);
+
+        expect(bootstrap.resolveActiveAppMode()).toBe("matrix");
+    });
+
+    it("defaults the active app mode to the calculate app", () => {
+        const root = new CalculatorCompositionRoot();
+
+        globalThis.localStorage.removeItem("calculator.activeAppMode");
+
+        const bootstrap = new CalculatorApplicationBootstrap(root);
+
+        expect(bootstrap.resolveActiveAppMode()).toBe("calculate");
+    });
+
+    it("includes the active app mode in the bootstrap result", () => {
+        const root = new CalculatorCompositionRoot();
+
+        globalThis.localStorage.setItem("calculator.activeAppMode", "statistics");
+
+        const result = new CalculatorApplicationBootstrap(root).bootstrap();
+
+        expect(result.activeAppMode).toBe("statistics");
+    });
+
     it("resolves light and dark theme preferences", () => {
         const root = new CalculatorCompositionRoot();
         const bootstrap = new CalculatorApplicationBootstrap(root);
