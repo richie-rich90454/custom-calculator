@@ -23,8 +23,8 @@ export class DefaultAppModeRegistryService implements AppModeRegistryService {
             name: "Complex",
             badge: "2",
             ariaLabel: "Complex app, number 2",
-            isAvailable: false,
-            availabilityReason: "The complex app arrives in a later release.",
+            isAvailable: true,
+            availabilityReason: null,
             iconId: "complex",
         },
         {
@@ -32,8 +32,8 @@ export class DefaultAppModeRegistryService implements AppModeRegistryService {
             name: "Base-N",
             badge: "3",
             ariaLabel: "Base-N app, number 3",
-            isAvailable: false,
-            availabilityReason: "The base-n app arrives in a later release.",
+            isAvailable: true,
+            availabilityReason: null,
             iconId: "base-n",
         },
         {
@@ -41,8 +41,8 @@ export class DefaultAppModeRegistryService implements AppModeRegistryService {
             name: "Matrix",
             badge: "4",
             ariaLabel: "Matrix app, number 4",
-            isAvailable: false,
-            availabilityReason: "The matrix app arrives in a later release.",
+            isAvailable: true,
+            availabilityReason: null,
             iconId: "matrix",
         },
         {
@@ -50,8 +50,8 @@ export class DefaultAppModeRegistryService implements AppModeRegistryService {
             name: "Vector",
             badge: "5",
             ariaLabel: "Vector app, number 5",
-            isAvailable: false,
-            availabilityReason: "The vector app arrives in a later release.",
+            isAvailable: true,
+            availabilityReason: null,
             iconId: "vector",
         },
         {
