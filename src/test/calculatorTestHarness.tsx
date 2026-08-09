@@ -32,6 +32,7 @@ export function createCalculatorTestHarness(
         bootstrapResult.settings,
         bootstrapResult.bigIntSupported,
         bootstrapResult.statusMessage,
+        bootstrapResult.activeAppMode,
     );
 
     const viewModelMapper = new CalculatorViewModelMapper();
