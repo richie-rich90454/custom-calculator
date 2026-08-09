@@ -83,4 +83,36 @@ describe("useKeypadGridNavigation", () => {
         await user.keyboard("{ArrowUp}");
         expect(firstButton).toHaveFocus();
     });
+
+    it("moves up to the previous row", async () => {
+        const user = userEvent.setup();
+
+        render(<TwoRowGridProbe />);
+
+        const lowerButton = screen.getByRole("button", { name: "e" });
+
+        lowerButton.focus();
+        await user.keyboard("{ArrowUp}");
+
+        expect(screen.getByRole("button", { name: "a" })).toHaveFocus();
+    });
 });
+
+function TwoRowGridProbe() {
+    const itemIds = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    const navigation = useKeypadGridNavigation(itemIds, 4);
+
+    return (
+        <div role="grid" tabIndex={-1} onKeyDown={navigation.handleGridKeyDown}>
+            {itemIds.map((id) => (
+                <button
+                    key={id}
+                    ref={(el) => navigation.registerItemRef(id, el)}
+                    onFocus={() => navigation.handleItemFocus(id)}
+                >
+                    {id}
+                </button>
+            ))}
+        </div>
+    );
+}
