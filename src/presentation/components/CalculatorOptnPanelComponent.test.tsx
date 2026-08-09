@@ -42,4 +42,22 @@ describe("CalculatorOptnPanelComponent", () => {
 
         expect(harness.store.getState().numericMode).toBe("EXACT_DECIMAL");
     });
+
+    it("toggles the pretty expression preview from the format tab", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness();
+
+        renderWithCalculatorContext(harness, <CalculatorOptnPanelComponent />);
+
+        await user.click(screen.getByRole("tab", { name: "Display Format" }));
+
+        const toggle = screen.getByRole("button", { name: "Toggle pretty expression preview" });
+
+        expect(toggle).toHaveAttribute("aria-pressed", "true");
+
+        await user.click(toggle);
+
+        expect(harness.store.getState().isKaTeXPreviewEnabled).toBe(false);
+        expect(toggle).toHaveAttribute("aria-pressed", "false");
+    });
 });
