@@ -99,6 +99,35 @@ describe("CalculatorKeypadComponent", () => {
         expect(screen.getByRole("button", { name: "Arm the shift layer" })).toBeInTheDocument();
     });
 
+    it("inserts the previous answer with the ans key", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness({
+            lastResultText: "42",
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
+
+        const ansButton = screen.getByRole("button", {
+            name: "Insert the previous answer",
+        });
+
+        ansButton.focus();
+        await user.click(ansButton);
+
+        expect(harness.store.getState().expressionText).toBe("ans");
+    });
+
+    it("inserts a close parenthesis with the close parenthesis key", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness();
+
+        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
+
+        await user.click(screen.getByRole("button", { name: "Close parenthesis" }));
+
+        expect(harness.store.getState().expressionText).toBe(")");
+    });
+
     it("activates keys with the Enter key via keyboard", async () => {
         const user = userEvent.setup();
         const harness = createCalculatorTestHarness();
