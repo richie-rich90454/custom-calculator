@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { CalculatorPanelName } from "../../state/CalculatorUiState";
 import {
     createCalculatorTestHarness,
     renderWithCalculatorContext,
@@ -49,5 +50,35 @@ describe("CalculatorHomeMenuComponent", () => {
             "aria-pressed",
             "true",
         );
+    });
+
+    it("activates an app with the keyboard", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness();
+
+        renderWithCalculatorContext(harness, <CalculatorHomeMenuComponent />);
+
+        const ratioButton = screen.getByRole("button", { name: "Ratio app, number 0" });
+
+        ratioButton.focus();
+        await user.keyboard("{Enter}");
+
+        expect(harness.store.getState().activeAppMode).toBe("ratio");
+        expect(harness.store.getState().activePanel).toBe("NONE");
+    });
+
+    it("closes the menu and shows the availability reason for an unavailable app", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness({ activePanel: CalculatorPanelName.HOME_MENU });
+
+        renderWithCalculatorContext(harness, <CalculatorHomeMenuComponent />);
+
+        const calculusButton = screen.getByRole("button", { name: "Calculus app, number 9" });
+
+        calculusButton.focus();
+        await user.keyboard("{Enter}");
+
+        expect(harness.store.getState().activeAppMode).toBe("calculus");
+        expect(harness.store.getState().statusMessage).not.toBeNull();
     });
 });
