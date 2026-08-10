@@ -19,7 +19,7 @@ const TOP_LAYOUT: readonly (readonly string[])[] = [
     ["square", "power", "log", "ln", "reciprocal"],
     ["pi", "sin", "cos", "tan", "hyp"],
     ["xy", "sto", "eng", "sd", "m-plus"],
-    ["paren-open", "x10x", "del", "ac", "ans"],
+    ["paren-open", "paren-close", "x10x", "del", "ac"],
 ];
 
 const DIGIT_LAYOUT: readonly (readonly string[])[] = [
@@ -30,6 +30,7 @@ const DIGIT_LAYOUT: readonly (readonly string[])[] = [
 ];
 
 const EQUALS_KEY_ID = "equals";
+const ANS_KEY_ID = "ans";
 const TOP_COLUMN_COUNT = 5;
 const DIGIT_COLUMN_COUNT = 4;
 
@@ -47,7 +48,7 @@ export function CalculatorKeypadComponent() {
         return map;
     }, [compositionRoot]);
 
-    const { topKeys, digitKeys, equalsKey, directionalPadKeys } = useMemo(
+    const { topKeys, digitKeys, equalsKey, ansKey, directionalPadKeys } = useMemo(
         () => resolveLayout(keysById),
         [keysById],
     );
@@ -138,6 +139,14 @@ export function CalculatorKeypadComponent() {
                         onKeyPressed={handleKeyPressed}
                     />
                     <CalculatorKeycapComponent
+                        keyDefinition={ansKey}
+                        customClassName={resolveKeycapClassName(ansKey)}
+                        registerItemRef={() => undefined}
+                        onFocus={() => undefined}
+                        onPress={(activationKind) => handleKeyPressed(ansKey, activationKind)}
+                        armedLayer={viewModel.activeModifierLayer}
+                    />
+                    <CalculatorKeycapComponent
                         keyDefinition={equalsKey}
                         customClassName={joinClassNames(
                             styles.equalsKey,
@@ -158,6 +167,7 @@ function resolveLayout(keysById: ReadonlyMap<string, KeyDefinition>): {
     readonly topKeys: readonly KeyDefinition[];
     readonly digitKeys: readonly KeyDefinition[];
     readonly equalsKey: KeyDefinition;
+    readonly ansKey: KeyDefinition;
     readonly directionalPadKeys: Readonly<Record<string, KeyDefinition>>;
 } {
     const topKeys: KeyDefinition[] = [];
@@ -185,6 +195,7 @@ function resolveLayout(keysById: ReadonlyMap<string, KeyDefinition>): {
         topKeys: topKeys,
         digitKeys: digitKeys,
         equalsKey: keysById.get(EQUALS_KEY_ID) as KeyDefinition,
+        ansKey: keysById.get(ANS_KEY_ID) as KeyDefinition,
         directionalPadKeys: directionalPadKeys,
     };
 }
