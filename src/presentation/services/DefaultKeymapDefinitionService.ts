@@ -341,12 +341,20 @@ function buildFullKeymap(): readonly KeyDefinition[] {
         },
         {
             id: "dpad-up",
-            primary: layer("▲", "Move up", action(KeyActionKind.MOVE_CURSOR_UP)),
+            primary: layer(
+                "▲",
+                "Step back through history",
+                action(KeyActionKind.HISTORY_STEP_BACK),
+            ),
             keycapClass: KeycapClass.NAVIGATION,
         },
         {
             id: "dpad-down",
-            primary: layer("▼", "Move down", action(KeyActionKind.MOVE_CURSOR_DOWN)),
+            primary: layer(
+                "▼",
+                "Step forward through history",
+                action(KeyActionKind.HISTORY_STEP_FORWARD),
+            ),
             keycapClass: KeycapClass.NAVIGATION,
         },
         {
