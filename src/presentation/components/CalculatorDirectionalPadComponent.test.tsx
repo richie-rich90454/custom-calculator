@@ -38,8 +38,12 @@ describe("CalculatorDirectionalPadComponent", () => {
             />,
         );
 
-        expect(screen.getByRole("button", { name: "Move up" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Move down" })).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", { name: "Step back through history" }),
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", { name: "Step forward through history" }),
+        ).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Move left" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Move right" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Confirm" })).toBeInTheDocument();
@@ -99,7 +103,9 @@ describe("CalculatorDirectionalPadComponent", () => {
             />,
         );
 
-        expect(screen.queryByRole("button", { name: "Move up" })).not.toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", { name: "Step back through history" }),
+        ).not.toBeInTheDocument();
     });
 
     it("reports focus on a pad button", () => {
