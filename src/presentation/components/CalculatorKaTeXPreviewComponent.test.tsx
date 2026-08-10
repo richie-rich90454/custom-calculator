@@ -54,4 +54,32 @@ describe("CalculatorKaTeXPreviewComponent", () => {
         expect(math).not.toBeNull();
         expect(math?.innerHTML.length).toBeGreaterThan(0);
     });
+
+    it("renders a two-argument log with its base as a subscript", () => {
+        const harness = createCalculatorTestHarness({
+            expressionText: "log(2,3)",
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorKaTeXPreviewComponent />);
+
+        const preview = screen.getByLabelText("Pretty preview");
+        const math = preview.querySelector("span[aria-hidden='true']");
+
+        expect(math?.textContent).toContain("log");
+        expect(math?.innerHTML).toContain("_");
+    });
+
+    it("escapes raw text for expressions that do not parse", () => {
+        const harness = createCalculatorTestHarness({
+            expressionText: "2+",
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorKaTeXPreviewComponent />);
+
+        const preview = screen.getByLabelText("Pretty preview");
+        const math = preview.querySelector("span[aria-hidden='true']");
+
+        expect(math).not.toBeNull();
+        expect(math?.textContent).toContain("2+");
+    });
 });
