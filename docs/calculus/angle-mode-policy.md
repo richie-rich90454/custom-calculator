@@ -31,6 +31,14 @@ not applied to symbolic results.
 
 Numeric operations (numeric derivative, definite integral, limit, summation, and product) use the active angle mode. The numeric engine converts trigonometric arguments according to the current mode so that numeric approximations match what a user expects from the active mode.
 
+When a numeric calculus operation runs under DEG or GON, the status strip shows a visible notice that trig input is being converted from the active mode:
+
+```
+Trig assumed in radians; input converted from DEG.
+```
+
+The notice reminds you that the result already accounts for the angle-mode conversion. Under RAD, no notice is shown because no conversion is applied.
+
 ## Why the distinction
 
 - A symbolic derivative such as `d/dx sin(x)` has a unique, mode-independent answer: `cos(x)`. Injecting an angle conversion would corrupt the algebra.
