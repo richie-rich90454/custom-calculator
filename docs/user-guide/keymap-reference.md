@@ -44,6 +44,10 @@ armed layer.
 | `AC` | clear expression and result | | |
 | `0`-`9`, `.` | digits and decimal point | | |
 | `=`, `+`, `−`, `×`, `÷`, `,` | evaluate and operators | `≈` on equals | |
+| `▲` | step back through history | | |
+| `▼` | step forward through history | | |
+| `◀`, `▶` | move the caret left / right | | |
+| `OK` | evaluate | | |
 
 ## Modifier layers
 
