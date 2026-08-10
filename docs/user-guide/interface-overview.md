@@ -68,9 +68,11 @@ center, the copper `SHIFT` label in the top-left corner, and the teal `ALPHA`
 label in the top-right corner. Pressing `SHIFT` or `ALPHA` arms the layer; the
 next keycap press resolves that layer and the modifier disarms.
 
-The cross-shaped directional pad sits to the right of the keypad with a center
-confirm key. See the [keymap reference](/user-guide/keymap-reference) for the
-complete three-layer mapping.
+The cross-shaped directional pad sits at the bottom-right of the keypad,
+integrated beside the digit keys. Its up and down arrows replay history, the
+left and right arrows move the caret, and the center confirm key evaluates.
+See the [keymap reference](/user-guide/keymap-reference) for the complete
+three-layer mapping.
 
 ## Next steps
 
