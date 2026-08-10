@@ -1,0 +1,81 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-2);
+}
+
+.controlsRow {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+}
+
+.actionGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+}
+
+.actionButton {
+    min-height: 36px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-primary);
+    cursor: pointer;
+}
+
+.actionButton:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.statusArea {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.errorLine {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-danger);
+}
+
+.tableWrapper {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.tableRow {
+    display: flex;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tableRow:last-child {
+    border-bottom: none;
+}
+
+.headCell {
+    flex: 1;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: var(--color-surface-muted);
+    color: var(--color-text-secondary);
+}
+
+.bodyCell {
+    flex: 1;
+    padding: 6px 10px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    color: var(--color-text-primary);
+}
