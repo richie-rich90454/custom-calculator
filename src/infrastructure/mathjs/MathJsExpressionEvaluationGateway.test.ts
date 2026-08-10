@@ -154,6 +154,23 @@ describe("MathJsExpressionEvaluationGateway", () => {
         expect(() => evaluateExpression(gateway, "log(-5)")).toThrowError(CalculationError);
     });
 
+    it("evaluates log as a base ten common logarithm", () => {
+        expect(Number(evaluateExpression(gateway, "log(100)").resultText)).toBeCloseTo(2, 10);
+    });
+
+    it("evaluates log with the base as the first argument", () => {
+        expect(Number(evaluateExpression(gateway, "log(2, 8)").resultText)).toBeCloseTo(3, 10);
+    });
+
+    it("evaluates the natural logarithm through ln", () => {
+        expect(Number(evaluateExpression(gateway, "ln(e)").resultText)).toBeCloseTo(1, 10);
+    });
+
+    it("evaluates base two and base ten logarithms", () => {
+        expect(Number(evaluateExpression(gateway, "log2(8)").resultText)).toBeCloseTo(3, 10);
+        expect(Number(evaluateExpression(gateway, "log10(100)").resultText)).toBeCloseTo(2, 10);
+    });
+
     it("reports a division by zero error", () => {
         try {
             evaluateExpression(gateway, "1/0");
