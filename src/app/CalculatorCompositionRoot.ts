@@ -102,6 +102,10 @@ import type { SimultaneousEquationService } from "../application/services/Simult
 import { GaussianEliminationSimultaneousEquationService } from "../application/services/GaussianEliminationSimultaneousEquationService";
 import type { RatioSolverService } from "../application/services/RatioSolverService";
 import { DefaultRatioSolverService } from "../application/services/DefaultRatioSolverService";
+import type { UnitConversionGateway } from "../domain/services/UnitConversionGateway";
+import { MathJsUnitConversionGateway } from "../infrastructure/mathjs/MathJsUnitConversionGateway";
+import type { TemperatureConversionPolicy } from "../application/services/TemperatureConversionPolicy";
+import { DefaultTemperatureConversionPolicy } from "../application/services/DefaultTemperatureConversionPolicy";
 
 const DATABASE_NAME = "custom-calculator";
 
@@ -147,6 +151,8 @@ export class CalculatorCompositionRoot {
     public readonly polynomialRootService: PolynomialRootService;
     public readonly simultaneousEquationService: SimultaneousEquationService;
     public readonly ratioSolverService: RatioSolverService;
+    public readonly unitConversionGateway: UnitConversionGateway;
+    public readonly temperatureConversionPolicy: TemperatureConversionPolicy;
 
     public constructor() {
         this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
@@ -282,6 +288,8 @@ export class CalculatorCompositionRoot {
         this.polynomialRootService = new AnalyticPolynomialRootService();
         this.simultaneousEquationService = new GaussianEliminationSimultaneousEquationService();
         this.ratioSolverService = new DefaultRatioSolverService();
+        this.unitConversionGateway = new MathJsUnitConversionGateway(this.mathJsInstanceProvider);
+        this.temperatureConversionPolicy = new DefaultTemperatureConversionPolicy();
     }
 
     private createPersistenceRepositories(): {
