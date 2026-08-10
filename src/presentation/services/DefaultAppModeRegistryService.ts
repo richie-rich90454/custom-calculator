@@ -59,8 +59,8 @@ export class DefaultAppModeRegistryService implements AppModeRegistryService {
             name: "Statistics",
             badge: "6",
             ariaLabel: "Statistics app, number 6",
-            isAvailable: false,
-            availabilityReason: "The statistics app arrives in a later release.",
+            isAvailable: true,
+            availabilityReason: null,
             iconId: "statistics",
         },
         {
@@ -68,8 +68,8 @@ export class DefaultAppModeRegistryService implements AppModeRegistryService {
             name: "Table",
             badge: "7",
             ariaLabel: "Table app, number 7",
-            isAvailable: false,
-            availabilityReason: "The table app arrives in a later release.",
+            isAvailable: true,
+            availabilityReason: null,
             iconId: "table",
         },
         {
@@ -77,8 +77,8 @@ export class DefaultAppModeRegistryService implements AppModeRegistryService {
             name: "Equation",
             badge: "8",
             ariaLabel: "Equation app, number 8",
-            isAvailable: false,
-            availabilityReason: "The equation app arrives in a later release.",
+            isAvailable: true,
+            availabilityReason: null,
             iconId: "equation",
         },
         {
@@ -95,8 +95,8 @@ export class DefaultAppModeRegistryService implements AppModeRegistryService {
             name: "Ratio",
             badge: "0",
             ariaLabel: "Ratio app, number 0",
-            isAvailable: false,
-            availabilityReason: "The ratio app arrives in a later release.",
+            isAvailable: true,
+            availabilityReason: null,
             iconId: "ratio",
         },
     ];
