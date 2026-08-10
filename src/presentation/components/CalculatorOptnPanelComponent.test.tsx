@@ -9,7 +9,7 @@ import {
 import { CalculatorOptnPanelComponent } from "./CalculatorOptnPanelComponent";
 
 describe("CalculatorOptnPanelComponent", () => {
-    it("shows the three options tabs", () => {
+    it("shows the four options tabs", () => {
         const harness = createCalculatorTestHarness();
 
         renderWithCalculatorContext(harness, <CalculatorOptnPanelComponent />);
@@ -17,6 +17,7 @@ describe("CalculatorOptnPanelComponent", () => {
         expect(screen.getByRole("tab", { name: "Constants" })).toBeInTheDocument();
         expect(screen.getByRole("tab", { name: "Angle Mode" })).toBeInTheDocument();
         expect(screen.getByRole("tab", { name: "Display Format" })).toBeInTheDocument();
+        expect(screen.getByRole("tab", { name: "Unit Conversion" })).toBeInTheDocument();
     });
 
     it("changes the angle mode from the angle tab", async () => {
