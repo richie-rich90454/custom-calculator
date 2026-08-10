@@ -17,6 +17,22 @@ describe("CalculatorStatusBarComponent indicators", () => {
         expect(screen.getByLabelText("Active app")).toHaveTextContent("Calculate");
     });
 
+    it("shows the app name for a shipped app mode", () => {
+        const harness = createCalculatorTestHarness({ activeAppMode: "matrix" });
+
+        renderWithCalculatorContext(harness, <CalculatorStatusBarComponent />);
+
+        expect(screen.getByLabelText("Active app")).toHaveTextContent("Matrix");
+    });
+
+    it("shows the calculator name for an unknown app mode", () => {
+        const harness = createCalculatorTestHarness({ activeAppMode: "missing" });
+
+        renderWithCalculatorContext(harness, <CalculatorStatusBarComponent />);
+
+        expect(screen.getByLabelText("Active app")).toHaveTextContent("Calculator");
+    });
+
     it("highlights the shift indicator when shift is armed", () => {
         const harness = createCalculatorTestHarness({ activeModifierLayer: ModifierLayer.SHIFT });
 
