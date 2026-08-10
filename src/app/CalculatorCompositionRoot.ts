@@ -35,6 +35,10 @@ import { MathJsResultFormatGateway } from "../infrastructure/mathjs/MathJsResult
 import { MathJsComplexOperationsGateway } from "../infrastructure/mathjs/MathJsComplexOperationsGateway";
 import { MathJsMatrixOperationsGateway } from "../infrastructure/mathjs/MathJsMatrixOperationsGateway";
 import { MathJsVectorOperationsGateway } from "../infrastructure/mathjs/MathJsVectorOperationsGateway";
+import {
+    DefaultMathJsExpressionTexConverter,
+    type MathJsExpressionTexConverter,
+} from "../infrastructure/mathjs/MathJsExpressionTexConverter";
 import type { ComplexOperationsGateway } from "../domain/services/ComplexOperationsGateway";
 import type { MatrixOperationsGateway } from "../domain/services/MatrixOperationsGateway";
 import type { VectorOperationsGateway } from "../domain/services/VectorOperationsGateway";
@@ -153,6 +157,7 @@ export class CalculatorCompositionRoot {
     public readonly ratioSolverService: RatioSolverService;
     public readonly unitConversionGateway: UnitConversionGateway;
     public readonly temperatureConversionPolicy: TemperatureConversionPolicy;
+    public readonly expressionTexConverter: MathJsExpressionTexConverter;
 
     public constructor() {
         this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
@@ -290,6 +295,9 @@ export class CalculatorCompositionRoot {
         this.ratioSolverService = new DefaultRatioSolverService();
         this.unitConversionGateway = new MathJsUnitConversionGateway(this.mathJsInstanceProvider);
         this.temperatureConversionPolicy = new DefaultTemperatureConversionPolicy();
+        this.expressionTexConverter = new DefaultMathJsExpressionTexConverter(
+            this.mathJsInstanceProvider,
+        );
     }
 
     private createPersistenceRepositories(): {
