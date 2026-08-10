@@ -44,7 +44,17 @@ describe("DefaultAppModeRegistryService", () => {
     });
 
     it("marks the shipped apps available and the rest unavailable", () => {
-        const availableApps = ["calculate", "complex", "base-n", "matrix", "vector"];
+        const availableApps = [
+            "calculate",
+            "complex",
+            "base-n",
+            "matrix",
+            "vector",
+            "statistics",
+            "table",
+            "equation",
+            "ratio",
+        ];
         const apps = registry.getAllApps();
 
         for (const app of apps) {
