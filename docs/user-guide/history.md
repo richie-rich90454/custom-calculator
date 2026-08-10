@@ -32,8 +32,8 @@ Each entry also offers **Insert expression** and **Insert result** actions that 
 
 The replay arrows step through previous calculations without opening the panel:
 
-- **PageUp** (or the up replay key) steps back to older entries.
-- **PageDown** (or the down replay key) steps forward to newer entries.
+- **PageUp** (or the **Up** directional-pad key) steps back to older entries.
+- **PageDown** (or the **Down** directional-pad key) steps forward to newer entries.
 
 History is ordered newest first. The first back press restores the newest
 entry; each further back press moves one entry older.
