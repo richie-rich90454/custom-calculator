@@ -63,3 +63,4 @@ Inserting a constant is a token insertion: the cursor moves to after the whole c
 
 - [Variables](/user-guide/variables) explains user-defined variables.
 - [Scientific reference](/scientific-reference/function-catalog) covers functions.
+- [Unit conversion](/user-guide/unit-conversion) converts values between physical units.
