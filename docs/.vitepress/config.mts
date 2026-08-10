@@ -235,6 +235,7 @@ export default withMermaid(
                                 link: "/developer/adding-a-numeric-mode",
                             },
                             { text: "Testing Guide", link: "/developer/testing-guide" },
+                            { text: "E2E Testing", link: "/developer/e2e-testing" },
                             { text: "Coverage Policy", link: "/developer/coverage-policy" },
                             { text: "Commit Policy", link: "/developer/commit-policy" },
                             { text: "Code Style Guide", link: "/developer/code-style-guide" },
