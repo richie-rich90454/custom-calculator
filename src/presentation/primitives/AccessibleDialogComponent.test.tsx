@@ -54,4 +54,38 @@ describe("AccessibleDialogComponent", () => {
 
         expect(onClose).toHaveBeenCalled();
     });
+
+    it("moves focus into the dialog when it opens", async () => {
+        const user = userEvent.setup();
+
+        render(
+            <AccessibleDialogComponent title="History" isOpen={true} onClose={() => undefined}>
+                <button>Inside button</button>
+            </AccessibleDialogComponent>,
+        );
+
+        await user.tab();
+
+        expect(screen.getByRole("button", { name: "Inside button" })).toHaveFocus();
+    });
+
+    it("keeps focus inside the dialog while tabbing", async () => {
+        const user = userEvent.setup();
+
+        render(
+            <AccessibleDialogComponent title="History" isOpen={true} onClose={() => undefined}>
+                <button>First control</button>
+                <button>Second control</button>
+            </AccessibleDialogComponent>,
+        );
+
+        await user.tab();
+        await user.tab();
+        await user.tab();
+
+        const focusedElement = document.activeElement;
+        const insideDialog = screen.getByRole("dialog").contains(focusedElement as Node);
+
+        expect(insideDialog).toBe(true);
+    });
 });
