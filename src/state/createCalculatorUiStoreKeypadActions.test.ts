@@ -748,6 +748,50 @@ describe("calculator UI store keypad actions", () => {
 
         expect(store.getState().expressionText).toBe("7");
     });
+
+    it("shows the calculus angle notice in degree mode", () => {
+        const { store } = createCalculatorTestHarness({
+            angleMode: AngleMode.DEG,
+        });
+
+        store.getState().onExpressionTextChanged("numericDerivative(sin(x), x, 0)", 31, 31, 31);
+        store.getState().onEvaluatePressed();
+
+        expect(store.getState().statusMessage).toContain("converted from DEG");
+    });
+
+    it("shows the calculus angle notice in gon mode", () => {
+        const { store } = createCalculatorTestHarness({
+            angleMode: AngleMode.GON,
+        });
+
+        store.getState().onExpressionTextChanged("integral(sin(x), x, 0, 1)", 25, 25, 25);
+        store.getState().onEvaluatePressed();
+
+        expect(store.getState().statusMessage).toContain("converted from GON");
+    });
+
+    it("omits the calculus angle notice in radian mode", () => {
+        const { store } = createCalculatorTestHarness({
+            angleMode: AngleMode.RAD,
+        });
+
+        store.getState().onExpressionTextChanged("numericDerivative(sin(x), x, 0)", 31, 31, 31);
+        store.getState().onEvaluatePressed();
+
+        expect(store.getState().statusMessage).toBeNull();
+    });
+
+    it("omits the calculus angle notice for plain expressions", () => {
+        const { store } = createCalculatorTestHarness({
+            angleMode: AngleMode.DEG,
+        });
+
+        store.getState().onExpressionTextChanged("2+3", 3, 3, 3);
+        store.getState().onEvaluatePressed();
+
+        expect(store.getState().statusMessage).toBeNull();
+    });
 });
 
 function createHistoryEntry(id: string, expressionText: string): HistoryEntry {
