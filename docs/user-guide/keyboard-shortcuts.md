@@ -66,6 +66,18 @@ Digits, operators, parentheses, and function names can be typed directly into th
 
 Each keypad grid exposes a single tab stop. Arrow keys move through the grid, and `Enter` or `Space` activates the focused button.
 
+## Directional pad
+
+The directional pad at the bottom-right has four arrows and a center confirm
+key:
+
+- **Up** and **Down** step backward and forward through history (multi-replay).
+- **Left** and **Right** move the caret within the expression.
+- **OK** evaluates the expression.
+
+The pad is keyboard-first like every control: `Tab` reaches it and the arrows
+activate each direction.
+
 ## Panels
 
 - `Escape` closes the active panel and returns logical focus.
