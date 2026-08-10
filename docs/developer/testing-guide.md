@@ -61,6 +61,10 @@ The project enforces 100 percent coverage. Every new branch must be covered. See
 
 Tests assert accessible names and roles so the interface stays usable. See [Accessibility guide](/developer/accessibility-guide).
 
+## End-to-end testing
+
+Beyond the unit suite, a Playwright suite drives every app through the real browser. See [End-to-end testing](/developer/e2e-testing).
+
 ## Next steps
 
 - [Coverage policy](/developer/coverage-policy)
