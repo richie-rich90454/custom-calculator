@@ -115,6 +115,8 @@ export default withMermaid(
                             { text: "Fractions", link: "/user-guide/fractions" },
                             { text: "Exact Decimal", link: "/user-guide/exact-decimal" },
                             { text: "Constants", link: "/user-guide/constants" },
+                            { text: "Unit Conversion", link: "/user-guide/unit-conversion" },
+                            { text: "CALC and SOLVE", link: "/user-guide/calc-and-solve" },
                             { text: "Variables", link: "/user-guide/variables" },
                             { text: "Memory", link: "/user-guide/memory" },
                             { text: "Display Formats", link: "/user-guide/display-formats" },
