@@ -6,3 +6,7 @@ coverage
 .DS_Store
 *.log
 AGENTS.md
+test-results
+playwright-report
+HANDOFF.md
+bug1.txt
