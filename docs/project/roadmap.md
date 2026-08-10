@@ -7,6 +7,14 @@ description: The planned direction of the scientific calculator.
 
 This page lists the planned direction of the project. Items are not commitments; they reflect current thinking.
 
+## Completed
+
+- **App suite** — complex, base-n, matrix, vector, statistics, table, equation, and ratio apps are shipped and enabled.
+- **Display upgrades** — pretty expression preview, approximate-result indicator, display formats, and multi-replay history.
+- **Unit conversion** — physical unit conversions across twelve categories with affine temperature handling.
+- **CALC and SOLVE** — variable substitution prompts and Newton-Raphson equation solving.
+- **Calculus angle policy** — degree and gon conversion with a visible notice chip.
+
 ## Short term
 
 - **Editing polish** — continue refining cursor placement, selection wrapping, and caret behavior to match high-end scientific calculator ergonomics.
