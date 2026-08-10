@@ -102,4 +102,30 @@ describe("calculus evaluation flow", () => {
         expect(nextState.errorText).toBeNull();
         expect(nextState.resultText).toBe("5");
     });
+
+    it("converts trig arguments from degrees in numeric calculus", () => {
+        const radiansState = evaluate("numericDerivative(sin(x), x, 0)", AngleMode.RAD);
+        const degreesState = evaluate("numericDerivative(sin(x), x, 0)", AngleMode.DEG);
+
+        expect(radiansState.errorText).toBeNull();
+        expect(degreesState.errorText).toBeNull();
+
+        const radiansValue = Number(radiansState.resultText);
+        const degreesValue = Number(degreesState.resultText);
+
+        expect(degreesValue / radiansValue).toBeCloseTo(Math.PI / 180, 6);
+    });
+
+    it("converts trig arguments from gons in numeric calculus", () => {
+        const radiansState = evaluate("numericDerivative(sin(x), x, 0)", AngleMode.RAD);
+        const gonsState = evaluate("numericDerivative(sin(x), x, 0)", AngleMode.GON);
+
+        expect(radiansState.errorText).toBeNull();
+        expect(gonsState.errorText).toBeNull();
+
+        const radiansValue = Number(radiansState.resultText);
+        const gonsValue = Number(gonsState.resultText);
+
+        expect(gonsValue / radiansValue).toBeCloseTo(Math.PI / 200, 6);
+    });
 });
