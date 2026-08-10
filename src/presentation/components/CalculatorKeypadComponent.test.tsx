@@ -113,6 +113,18 @@ describe("CalculatorKeypadComponent", () => {
         expect(harness.store.getState().expressionText).toBe("7");
     });
 
+    it("focuses the equals key in the side cluster", () => {
+        const harness = createCalculatorTestHarness();
+
+        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
+
+        const equalsButton = screen.getByRole("button", { name: "Evaluate" });
+
+        equalsButton.focus();
+
+        expect(equalsButton).toHaveFocus();
+    });
+
     it("moves focus to the next key with the right arrow", async () => {
         const user = userEvent.setup();
         const harness = createCalculatorTestHarness();
@@ -126,6 +138,38 @@ describe("CalculatorKeypadComponent", () => {
         await user.keyboard("{ArrowRight}");
 
         expect(eightButton).toHaveFocus();
+    });
+
+    it("moves focus within the top function key grid with arrow keys", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness();
+
+        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
+
+        const integralButton = screen.getByRole("button", {
+            name: "Insert a definite integral template",
+        });
+        const limitButton = screen.getByRole("button", { name: "Insert a limit template" });
+
+        integralButton.focus();
+        await user.keyboard("{ArrowRight}");
+
+        expect(limitButton).toHaveFocus();
+    });
+
+    it("moves focus between digit grid rows with arrow keys", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness();
+
+        renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
+
+        const sevenButton = screen.getByRole("button", { name: "Digit seven" });
+        const fourButton = screen.getByRole("button", { name: "Digit four" });
+
+        sevenButton.focus();
+        await user.keyboard("{ArrowDown}");
+
+        expect(fourButton).toHaveFocus();
     });
 
     it("moves focus down a row with the down arrow", async () => {
