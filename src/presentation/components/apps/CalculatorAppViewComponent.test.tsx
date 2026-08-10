@@ -70,6 +70,50 @@ describe("CalculatorAppViewComponent", () => {
         ).toBeInTheDocument();
     });
 
+    it("renders the statistics app", () => {
+        const harness = createCalculatorTestHarness({
+            activeAppMode: "statistics",
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorAppViewComponent />);
+
+        expect(screen.getByLabelText("x value 1")).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Compute regression" })).toBeInTheDocument();
+    });
+
+    it("renders the table app", () => {
+        const harness = createCalculatorTestHarness({
+            activeAppMode: "table",
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorAppViewComponent />);
+
+        expect(screen.getByLabelText("f(x)")).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Generate the table" })).toBeInTheDocument();
+    });
+
+    it("renders the equation app", () => {
+        const harness = createCalculatorTestHarness({
+            activeAppMode: "equation",
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorAppViewComponent />);
+
+        expect(screen.getByLabelText("Coefficient of x^2")).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Solve the equation" })).toBeInTheDocument();
+    });
+
+    it("renders the ratio app", () => {
+        const harness = createCalculatorTestHarness({
+            activeAppMode: "ratio",
+        });
+
+        renderWithCalculatorContext(harness, <CalculatorAppViewComponent />);
+
+        expect(screen.getByLabelText("First term")).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Solve the ratio" })).toBeInTheDocument();
+    });
+
     it("shows a message for an unknown app id", () => {
         const harness = createCalculatorTestHarness({
             activeAppMode: "missing",
