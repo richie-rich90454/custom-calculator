@@ -5,6 +5,10 @@ import { ComplexAppComponent } from "./ComplexAppComponent";
 import { BaseNAppComponent } from "./BaseNAppComponent";
 import { MatrixAppComponent } from "./MatrixAppComponent";
 import { VectorAppComponent } from "./VectorAppComponent";
+import { StatisticsAppComponent } from "./StatisticsAppComponent";
+import { TableAppComponent } from "./TableAppComponent";
+import { EquationAppComponent } from "./EquationAppComponent";
+import { RatioAppComponent } from "./RatioAppComponent";
 
 /**
  * Renders the active app: the calculate app shows the classic display and
@@ -29,6 +33,14 @@ export function CalculatorAppViewComponent() {
             return <MatrixAppComponent />;
         case "vector":
             return <VectorAppComponent />;
+        case "statistics":
+            return <StatisticsAppComponent />;
+        case "table":
+            return <TableAppComponent />;
+        case "equation":
+            return <EquationAppComponent />;
+        case "ratio":
+            return <RatioAppComponent />;
         default:
             return <p>App not available.</p>;
     }
