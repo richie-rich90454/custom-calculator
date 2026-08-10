@@ -28,6 +28,12 @@ Initial release. The first production-minded version with:
 
 ## Unreleased
 
+- Display upgrades: pretty expression preview, approximate-result indicator, and display formats.
+- Multi-replay history with arrow-key stepping.
+- Dedicated app suite: complex, base-n, matrix, vector, statistics, table, equation, and ratio.
+- Unit conversion across twelve physical categories with affine temperature handling.
+- CALC variable substitution and SOLVE equation solving.
+- Calculus angle policy with visible conversion notice.
 - Expression editor UX parity refinements.
 - Cursor placement services and tests.
 
