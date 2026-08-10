@@ -20,6 +20,7 @@ export class MathJsConstantScopeBuilder implements MathJsEvaluationScopeBuilder 
         this.populateConstants(scope, math);
         this.populateVariables(scope, math, sessionState);
         this.populateTrigonometricWrappers(scope, math, sessionState.angleMode);
+        this.populateLogarithmicWrappers(scope, math);
         this.populatePreviousAnswer(scope, sessionState);
 
         if (sessionState.complexNumbersEnabled) {
@@ -157,5 +158,19 @@ export class MathJsConstantScopeBuilder implements MathJsEvaluationScopeBuilder 
         if (sessionState.lastResultValue !== null) {
             scope["ans"] = sessionState.lastResultValue;
         }
+    }
+
+    private populateLogarithmicWrappers(
+        scope: Record<string, unknown>,
+        math: MathJsInstance,
+    ): void {
+        scope["log"] = (first: unknown, second?: unknown): unknown => {
+            if (second === undefined) {
+                return math.log10(first as never);
+            }
+
+            return math.log(second as never, first as never);
+        };
+        scope["ln"] = (value: unknown): unknown => math.log(value as never);
     }
 }
