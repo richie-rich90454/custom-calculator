@@ -126,12 +126,6 @@ export class DefaultKeyActionDispatcherService implements KeyActionDispatcherSer
             case KeyActionKind.MOVE_CURSOR_RIGHT:
                 target.onCursorMovePressed(CursorMoveDirection.RIGHT);
                 break;
-            case KeyActionKind.MOVE_CURSOR_UP:
-                target.onCursorMovePressed(CursorMoveDirection.UP);
-                break;
-            case KeyActionKind.MOVE_CURSOR_DOWN:
-                target.onCursorMovePressed(CursorMoveDirection.DOWN);
-                break;
             case KeyActionKind.CONFIRM:
                 target.onConfirmPressed();
                 break;
