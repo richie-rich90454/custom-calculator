@@ -196,7 +196,7 @@ describe("DefaultKeyActionDispatcherService", () => {
             "storeArmed",
             "engToggle:forward",
             "memoryAdd",
-            "cursorMove:UP",
+            "historyStepBack",
             "confirm",
         ]);
     });
@@ -259,7 +259,7 @@ describe("DefaultKeyActionDispatcherService", () => {
             "insertExponent10",
             "sdCycle",
             "hyperbolicMenu:false",
-            "cursorMove:DOWN",
+            "historyStepForward",
             "cursorMove:RIGHT",
             "cursorMove:LEFT",
         ]);
