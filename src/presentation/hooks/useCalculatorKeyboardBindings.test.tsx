@@ -78,4 +78,38 @@ describe("useCalculatorKeyboardBindings", () => {
 
         expect(harness.store.getState().expressionText).toBe("");
     });
+
+    it("opens the variable prompt with F5 and submits from the keyboard", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness();
+
+        renderWithCalculatorContext(harness, <KeyboardBindingProbe />);
+
+        harness.store.getState().onExpressionTextChanged("a+1", 3, 3, 3);
+
+        await user.tab();
+        await user.keyboard("{F5}");
+
+        expect(harness.store.getState().activePanel).toBe("VARIABLE_PROMPT");
+        expect(harness.store.getState().pendingVariablePrompts).toEqual(["a"]);
+
+        harness.store.getState().onVariablePromptSubmitted({ a: "2" });
+
+        expect(harness.store.getState().resultText).toBe("3");
+        expect(harness.store.getState().pendingVariablePrompts).toEqual([]);
+    });
+
+    it("solves an equation with F6", async () => {
+        const user = userEvent.setup();
+        const harness = createCalculatorTestHarness();
+
+        renderWithCalculatorContext(harness, <KeyboardBindingProbe />);
+
+        harness.store.getState().onExpressionTextChanged("x^2-4", 5, 5, 5);
+
+        await user.tab();
+        await user.keyboard("{F6}");
+
+        expect(harness.store.getState().resultText).toContain("x = 2");
+    });
 });
