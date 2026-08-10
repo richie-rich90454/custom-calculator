@@ -4,14 +4,16 @@
     align-items: center;
     justify-content: center;
     min-height: 44px;
+    min-width: 0;
     border: 1px solid var(--color-shell-edge);
     border-radius: 6px;
-    padding: 0;
+    padding: 0 4px;
+    overflow: hidden;
     color: var(--color-key-primary-ink);
     font-family: var(--font-ui);
-    font-size: 16px;
+    font-size: clamp(11px, 2.1vw, 15px);
     font-weight: 500;
-    line-height: 1;
+    line-height: 1.1;
     cursor: pointer;
     user-select: none;
     box-shadow:
@@ -26,20 +28,28 @@
 
 .primaryLabel {
     pointer-events: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
 }
 
 .shiftLabel,
 .alphaLabel {
     position: absolute;
-    top: 3px;
-    font-size: 9px;
+    top: 2px;
+    font-size: clamp(7px, 1.2vw, 9px);
     font-weight: 600;
     letter-spacing: 0.02em;
     pointer-events: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 10px);
 }
 
 .shiftLabel {
-    left: 5px;
+    left: 4px;
     color: var(--color-silk-shift);
     opacity: 0.9;
 }
@@ -51,7 +61,7 @@
 }
 
 .alphaLabel {
-    right: 5px;
+    right: 4px;
     color: var(--color-silk-alpha);
     opacity: 0.9;
 }
@@ -96,10 +106,11 @@
     background-color: var(--color-key-function);
     color: var(--color-key-function-ink);
     min-height: 40px;
+    font-size: clamp(12px, 2.4vw, 18px);
 }
 
 .evaluateKey {
     background-color: var(--color-key-primary);
     color: var(--color-key-primary-ink);
-    font-size: 20px;
+    font-size: clamp(14px, 3vw, 22px);
 }
