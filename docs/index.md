@@ -26,6 +26,8 @@ The calculator is designed as a calm, precise scientific instrument: it feels fa
 - **Numeric modes** — standard, exact decimal, fraction, and BigInt modes with browser feature detection and graceful fallback.
 - **Angle modes** — degrees, radians, and gradians with a consistent calculus angle policy.
 - **Accessible design** — React Aria primitives, visible focus, and screen reader support.
+- **App suite** — dedicated apps for complex numbers, base-n arithmetic, matrices, vectors, statistics, tables, polynomial and simultaneous equations, and ratio proportions.
+- **Unit conversion** — convert between physical units across length, mass, temperature, pressure, energy, power, force, time, area, volume, speed, and angle.
 - **Original high-quality UI** — a layered, themeable design system in light, dark, and system themes.
 
 ## A quick taste
