@@ -7,6 +7,7 @@ import "@fontsource/noto-sans/700.css";
 import "@fontsource/noto-sans-mono/400.css";
 import "@fontsource/noto-sans-mono/500.css";
 import "@fontsource/noto-sans-mono/600.css";
+import "katex/dist/katex.min.css";
 import "./presentation/styles/themes.css";
 import "./presentation/styles/global.css";
 import { CalculatorApplicationBootstrap } from "./app/CalculatorApplicationBootstrap";
