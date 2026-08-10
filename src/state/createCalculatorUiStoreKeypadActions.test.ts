@@ -689,9 +689,9 @@ describe("calculator UI store keypad actions", () => {
     it("reports the reason for an unavailable app mode", () => {
         const { store } = createCalculatorTestHarness();
 
-        store.getState().onAppModeSelected("statistics");
+        store.getState().onAppModeSelected("calculus");
 
-        expect(store.getState().activeAppMode).toBe("statistics");
+        expect(store.getState().activeAppMode).toBe("calculus");
         expect(store.getState().statusMessage).not.toBeNull();
     });
 
