@@ -23,11 +23,12 @@ as accessible dialogs over the shell.
 |   x²  |  xʸ   |  log  |  ln  | 1/x                                |
 |    π  |  sin  |  cos  |  tan |  hyp                                |
 |    x  |  STO  |  ENG  | S⇔D |  M+                                 |
-|    (  | ×10ˣ  |  DEL  |  AC  |  Ans                                |
+|    (  |   )   | ×10ˣ  | DEL  |  AC                                 |
 |    7  |   8   |   9   |  ÷   |     ▲                              |
 |    4  |   5   |   6   |  ×   |  ◀  OK  ▶   cross-shaped D-pad      |
 |    1  |   2   |   3   |  −   |     ▼                              |
-|    0  |   .   |   ,   |  +   |  =                                  |
+|    0  |   .   |   ,   |  +   |  Ans                               |
+|                                |     =                              |
 +------------------------------------------------------------------+
 ```
 
