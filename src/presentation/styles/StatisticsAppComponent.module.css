@@ -1,0 +1,91 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-2);
+}
+
+.editor {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.columnHeading {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.cell {
+    width: 88px;
+    height: 34px;
+    padding: 0 8px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    color: var(--color-text-primary);
+}
+
+.cell:focus {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 1px;
+}
+
+.actionGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+}
+
+.regressionGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+}
+
+.actionButton {
+    min-height: 36px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-primary);
+    cursor: pointer;
+}
+
+.actionButton:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.statusArea {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.resultLine {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+}
+
+.errorLine {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-danger);
+}
