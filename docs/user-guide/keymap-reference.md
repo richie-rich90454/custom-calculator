@@ -38,6 +38,7 @@ armed layer.
 | `S⇔D` | cycle decimal and fraction | display format menu | |
 | `M+` | add result to memory | `M-` | `M` |
 | `(` | open parenthesis | | |
+| `)` | close parenthesis | | |
 | `×10ˣ` | insert times ten to the power of | `Ran#` | |
 | `Ans` | insert previous answer | `%` | `Y` |
 | `DEL` | delete the token before the caret | | |
