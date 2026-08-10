@@ -596,6 +596,7 @@ export function createCalculatorUiStore(
                         lastResultValue: result.root,
                         errorText: null,
                         isFractionResultDisplayed: false,
+                        isApproximateResult: false,
                     });
                 } else {
                     set({
@@ -778,6 +779,8 @@ export function createCalculatorUiStore(
                     ...viewModelMapper.mapSessionStateToUiState(nextSessionState, get()),
                     pendingVariablePrompts: [],
                     activePanel: CalculatorPanelName.NONE,
+                    isFractionResultDisplayed: false,
+                    isApproximateResult: false,
                 });
 
                 if (nextSessionState.resultText !== null) {
