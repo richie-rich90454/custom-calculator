@@ -361,6 +361,29 @@ describe("calculator UI store keypad actions", () => {
         expect(store.getState().isApproximateResult).toBe(false);
     });
 
+    it("resets the approximate indicator after SOLVE", () => {
+        const { store } = createCalculatorTestHarness({
+            isApproximateResult: true,
+        });
+
+        store.getState().onExpressionTextChanged("x^2-4", 5, 5, 5);
+        store.getState().onSolvePressed();
+
+        expect(store.getState().isApproximateResult).toBe(false);
+    });
+
+    it("resets the approximate indicator after a variable prompt submission", () => {
+        const { store } = createCalculatorTestHarness({
+            isApproximateResult: true,
+            expressionText: "a+1",
+            pendingVariablePrompts: ["a"],
+        });
+
+        store.getState().onVariablePromptSubmitted({ a: "2" });
+
+        expect(store.getState().isApproximateResult).toBe(false);
+    });
+
     it("applies a fixed display format of pi to four decimal places", () => {
         const { store } = createCalculatorTestHarness();
 
