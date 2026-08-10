@@ -4,6 +4,7 @@ import { AngleMode } from "../../domain/model/AngleMode";
 import { useCalculatorViewModel } from "../hooks/useCalculatorViewModel";
 import { AccessibleButtonComponent } from "../primitives/AccessibleButtonComponent";
 import { ConstantsPanelComponent } from "./ConstantsPanelComponent";
+import { UnitConversionTabComponent } from "./UnitConversionTabComponent";
 import { cssClass, joinClassNames } from "../utils/classNames";
 import styles from "../styles/CalculatorOptnPanelComponent.module.css";
 
@@ -26,6 +27,9 @@ export function CalculatorOptnPanelComponent() {
                 </Tab>
                 <Tab id="format" className={cssClass(styles.tab)}>
                     Display Format
+                </Tab>
+                <Tab id="units" className={cssClass(styles.tab)}>
+                    Unit Conversion
                 </Tab>
             </TabList>
             <TabPanel id="constants" className={cssClass(styles.tabPanel)}>
@@ -92,6 +96,9 @@ export function CalculatorOptnPanelComponent() {
                         {viewModel.isKaTeXPreviewEnabled ? "Preview on" : "Preview off"}
                     </AccessibleButtonComponent>
                 </div>
+            </TabPanel>
+            <TabPanel id="units" className={cssClass(styles.tabPanel)}>
+                <UnitConversionTabComponent />
             </TabPanel>
         </Tabs>
     );
