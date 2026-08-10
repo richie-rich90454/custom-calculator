@@ -13,21 +13,25 @@ import { cssClass, joinClassNames } from "../utils/classNames";
 import styles from "../styles/CalculatorKeypadComponent.module.css";
 import keycapStyles from "../styles/CalculatorKeycapComponent.module.css";
 
-const KEYPAD_LAYOUT: readonly (readonly string[])[] = [
+const TOP_LAYOUT: readonly (readonly string[])[] = [
     ["menu", "shift", "alpha", "optn", "calc"],
     ["integral", "limit", "sum", "fraction", "sqrt"],
     ["square", "power", "log", "ln", "reciprocal"],
     ["pi", "sin", "cos", "tan", "hyp"],
     ["xy", "sto", "eng", "sd", "m-plus"],
     ["paren-open", "x10x", "del", "ac", "ans"],
-    ["7", "8", "9", "divide", "equals"],
-    ["4", "5", "6", "multiply", "equals"],
-    ["1", "2", "3", "subtract", "equals"],
-    ["0", "decimal", "comma", "add", "equals"],
+];
+
+const DIGIT_LAYOUT: readonly (readonly string[])[] = [
+    ["7", "8", "9", "divide"],
+    ["4", "5", "6", "multiply"],
+    ["1", "2", "3", "subtract"],
+    ["0", "decimal", "comma", "add"],
 ];
 
 const EQUALS_KEY_ID = "equals";
-const KEYPAD_COLUMN_COUNT = 5;
+const TOP_COLUMN_COUNT = 5;
+const DIGIT_COLUMN_COUNT = 4;
 
 export function CalculatorKeypadComponent() {
     const { store, compositionRoot } = useCalculatorApplicationContext();
@@ -43,11 +47,16 @@ export function CalculatorKeypadComponent() {
         return map;
     }, [compositionRoot]);
 
-    const { layoutKeys, directionalPadKeys } = useMemo(() => resolveLayout(keysById), [keysById]);
+    const { topKeys, digitKeys, equalsKey, directionalPadKeys } = useMemo(
+        () => resolveLayout(keysById),
+        [keysById],
+    );
 
-    const layoutIds = useMemo(() => layoutKeys.map((key) => key.id), [layoutKeys]);
+    const topIds = useMemo(() => topKeys.map((key) => key.id), [topKeys]);
+    const digitIds = useMemo(() => digitKeys.map((key) => key.id), [digitKeys]);
 
-    const navigation = useKeypadGridNavigation(layoutIds, KEYPAD_COLUMN_COUNT);
+    const topNavigation = useKeypadGridNavigation(topIds, TOP_COLUMN_COUNT);
+    const digitNavigation = useKeypadGridNavigation(digitIds, DIGIT_COLUMN_COUNT);
 
     const handleKeyPressed = (key: KeyDefinition, activationKind: ButtonActivationKind): void => {
         const state = store.getState();
@@ -76,53 +85,94 @@ export function CalculatorKeypadComponent() {
                 aria-label="Calculator keypad"
                 className={cssClass(styles.keyGrid)}
                 tabIndex={-1}
-                onKeyDown={navigation.handleGridKeyDown}
+                onKeyDown={topNavigation.handleGridKeyDown}
             >
-                {layoutKeys.map((definition) => (
+                {topKeys.map((definition) => (
                     <CalculatorKeycapComponent
                         key={definition.id}
                         keyDefinition={definition}
-                        customClassName={joinClassNames(
-                            resolveKeycapClassName(definition),
-                            definition.id === EQUALS_KEY_ID ? styles.equalsKeySpan : undefined,
-                        )}
+                        customClassName={resolveKeycapClassName(definition)}
                         registerItemRef={(element) =>
-                            navigation.registerItemRef(definition.id, element)
+                            topNavigation.registerItemRef(definition.id, element)
                         }
-                        isExcludedFromTabOrder={navigation.getTabIndex(definition.id) === -1}
-                        onFocus={() => navigation.handleItemFocus(definition.id)}
+                        isExcludedFromTabOrder={topNavigation.getTabIndex(definition.id) === -1}
+                        onFocus={() => topNavigation.handleItemFocus(definition.id)}
                         onPress={(activationKind) => handleKeyPressed(definition, activationKind)}
                         armedLayer={viewModel.activeModifierLayer}
                     />
                 ))}
             </div>
 
-            <div className={cssClass(styles.sideCluster)}>
-                <CalculatorDirectionalPadComponent
-                    keys={directionalPadKeys}
-                    armedLayer={viewModel.activeModifierLayer}
-                    onKeyPressed={handleKeyPressed}
-                />
+            <div className={cssClass(styles.bottomSection)}>
+                <div
+                    role="grid"
+                    aria-label="Calculator number keys"
+                    className={cssClass(styles.digitGrid)}
+                    tabIndex={-1}
+                    onKeyDown={digitNavigation.handleGridKeyDown}
+                >
+                    {digitKeys.map((definition) => (
+                        <CalculatorKeycapComponent
+                            key={definition.id}
+                            keyDefinition={definition}
+                            customClassName={resolveKeycapClassName(definition)}
+                            registerItemRef={(element) =>
+                                digitNavigation.registerItemRef(definition.id, element)
+                            }
+                            isExcludedFromTabOrder={
+                                digitNavigation.getTabIndex(definition.id) === -1
+                            }
+                            onFocus={() => digitNavigation.handleItemFocus(definition.id)}
+                            onPress={(activationKind) =>
+                                handleKeyPressed(definition, activationKind)
+                            }
+                            armedLayer={viewModel.activeModifierLayer}
+                        />
+                    ))}
+                </div>
+
+                <div className={cssClass(styles.sideCluster)}>
+                    <CalculatorDirectionalPadComponent
+                        keys={directionalPadKeys}
+                        armedLayer={viewModel.activeModifierLayer}
+                        onKeyPressed={handleKeyPressed}
+                    />
+                    <CalculatorKeycapComponent
+                        keyDefinition={equalsKey}
+                        customClassName={joinClassNames(
+                            styles.equalsKey,
+                            resolveKeycapClassName(equalsKey),
+                        )}
+                        registerItemRef={() => undefined}
+                        onFocus={() => undefined}
+                        onPress={(activationKind) => handleKeyPressed(equalsKey, activationKind)}
+                        armedLayer={viewModel.activeModifierLayer}
+                    />
+                </div>
             </div>
         </div>
     );
 }
 
 function resolveLayout(keysById: ReadonlyMap<string, KeyDefinition>): {
-    readonly layoutKeys: readonly KeyDefinition[];
+    readonly topKeys: readonly KeyDefinition[];
+    readonly digitKeys: readonly KeyDefinition[];
+    readonly equalsKey: KeyDefinition;
     readonly directionalPadKeys: Readonly<Record<string, KeyDefinition>>;
 } {
-    const seenIds = new Set<string>();
-    const layoutKeys: KeyDefinition[] = [];
+    const topKeys: KeyDefinition[] = [];
 
-    for (const row of KEYPAD_LAYOUT) {
+    for (const row of TOP_LAYOUT) {
         for (const keyId of row) {
-            if (seenIds.has(keyId)) {
-                continue;
-            }
+            topKeys.push(keysById.get(keyId) as KeyDefinition);
+        }
+    }
 
-            seenIds.add(keyId);
-            layoutKeys.push(keysById.get(keyId) as KeyDefinition);
+    const digitKeys: KeyDefinition[] = [];
+
+    for (const row of DIGIT_LAYOUT) {
+        for (const keyId of row) {
+            digitKeys.push(keysById.get(keyId) as KeyDefinition);
         }
     }
 
@@ -131,7 +181,12 @@ function resolveLayout(keysById: ReadonlyMap<string, KeyDefinition>): {
         directionalPadKeys[keyId] = keysById.get(keyId) as KeyDefinition;
     }
 
-    return { layoutKeys: layoutKeys, directionalPadKeys: directionalPadKeys };
+    return {
+        topKeys: topKeys,
+        digitKeys: digitKeys,
+        equalsKey: keysById.get(EQUALS_KEY_ID) as KeyDefinition,
+        directionalPadKeys: directionalPadKeys,
+    };
 }
 
 const KEYCAP_CLASS_NAMES: Readonly<Record<KeycapClass, string | undefined>> = {
