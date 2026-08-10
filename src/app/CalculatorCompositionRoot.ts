@@ -90,6 +90,18 @@ import type { ExpressionVariablePromptService } from "../presentation/services/E
 import { DefaultExpressionVariablePromptService } from "../presentation/services/DefaultExpressionVariablePromptService";
 import type { ReplayHistoryService } from "../presentation/services/ReplayHistoryService";
 import { DefaultReplayHistoryService } from "../presentation/services/DefaultReplayHistoryService";
+import type { StatisticsSummaryService } from "../application/services/StatisticsSummaryService";
+import { DefaultStatisticsSummaryService } from "../application/services/DefaultStatisticsSummaryService";
+import type { RegressionAnalysisService } from "../application/services/RegressionAnalysisService";
+import { DefaultRegressionAnalysisService } from "../application/services/DefaultRegressionAnalysisService";
+import type { TableGenerationService } from "../application/services/TableGenerationService";
+import { DefaultTableGenerationService } from "../application/services/DefaultTableGenerationService";
+import type { PolynomialRootService } from "../application/services/PolynomialRootService";
+import { AnalyticPolynomialRootService } from "../application/services/AnalyticPolynomialRootService";
+import type { SimultaneousEquationService } from "../application/services/SimultaneousEquationService";
+import { GaussianEliminationSimultaneousEquationService } from "../application/services/GaussianEliminationSimultaneousEquationService";
+import type { RatioSolverService } from "../application/services/RatioSolverService";
+import { DefaultRatioSolverService } from "../application/services/DefaultRatioSolverService";
 
 const DATABASE_NAME = "custom-calculator";
 
@@ -129,6 +141,12 @@ export class CalculatorCompositionRoot {
     public readonly bigIntBaseNArithmeticService: BigIntBaseNArithmeticService;
     public readonly matrixOperationsGateway: MatrixOperationsGateway;
     public readonly vectorOperationsGateway: VectorOperationsGateway;
+    public readonly statisticsSummaryService: StatisticsSummaryService;
+    public readonly regressionAnalysisService: RegressionAnalysisService;
+    public readonly tableGenerationService: TableGenerationService;
+    public readonly polynomialRootService: PolynomialRootService;
+    public readonly simultaneousEquationService: SimultaneousEquationService;
+    public readonly ratioSolverService: RatioSolverService;
 
     public constructor() {
         this.bigIntSupportDetector = new BrowserBigIntSupportDetector();
@@ -256,6 +274,14 @@ export class CalculatorCompositionRoot {
         this.vectorOperationsGateway = new MathJsVectorOperationsGateway(
             this.mathJsInstanceProvider,
         );
+        this.statisticsSummaryService = new DefaultStatisticsSummaryService();
+        this.regressionAnalysisService = new DefaultRegressionAnalysisService();
+        this.tableGenerationService = new DefaultTableGenerationService(
+            new NewtonRaphsonEquationSolvingGateway(this.mathJsInstanceProvider),
+        );
+        this.polynomialRootService = new AnalyticPolynomialRootService();
+        this.simultaneousEquationService = new GaussianEliminationSimultaneousEquationService();
+        this.ratioSolverService = new DefaultRatioSolverService();
     }
 
     private createPersistenceRepositories(): {
