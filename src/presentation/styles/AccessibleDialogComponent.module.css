@@ -5,8 +5,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-4);
-    background-color: var(--color-shadow);
+    padding: var(--space-3);
+    background-color: rgba(20, 24, 30, 0.55);
 }
 
 .modal {
