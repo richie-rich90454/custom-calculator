@@ -54,9 +54,20 @@ digits and operators type directly, `Enter` evaluates, `Backspace` deletes,
 ## App registry
 
 `DefaultAppModeRegistryService` registers the ten apps with their numeric
-badges. Apps delivered in later phases are registered as unavailable so the
-home menu renders them with a clear reason instead of a dead entry. The last
-active app persists to `localStorage` and is restored at bootstrap.
+badges. Shipped apps are available and render through
+`CalculatorAppViewComponent`, which switches on the active app id: the
+calculate app shows the classic display and keypad, and every other app renders
+its dedicated app component. The last active app persists to `localStorage` and
+is restored at bootstrap.
+
+## App view routing
+
+`CalculatorShellComponent` renders `CalculatorAppViewComponent` whenever the
+active app is not the calculate app, keeping the status strip and dialogs
+unchanged. Each app component is self-contained: it reads services from the
+composition root, keeps its editor state locally, and reports clear errors for
+invalid input. Apps that are not yet delivered stay unavailable in the registry
+so the home menu shows their availability reason instead of a dead entry.
 
 ## Wiring
 
