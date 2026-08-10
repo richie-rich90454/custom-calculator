@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { HistoryEntry } from "../domain/model/HistoryEntry";
 import type { CalculatorSessionState } from "../domain/model/CalculatorSessionState";
+import { AngleMode } from "../domain/model/AngleMode";
 import { ModifierLayer } from "../domain/model/ModifierLayer";
 import { ModifierLayerState } from "../domain/model/ModifierLayerState";
 import { ResultFormatMode } from "../domain/model/ResultFormatMode";
@@ -159,6 +160,11 @@ export function createCalculatorUiStore(
                 ...viewModelMapper.mapSessionStateToUiState(nextSessionState, get()),
                 isFractionResultDisplayed: false,
                 isApproximateResult: false,
+                statusMessage: resolveCalculusAngleNotice(
+                    nextSessionState.expressionText,
+                    nextSessionState.angleMode,
+                    compositionRoot.calculusOperationCatalogService.getOperationNames(),
+                ),
             });
 
             if (nextSessionState.resultText !== null) {
@@ -845,4 +851,26 @@ function mergePromptedVariables(
     );
 
     return [...existingVariables, ...promptedVariables];
+}
+
+function resolveCalculusAngleNotice(
+    expressionText: string,
+    angleMode: AngleMode,
+    calculusOperationNames: readonly string[],
+): string | null {
+    if (angleMode === AngleMode.RAD) {
+        return null;
+    }
+
+    const isCalculusBlock = calculusOperationNames.some((operationName) =>
+        expressionText.includes(`${operationName}(`),
+    );
+
+    if (!isCalculusBlock) {
+        return null;
+    }
+
+    const modeLabel = angleMode === AngleMode.DEG ? "DEG" : "GON";
+
+    return `Trig assumed in radians; input converted from ${modeLabel}.`;
 }
