@@ -82,7 +82,7 @@ export function CalculatorKeypadComponent() {
     return (
         <div className={cssClass(styles.keypad)}>
             <div
-                role="grid"
+                role="toolbar"
                 aria-label="Calculator keypad"
                 className={cssClass(styles.keyGrid)}
                 tabIndex={-1}
@@ -106,7 +106,7 @@ export function CalculatorKeypadComponent() {
 
             <div className={cssClass(styles.bottomSection)}>
                 <div
-                    role="grid"
+                    role="toolbar"
                     aria-label="Calculator number keys"
                     className={cssClass(styles.digitGrid)}
                     tabIndex={-1}
@@ -174,7 +174,7 @@ function resolveLayout(keysById: ReadonlyMap<string, KeyDefinition>): {
 
     for (const row of TOP_LAYOUT) {
         for (const keyId of row) {
-            topKeys.push(keysById.get(keyId) as KeyDefinition);
+            topKeys.push(requireKeyDefinition(keysById, keyId));
         }
     }
 
@@ -182,22 +182,35 @@ function resolveLayout(keysById: ReadonlyMap<string, KeyDefinition>): {
 
     for (const row of DIGIT_LAYOUT) {
         for (const keyId of row) {
-            digitKeys.push(keysById.get(keyId) as KeyDefinition);
+            digitKeys.push(requireKeyDefinition(keysById, keyId));
         }
     }
 
     const directionalPadKeys: Record<string, KeyDefinition> = {};
     for (const keyId of ["dpad-up", "dpad-left", "confirm", "dpad-right", "dpad-down"]) {
-        directionalPadKeys[keyId] = keysById.get(keyId) as KeyDefinition;
+        directionalPadKeys[keyId] = requireKeyDefinition(keysById, keyId);
     }
 
     return {
         topKeys: topKeys,
         digitKeys: digitKeys,
-        equalsKey: keysById.get(EQUALS_KEY_ID) as KeyDefinition,
-        ansKey: keysById.get(ANS_KEY_ID) as KeyDefinition,
+        equalsKey: requireKeyDefinition(keysById, EQUALS_KEY_ID),
+        ansKey: requireKeyDefinition(keysById, ANS_KEY_ID),
         directionalPadKeys: directionalPadKeys,
     };
+}
+
+function requireKeyDefinition(
+    keysById: ReadonlyMap<string, KeyDefinition>,
+    keyId: string,
+): KeyDefinition {
+    const key = keysById.get(keyId);
+
+    if (key === undefined) {
+        throw new Error(`Unknown key id in keypad layout: ${keyId}.`);
+    }
+
+    return key;
 }
 
 const KEYCAP_CLASS_NAMES: Readonly<Record<KeycapClass, string | undefined>> = {
