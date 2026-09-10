@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ModifierLayer } from "../../domain/model/ModifierLayer";
@@ -245,12 +245,12 @@ describe("CalculatorKeypadComponent", () => {
         expect(sevenButton).toHaveFocus();
     });
 
-    it("exposes exactly one tab stop per keypad grid", () => {
+    it("exposes exactly one tab stop per keypad toolbar", () => {
         const harness = createCalculatorTestHarness();
 
         renderWithCalculatorContext(harness, <CalculatorKeypadComponent />);
 
-        const grid = screen.getByRole("grid", { name: "Calculator keypad" });
+        const grid = screen.getByRole("toolbar", { name: "Calculator keypad" });
         const buttonsInGrid = Array.from(grid.querySelectorAll("button")) as HTMLButtonElement[];
 
         const tabStops = buttonsInGrid.filter((button) => button.tabIndex === 0);
@@ -280,5 +280,15 @@ describe("CalculatorKeypadComponent", () => {
 
         expect(harness.store.getState().activeModifierLayer).toBe(ModifierLayer.NONE);
         expect(harness.store.getState().expressionText).toBe("asin(");
+    });
+
+    it("fails fast when the keymap is missing a layout key", () => {
+        const harness = createCalculatorTestHarness();
+
+        vi.spyOn(harness.compositionRoot.keymapDefinitionService, "getAllKeys").mockReturnValue([]);
+
+        expect(() => renderWithCalculatorContext(harness, <CalculatorKeypadComponent />)).toThrow(
+            "Unknown key id in keypad layout",
+        );
     });
 });
