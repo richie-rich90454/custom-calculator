@@ -38,13 +38,13 @@ The native input handles the standard navigation keys.
 
 ## Using the keypad with the keyboard
 
-Each keypad grid exposes a single tab stop. Press `Tab` to reach the grid, then use the arrow keys to move through the buttons.
+Each keypad toolbar exposes a single tab stop. Press `Tab` to reach the toolbar, then use the arrow keys to move through the buttons.
 
-- `Tab` moves between major regions and out of the grid.
-- Arrow keys move within the grid.
+- `Tab` moves between major regions and out of the toolbar.
+- Arrow keys move within the toolbar.
 - `Enter` or `Space` activates the focused button.
 
-The arrow-key grid navigation keeps focus on the grid so you can reach every key without a mouse. See [Keyboard handling](/architecture/keyboard-handling).
+The arrow-key toolbar navigation keeps focus on the toolbar so you can reach every key without a mouse. See [Keyboard handling](/architecture/keyboard-handling).
 
 ## Opening panels
 
