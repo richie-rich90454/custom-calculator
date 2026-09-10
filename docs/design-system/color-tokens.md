@@ -19,17 +19,20 @@ Colors are defined as CSS variables in `src/presentation/styles/themes.css`. The
 | `--color-text-secondary` | `#5b6470` | `#98a2b3` | Secondary text     |
 | `--color-text-muted`     | `#8a93a0` | `#6b7686` | Muted text         |
 | `--color-accent`         | `#1f6feb` | `#4c8dff` | Accent and links   |
-| `--color-focus-ring`     | `#1f6feb` | `#4c8dff` | Focus indicators   |
+| `--color-focus-ring`     | `#2f6db3` | `#2f6db3` | Focus indicators   |
 
 ## Key tokens
 
-| Token                  | Light     | Dark      | Use                     |
-| ---------------------- | --------- | --------- | ----------------------- |
-| `--color-key-digit`    | `#ffffff` | `#1c222b` | Digit key background    |
-| `--color-key-function` | `#eef0f3` | `#202632` | Function key background |
-| `--color-key-operator` | `#e3eaf6` | `#243147` | Operator key background |
-| `--color-key-accent`   | `#1f6feb` | `#4c8dff` | Equals key background   |
-| `--color-key-danger`   | `#fbecec` | `#3a2226` | Clear key background    |
+Keycap tokens are instrument-fixed: both themes use the same values so the calculator reads as one instrument.
+
+| Token                  | Light     | Dark      | Use                           |
+| ---------------------- | --------- | --------- | ----------------------------- |
+| `--color-key-primary`  | `#edebe4` | `#edebe4` | Digit and operator keys       |
+| `--color-key-function` | `#343b42` | `#343b42` | Function and utility keys     |
+| `--color-key-delete`   | `#1f6f6b` | `#1f6f6b` | Delete key background         |
+| `--color-key-clear`    | `#a6512d` | `#a6512d` | Clear key background          |
+| `--color-key-operator` | `#e3eaf6` | `#243147` | Panel action background       |
+| `--color-key-danger`   | `#fbecec` | `#3a2226` | Destructive action background |
 
 ## Feedback tokens
 
