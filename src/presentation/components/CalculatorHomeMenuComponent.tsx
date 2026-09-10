@@ -10,7 +10,7 @@ export function CalculatorHomeMenuComponent() {
     const viewModel = useCalculatorViewModel();
 
     return (
-        <div className={cssClass(styles.homeMenu)} role="grid" aria-label="App menu">
+        <div className={cssClass(styles.homeMenu)} role="group" aria-label="App menu">
             {viewModel.appModes.map((app) => {
                 const isActive = app.id === viewModel.activeAppMode;
 
