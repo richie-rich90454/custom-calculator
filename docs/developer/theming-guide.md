@@ -30,7 +30,7 @@ Components use tokens such as `var(--color-text-primary)`, which resolve differe
 | Colors   | `--color-background`, `--color-surface`, `--color-border`              |
 | Text     | `--color-text-primary`, `--color-text-secondary`, `--color-text-muted` |
 | Accent   | `--color-accent`, `--color-accent-muted`, `--color-focus-ring`         |
-| Keys     | `--color-key-digit`, `--color-key-function`, `--color-key-operator`    |
+| Keys     | `--color-key-primary`, `--color-key-function`, `--color-key-operator`  |
 | Feedback | `--color-error`, `--color-success`, `--color-warning`                  |
 | Radii    | `--radius-sm`, `--radius-md`, `--radius-lg`                            |
 | Spacing  | `--space-1` through `--space-6`                                        |
