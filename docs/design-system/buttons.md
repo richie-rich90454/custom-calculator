@@ -9,14 +9,16 @@ Buttons are the primary interactive element. The keypad distinguishes several bu
 
 ## Button roles
 
-| Role     | Token                  | Example |
-| -------- | ---------------------- | ------- |
-| Digit    | `--color-key-digit`    | `7`     |
-| Function | `--color-key-function` | `sin`   |
-| Operator | `--color-key-operator` | `+`     |
-| Utility  | `--color-key-utility`  | `MR`    |
-| Danger   | `--color-key-danger`   | `AC`    |
-| Accent   | `--color-key-accent`   | `=`     |
+| Role       | Token                  | Example |
+| ---------- | ---------------------- | ------- |
+| Digit      | `--color-key-primary`  | `7`     |
+| Operator   | `--color-key-primary`  | `+`     |
+| Function   | `--color-key-function` | `sin`   |
+| Utility    | `--color-key-function` | `STO`   |
+| Navigation | `--color-key-function` | `◀`     |
+| Delete     | `--color-key-delete`   | `DEL`   |
+| Clear      | `--color-key-clear`    | `AC`    |
+| Evaluate   | `--color-key-primary`  | `=`     |
 
 ## Interaction states
 
@@ -32,7 +34,7 @@ Buttons are the primary interactive element. The keypad distinguishes several bu
 
 ## Keyboard access
 
-Each keypad grid exposes one tab stop. Arrow keys navigate the grid, and `Enter` or `Space` activates the focused button.
+Each keypad toolbar exposes one tab stop. Arrow keys navigate the toolbar, and `Enter` or `Space` activates the focused button.
 
 ## No flashy effects
 
