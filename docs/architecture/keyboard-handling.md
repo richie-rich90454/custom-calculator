@@ -48,9 +48,9 @@ flowchart TB
 | `Ctrl+,` | Open settings        |
 | `Ctrl+L` | Open calculus        |
 
-## Keypad grid navigation
+## Keypad toolbar navigation
 
-Each keypad grid exposes one tab stop. `useKeypadGridNavigation` handles arrow-key movement inside the grid, and `Enter` or `Space` activates the focused key through React Aria.
+Each keypad toolbar exposes one tab stop. `useKeypadGridNavigation` handles arrow-key movement inside the toolbar, and `Enter` or `Space` activates the focused key through React Aria.
 
 ## Focus preservation
 
