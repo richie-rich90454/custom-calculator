@@ -24,7 +24,6 @@
     --color-surface: #ffffff;
     --color-surface-muted: #eef0f3;
     --color-surface-hover: #e8ebef;
-    --color-display-background: #f8f9fb;
     --color-border: #d7dbe0;
     --color-border-strong: #b9c1ca;
     --color-text-primary: #15181d;
@@ -33,27 +32,16 @@
     --color-accent: #1f6feb;
     --color-accent-muted: #dbe7ff;
     --color-accent-contrast: #ffffff;
-    --color-key-digit: #ffffff;
-    --color-key-digit-text: #15181d;
-    --color-key-function: #eef0f3;
-    --color-key-function-text: #38414d;
     --color-key-operator: #e3eaf6;
     --color-key-operator-text: #1d5cc9;
-    --color-key-utility: #f0f1f4;
-    --color-key-utility-text: #4b545f;
     --color-key-danger: #fbecec;
     --color-key-danger-text: #b42318;
-    --color-key-accent: #1f6feb;
-    --color-key-accent-text: #ffffff;
     --color-error: #b42318;
     --color-error-background: #fdf1f0;
     --color-success: #1e8a44;
     --color-warning: #b07a13;
-    --color-focus-ring: #1f6feb;
     --color-shadow: rgba(28, 33, 42, 0.08);
     --color-shadow-strong: rgba(28, 33, 42, 0.16);
-    --color-calculator-body: #e4e7ec;
-    --color-calculator-edge: #c6cbd4;
     --color-panel-background: #ffffff;
 }
 
@@ -62,7 +50,6 @@
     --color-surface: #181c23;
     --color-surface-muted: #202632;
     --color-surface-hover: #262d3a;
-    --color-display-background: #0d1015;
     --color-border: #2c3442;
     --color-border-strong: #3c4757;
     --color-text-primary: #e8ebf0;
@@ -71,27 +58,16 @@
     --color-accent: #4c8dff;
     --color-accent-muted: #1b2b47;
     --color-accent-contrast: #0d1015;
-    --color-key-digit: #1c222b;
-    --color-key-digit-text: #eef1f5;
-    --color-key-function: #202632;
-    --color-key-function-text: #b6c0cc;
     --color-key-operator: #243147;
     --color-key-operator-text: #9fc0ff;
-    --color-key-utility: #242a35;
-    --color-key-utility-text: #c3ccd8;
     --color-key-danger: #3a2226;
     --color-key-danger-text: #ff9d9d;
-    --color-key-accent: #4c8dff;
-    --color-key-accent-text: #0d1015;
     --color-error: #ff6b6b;
     --color-error-background: #2b1718;
     --color-success: #6bdb8c;
     --color-warning: #f5c76b;
-    --color-focus-ring: #2f6db3;
     --color-shadow: rgba(0, 0, 0, 0.35);
     --color-shadow-strong: rgba(0, 0, 0, 0.5);
-    --color-calculator-body: #14181e;
-    --color-calculator-edge: #0a0d11;
     --color-panel-background: #181c23;
 }
 
@@ -99,7 +75,6 @@
    body always wears this palette regardless of the surrounding theme. */
 :root,
 [data-theme="dark"] {
-    --color-shell: #24272c;
     --color-shell-edge: #3a3e45;
     --color-key-primary: #edebe4;
     --color-key-primary-ink: #1c1e21;
