@@ -1,19 +1,19 @@
 .keypad {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 12px;
+    gap: var(--space-3);
+    padding: var(--space-1) 0 0;
 }
 
 .keyGrid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 6px;
+    gap: var(--space-2);
 }
 
 .bottomSection {
     display: flex;
-    gap: 10px;
+    gap: var(--space-3);
     align-items: stretch;
 }
 
@@ -21,15 +21,15 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-template-rows: repeat(4, minmax(44px, auto));
-    gap: 6px;
+    gap: var(--space-2);
     flex: 1;
 }
 
 .sideCluster {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    flex: 0 0 132px;
+    gap: var(--space-2);
+    flex: 0 0 clamp(112px, 28%, 144px);
 }
 
 .equalsKey {
