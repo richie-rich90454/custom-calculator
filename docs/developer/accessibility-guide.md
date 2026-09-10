@@ -23,7 +23,7 @@ These provide keyboard interaction, focus management, and accessible names.
 
 - Focus is always visible with a high-contrast focus ring.
 - The expression editor lands focus on load for immediate keyboard entry.
-- Keypad grids expose a single tab stop and arrow-key navigation.
+- Keypad toolbars expose a single tab stop and arrow-key navigation.
 - Opening and closing panels returns logical focus.
 
 ## Keyboard
