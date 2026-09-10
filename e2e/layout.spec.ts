@@ -7,8 +7,8 @@ test.beforeEach(async ({ context }) => {
 test("renders every key exactly once without duplicated labels", async ({ page }) => {
     await page.goto("/");
 
-    const grid = page.getByRole("grid", { name: "Calculator keypad" });
-    const digitGrid = page.getByRole("grid", { name: "Calculator number keys" });
+    const grid = page.getByRole("toolbar", { name: "Calculator keypad" });
+    const digitGrid = page.getByRole("toolbar", { name: "Calculator number keys" });
 
     for (const [label, count] of [
         ["Digit seven", 1],
@@ -28,9 +28,7 @@ test("renders every key exactly once without duplicated labels", async ({ page }
     ] as const) {
         await expect(grid.locator("button")).toHaveCount(30);
         await expect(digitGrid.locator("button")).toHaveCount(16);
-        await expect(
-            page.getByRole("button", { name: label, exact: true }),
-        ).toHaveCount(count);
+        await expect(page.getByRole("button", { name: label, exact: true })).toHaveCount(count);
     }
 });
 
@@ -39,15 +37,13 @@ test("shows both parenthesis keys and the ans key", async ({ page }) => {
 
     await expect(page.getByRole("button", { name: "Open parenthesis" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Close parenthesis" })).toBeVisible();
-    await expect(
-        page.getByRole("button", { name: "Insert the previous answer" }),
-    ).toBeVisible();
+    await expect(page.getByRole("button", { name: "Insert the previous answer" })).toBeVisible();
 });
 
 test("aligns the digit rows and the equals key in the fifth column", async ({ page }) => {
     await page.goto("/");
 
-    const digitGrid = page.getByRole("grid", { name: "Calculator number keys" });
+    const digitGrid = page.getByRole("toolbar", { name: "Calculator number keys" });
 
     const seven = digitGrid.getByRole("button", { name: "Digit seven" });
     const four = digitGrid.getByRole("button", { name: "Digit four" });
