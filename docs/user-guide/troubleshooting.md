@@ -40,7 +40,7 @@ Settings are stored in local storage. If storage is unavailable, settings reset 
 
 ## The keypad does not respond to the mouse
 
-The keypad never requires a mouse, but it also fully supports one. If buttons appear unresponsive, press `Tab` to reach the keypad grid and use the arrow keys plus `Enter` to activate a button.
+The keypad never requires a mouse, but it also fully supports one. If buttons appear unresponsive, press `Tab` to reach the keypad toolbar and use the arrow keys plus `Enter` to activate a button.
 
 ## An app shows an error or an empty result
 
