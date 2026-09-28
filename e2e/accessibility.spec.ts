@@ -19,7 +19,9 @@ test("exposes keycap layer labels on the shift and alpha layers", async ({ page 
     ).toBeVisible();
 
     await page.getByRole("button", { name: "Arm the alpha layer" }).click();
-    await expect(page.getByRole("button", { name: "Insert the variable A, alpha layer" })).toBeVisible();
+    await expect(
+        page.getByRole("button", { name: "Insert the variable A, alpha layer" }),
+    ).toBeVisible();
 });
 
 test("disarms a modifier with Escape", async ({ page }) => {
@@ -56,8 +58,8 @@ test("traps focus inside the variable prompt dialog", async ({ page }) => {
     await expect(valueField).toBeFocused();
 
     await page.keyboard.press("Tab");
-    const focusedAfterTab = await page.evaluate(() =>
-        document.activeElement?.closest('[role="dialog"]') !== null,
+    const focusedAfterTab = await page.evaluate(
+        () => document.activeElement?.closest('[role="dialog"]') !== null,
     );
     expect(focusedAfterTab).toBe(true);
 });
@@ -69,9 +71,7 @@ test("navigates the app menu and opens the matrix app", async ({ page }) => {
     await expect(page.getByRole("button", { name: "Calculate app, number 1" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Complex app, number 2" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Matrix app, number 4" })).toBeVisible();
-    await expect(
-        page.getByRole("button", { name: "Calculus app, number 9" }),
-    ).toBeVisible();
+    await expect(page.getByRole("button", { name: "Calculus app, number 9" })).toBeVisible();
 
     await page.getByRole("button", { name: "Matrix app, number 4" }).click();
 
