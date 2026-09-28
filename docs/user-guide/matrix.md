@@ -5,8 +5,7 @@ description: How to enter and operate on matrices in the Matrix app.
 
 # Matrix
 
-The **Matrix** app (4) stores three matrices — MatA, MatB, and MatC — and
-computes the common matrix operations on them.
+The **Matrix** app (4) stores three matrices — MatA, MatB, and MatC — and computes the common matrix operations on them.
 
 ## Opening the app
 
@@ -14,23 +13,21 @@ Open the home menu and select **Matrix**.
 
 ## Entering matrices
 
-Each matrix has a row and column selector (1 to 4 each). Type a value into
-every cell; empty cells count as zero.
+Each matrix has a row and column selector (1 to 4 each). Type a value into every cell; empty cells count as zero.
 
 ## Operations
 
-Choose an operation from the **Matrix operation** selector, then press
-**Compute**:
+Choose an operation from the **Matrix operation** selector, then press **Compute**:
 
-| Operation      | Description                          |
-| -------------- | ------------------------------------ |
-| A + B          | matrix addition                      |
-| A − B          | matrix subtraction                   |
-| A × B          | matrix multiplication                |
-| Transpose A    | transpose of MatA                    |
-| Determinant of A | determinant of MatA (square only)   |
-| Inverse of A   | inverse of MatA (square, non-singular) |
-| Identity (3×3) | the 3×3 identity matrix              |
+| Operation        | Description                            |
+| ---------------- | -------------------------------------- |
+| A + B            | matrix addition                        |
+| A − B            | matrix subtraction                     |
+| A × B            | matrix multiplication                  |
+| Transpose A      | transpose of MatA                      |
+| Determinant of A | determinant of MatA (square only)      |
+| Inverse of A     | inverse of MatA (square, non-singular) |
+| Identity (3×3)   | the 3×3 identity matrix                |
 
 ## Errors
 
