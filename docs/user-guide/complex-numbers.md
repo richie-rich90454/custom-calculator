@@ -39,16 +39,14 @@ Complex results are formatted using the active numeric mode where applicable.
 
 ## The Complex app
 
-Open the home menu and select the **Complex** app (2) for dedicated complex
-number work. The app provides:
+Open the home menu and select the **Complex** app (2) for dedicated complex number work. The app provides:
 
 - Rectangular entry (`a + bi`) and polar entry (`r ∠ θ`) for two operands A and B.
 - Addition, subtraction, multiplication, and division.
 - Conjugate, absolute value, and argument operations on A.
 - Automatic conversion between rectangular and polar display of every result.
 
-When complex numbers are disabled in settings, the app shows a clear notice
-and blocks the operations instead of producing complex values.
+When complex numbers are disabled in settings, the app shows a clear notice and blocks the operations instead of producing complex values.
 
 ## Persistence
 
