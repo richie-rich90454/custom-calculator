@@ -7,43 +7,40 @@ import reactHooks from "eslint-plugin-react-hooks";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 
 export default [
-  {
-    ignores: ["dist", "coverage", "node_modules"],
-  },
-  {
-    files: ["**/*.{ts,tsx}"],
-    languageOptions: {
-      parser: tsParser,
-      ecmaVersion: "latest",
-      sourceType: "module",
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
+    {
+        ignores: ["dist", "coverage", "node_modules"],
     },
-    plugins: {
-      "@typescript-eslint": tseslint,
-      react,
-      "react-hooks": reactHooks,
-      "jsx-a11y": jsxA11y,
+    {
+        files: ["**/*.{ts,tsx}"],
+        languageOptions: {
+            parser: tsParser,
+            ecmaVersion: "latest",
+            sourceType: "module",
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+            },
+        },
+        plugins: {
+            "@typescript-eslint": tseslint,
+            react,
+            "react-hooks": reactHooks,
+            "jsx-a11y": jsxA11y,
+        },
+        settings: {
+            react: {
+                version: "detect",
+            },
+        },
+        rules: {
+            ...js.configs.recommended.rules,
+            ...tseslint.configs.recommended.rules,
+            ...react.configs.recommended.rules,
+            ...reactHooks.configs.recommended.rules,
+            ...jsxA11y.configs.recommended.rules,
+            "react/react-in-jsx-scope": "off",
+            "react/prop-types": "off",
+            "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+        },
     },
-    settings: {
-      react: {
-        version: "detect",
-      },
-    },
-    rules: {
-      ...js.configs.recommended.rules,
-      ...tseslint.configs.recommended.rules,
-      ...react.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      ...jsxA11y.configs.recommended.rules,
-      "react/react-in-jsx-scope": "off",
-      "react/prop-types": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        { argsIgnorePattern: "^_" },
-      ],
-    },
-  },
 ];
