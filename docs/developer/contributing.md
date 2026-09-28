@@ -13,7 +13,7 @@ Thank you for contributing. This page explains the workflow, standards, and expe
 2. Read the [code style guide](/developer/code-style-guide).
 3. Make your change with focused, one-file-per-commit commits.
 4. Follow the [commit policy](/developer/commit-policy).
-5. Verify with typecheck, lint, and tests.
+5. Verify with formatting, typecheck, lint, and tests.
 6. Open a pull request.
 
 ## Verification
@@ -21,6 +21,7 @@ Thank you for contributing. This page explains the workflow, standards, and expe
 Every contribution must pass:
 
 ```bash
+npm run format:check
 npm run typecheck
 npm run lint
 npm run test
