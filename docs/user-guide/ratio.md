@@ -5,8 +5,7 @@ description: How to solve ratio proportions a:b = c:d for a missing term with th
 
 # Ratio
 
-The **Ratio** app (0) solves a proportion of the form `a:b = c:d` when
-exactly one of the four terms is unknown.
+The **Ratio** app (0) solves a proportion of the form `a:b = c:d` when exactly one of the four terms is unknown.
 
 ## Opening the app
 
@@ -14,13 +13,12 @@ Open the home menu and select **Ratio**.
 
 ## Solving a proportion
 
-Enter three of the four terms and leave the unknown one empty. Press
-**Solve** to compute the missing term.
+Enter three of the four terms and leave the unknown one empty. Press **Solve** to compute the missing term.
 
 ## Examples
 
-| Ratio         | Missing term |
-| ------------- | ------------ |
+| Ratio           | Missing term |
+| --------------- | ------------ |
 | `2 : 3 = 4 : ?` | 6            |
 | `? : 3 = 4 : 6` | 2            |
 | `2 : ? = 4 : 6` | 3            |
