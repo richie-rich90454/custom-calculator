@@ -5,8 +5,7 @@ description: How to generate tables of function values with the Table app.
 
 # Table
 
-The **Table** app (7) evaluates one or two functions over a range of x values
-and displays the result as a table.
+The **Table** app (7) evaluates one or two functions over a range of x values and displays the result as a table.
 
 ## Opening the app
 
@@ -14,8 +13,7 @@ Open the home menu and select **Table**.
 
 ## Setting up the table
 
-Enter the function of x in **f(x)**. Optionally add a second function in
-**g(x)** to show both columns.
+Enter the function of x in **f(x)**. Optionally add a second function in **g(x)** to show both columns.
 
 Set the range with **Start**, **End**, and **Step**, then press **Generate**.
 
@@ -37,8 +35,7 @@ x   f(x)
 - Start, end, and step must be finite numbers.
 - A range generating more than 200 rows is rejected with a clear message.
 
-A function that is not defined at a particular x value (for example
-`sqrt(x)` at a negative x) shows a dash in that cell.
+A function that is not defined at a particular x value (for example `sqrt(x)` at a negative x) shows a dash in that cell.
 
 ## Related documentation
 
