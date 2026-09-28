@@ -5,8 +5,7 @@ description: How to enter vectors and compute dot, cross, magnitude, angle, and 
 
 # Vector
 
-The **Vector** app (5) stores two vectors — VecA and VecB — with two or three
-components each, and computes the standard vector operations.
+The **Vector** app (5) stores two vectors — VecA and VecB — with two or three components each, and computes the standard vector operations.
 
 ## Opening the app
 
@@ -14,21 +13,19 @@ Open the home menu and select **Vector**.
 
 ## Entering vectors
 
-Each vector has a dimension selector (2 or 3 components). Type a value into
-each component field; empty fields count as zero.
+Each vector has a dimension selector (2 or 3 components). Type a value into each component field; empty fields count as zero.
 
 ## Operations
 
-Choose an operation from the **Vector operation** selector, then press
-**Compute**:
+Choose an operation from the **Vector operation** selector, then press **Compute**:
 
-| Operation               | Description                          |
-| ----------------------- | ------------------------------------ |
-| Dot product             | scalar product of A and B            |
-| Cross product           | cross product of A and B (3D only)   |
-| Magnitude of A          | length of VecA                       |
-| Angle between A and B   | angle in radians                     |
-| Unit vector of A        | A normalized to length one           |
+| Operation             | Description                        |
+| --------------------- | ---------------------------------- |
+| Dot product           | scalar product of A and B          |
+| Cross product         | cross product of A and B (3D only) |
+| Magnitude of A        | length of VecA                     |
+| Angle between A and B | angle in radians                   |
+| Unit vector of A      | A normalized to length one         |
 
 ## Errors
 
