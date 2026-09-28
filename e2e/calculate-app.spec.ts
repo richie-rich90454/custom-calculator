@@ -53,9 +53,7 @@ test("formats pi with four fixed decimal places", async ({ page }) => {
     await page.keyboard.press("Enter");
 
     await page.getByRole("button", { name: "Arm the shift layer" }).click();
-    await page
-        .getByRole("button", { name: "Open the display format menu, shift layer" })
-        .click();
+    await page.getByRole("button", { name: "Open the display format menu, shift layer" }).click();
 
     await page.getByRole("button", { name: "Fix decimal places" }).click();
 
@@ -120,9 +118,7 @@ test("replays history from the history panel", async ({ page }) => {
 
     await page.getByRole("button", { name: "Open history panel" }).click();
     await page.getByRole("button", { name: "Delete history entry 1+1" }).click();
-    await expect(page.getByRole("list", { name: "Calculation history" })).not.toContainText(
-        "1+1",
-    );
+    await expect(page.getByRole("list", { name: "Calculation history" })).not.toContainText("1+1");
 });
 
 test("simplifies an expression with the CAS panel", async ({ page }) => {
