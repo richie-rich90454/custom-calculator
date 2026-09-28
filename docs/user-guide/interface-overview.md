@@ -5,9 +5,7 @@ description: A tour of the instrument shell, status strip, display, home menu, a
 
 # Interface Overview
 
-The calculator is a single-instrument shell: a status strip on top, a paper-white
-display in the middle, and a layered keypad below. Panels and the app menu open
-as accessible dialogs over the shell.
+The calculator is a single-instrument shell: a status strip on top, a paper-white display in the middle, and a layered keypad below. Panels and the app menu open as accessible dialogs over the shell.
 
 ```
 +------------------------------------------------------------------+
@@ -40,8 +38,7 @@ The first row mirrors the state of the instrument:
 - the angle-mode chip (`DEG`, `RAD`, or `GON`) — press it to cycle,
 - the numeric-format chip (`NORM`, `EXACT`, `FRAC`, or `BIG`),
 - the sticky modifier arrows — `△ SHIFT` and `α ALPHA` light up when armed,
-- the `M`, `CAS`, and `CMPLX` indicators when memory, CAS, or complex numbers
-  are active,
+- the `M`, `CAS`, and `CMPLX` indicators when memory, CAS, or complex numbers are active,
 - a `BIG-INT UNAVAILABLE` warning when the browser has no BigInt support.
 
 ## Display anatomy
@@ -53,27 +50,17 @@ The display has four logical rows, all left-aligned:
 3. the KaTeX pretty preview line (toggleable, left-aligned),
 4. the result line, or an inline error message.
 
-See [Display and Result Formats](/user-guide/expression-editing) for editing
-behavior and [keymap reference](/user-guide/keymap-reference) for every key.
+See [Display and Result Formats](/user-guide/expression-editing) for editing behavior and [keymap reference](/user-guide/keymap-reference) for every key.
 
 ## Home menu
 
-The `MENU` key opens the home icon menu: ten apps arranged in a two-by-five
-grid, each with an original line icon and a numeric badge from `1` through `9`
-and `0`. The last active app persists across sessions.
+The `MENU` key opens the home icon menu: ten apps arranged in a two-by-five grid, each with an original line icon and a numeric badge from `1` through `9` and `0`. The last active app persists across sessions.
 
 ## Layered keypad
 
-Every keycap prints up to three silkscreen layers: the primary label in the
-center, the copper `SHIFT` label in the top-left corner, and the teal `ALPHA`
-label in the top-right corner. Pressing `SHIFT` or `ALPHA` arms the layer; the
-next keycap press resolves that layer and the modifier disarms.
+Every keycap prints up to three silkscreen layers: the primary label in the center, the copper `SHIFT` label in the top-left corner, and the teal `ALPHA` label in the top-right corner. Pressing `SHIFT` or `ALPHA` arms the layer; the next keycap press resolves that layer and the modifier disarms.
 
-The cross-shaped directional pad sits at the bottom-right of the keypad,
-integrated beside the digit keys. Its up and down arrows replay history, the
-left and right arrows move the caret, and the center confirm key evaluates.
-See the [keymap reference](/user-guide/keymap-reference) for the complete
-three-layer mapping.
+The cross-shaped directional pad sits at the bottom-right of the keypad, integrated beside the digit keys. Its up and down arrows replay history, the left and right arrows move the caret, and the center confirm key evaluates. See the [keymap reference](/user-guide/keymap-reference) for the complete three-layer mapping.
 
 ## Next steps
 
