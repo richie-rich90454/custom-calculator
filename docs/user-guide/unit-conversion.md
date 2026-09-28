@@ -5,8 +5,7 @@ description: How to convert between physical units with the OPTN unit conversion
 
 # Unit Conversion
 
-The options catalog (OPTN) includes a **Unit Conversion** tab that converts
-values between physical units.
+The options catalog (OPTN) includes a **Unit Conversion** tab that converts values between physical units.
 
 ## Opening unit conversion
 
@@ -23,26 +22,24 @@ The result is shown in the target unit.
 
 ## Supported categories
 
-| Category    | Sample units                                      |
-| ----------- | ------------------------------------------------- |
-| Length      | m, cm, mm, km, in, ft, yd, mi                     |
-| Mass        | g, kg, mg, lb, oz, t                              |
-| Temperature | C, F, K, R                                        |
-| Pressure    | Pa, kPa, bar, atm, mmHg, psi                      |
-| Energy      | J, kJ, cal, kcal, Wh, kWh, eV                     |
-| Power       | W, kW, MW, hp                                     |
-| Force       | N, kN, kgf, lbf, dyn                              |
-| Time        | s, ms, min, h, day                                |
-| Area        | m^2, cm^2, km^2, ha, acre, ft^2                   |
-| Volume      | L, mL, m^3, cm^3, gal, fl oz                      |
-| Speed       | m/s, km/h, mph, knot, ft/s                        |
-| Angle       | deg, rad, gon                                     |
+| Category    | Sample units                    |
+| ----------- | ------------------------------- |
+| Length      | m, cm, mm, km, in, ft, yd, mi   |
+| Mass        | g, kg, mg, lb, oz, t            |
+| Temperature | C, F, K, R                      |
+| Pressure    | Pa, kPa, bar, atm, mmHg, psi    |
+| Energy      | J, kJ, cal, kcal, Wh, kWh, eV   |
+| Power       | W, kW, MW, hp                   |
+| Force       | N, kN, kgf, lbf, dyn            |
+| Time        | s, ms, min, h, day              |
+| Area        | m^2, cm^2, km^2, ha, acre, ft^2 |
+| Volume      | L, mL, m^3, cm^3, gal, fl oz    |
+| Speed       | m/s, km/h, mph, knot, ft/s      |
+| Angle       | deg, rad, gon                   |
 
 ## Temperature conversions
 
-Temperature uses affine formulas because the scales have different zero
-points. Celsius, Fahrenheit, Kelvin, and Rankine are converted through a
-dedicated temperature policy.
+Temperature uses affine formulas because the scales have different zero points. Celsius, Fahrenheit, Kelvin, and Rankine are converted through a dedicated temperature policy.
 
 ```
 0 C -> 32 F
