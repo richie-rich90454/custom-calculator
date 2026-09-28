@@ -10,6 +10,8 @@ The repository is organized into a root application and an isolated documentatio
 ```
 custom-calculator/
 ├── docs/                  Isolated VitePress documentation package
+├── e2e/                   Playwright end-to-end specs
+├── public/                Favicon set and web app manifest
 ├── src/
 │   ├── app/               Bootstrap, composition root, application context
 │   ├── application/       Commands, controller, orchestration, CAS and calculus
@@ -21,20 +23,22 @@ custom-calculator/
 │   └── main.tsx           Application entry point
 ├── index.html
 ├── package.json
+├── playwright.config.ts   Playwright end-to-end configuration
 ├── vite.config.ts
 └── tsconfig.json
 ```
 
 ## Root files
 
-| File               | Purpose                         |
-| ------------------ | ------------------------------- |
-| `package.json`     | Root dependencies and scripts   |
-| `vite.config.ts`   | Vite and Vitest configuration   |
-| `tsconfig.json`    | Strict TypeScript configuration |
-| `index.html`       | HTML entry point                |
-| `.prettierrc.json` | Prettier formatting rules       |
-| `eslint.config.js` | ESLint configuration            |
+| File                   | Purpose                         |
+| ---------------------- | ------------------------------- |
+| `package.json`         | Root dependencies and scripts   |
+| `vite.config.ts`       | Vite and Vitest configuration   |
+| `tsconfig.json`        | Strict TypeScript configuration |
+| `index.html`           | HTML entry point                |
+| `.oxfmtrc.json`        | oxfmt formatting rules          |
+| `eslint.config.js`     | ESLint configuration            |
+| `playwright.config.ts` | End-to-end test configuration   |
 
 ## Documentation package
 
