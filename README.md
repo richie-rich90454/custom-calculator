@@ -1,35 +1,23 @@
 # Custom Scientific Calculator
 
-A production-minded, DOM-based scientific calculator built as an expression
-calculator with full keyboard navigation and accessible React Aria controls.
+A production-minded, DOM-based scientific calculator built as an expression calculator with full keyboard navigation and accessible React Aria controls.
 
-The application is designed as a calm, precise scientific instrument: a
-multi-line expression editor, a broad scientific function set, angle modes,
-numeric modes, constants, variables, memory, history, themes, and
-enableable CAS-style operations.
+The application is designed as a calm, precise scientific instrument: a multi-line expression editor, a broad scientific function set, angle modes, numeric modes, constants, variables, memory, history, themes, and enableable CAS-style operations.
 
 ## Features
 
-- Expression-based entry with full cursor editing, selection, and
-  context-aware smart delete.
-- Broad scientific function set: trigonometric, inverse trigonometric,
-  hyperbolic, logarithmic, exponential, root, rounding, and arithmetic
-  functions.
+- Expression-based entry with full cursor editing, selection, and context-aware smart delete.
+- Broad scientific function set: trigonometric, inverse trigonometric, hyperbolic, logarithmic, exponential, root, rounding, and arithmetic functions.
 - Angle modes: DEG, RAD, GON.
-- Numeric modes: STANDARD, EXACT_DECIMAL, FRACTION, and BIGINT (with
-  browser feature detection and graceful fallback).
+- Numeric modes: STANDARD, EXACT_DECIMAL, FRACTION, and BIGINT (with browser feature detection and graceful fallback).
 - Configurable complex number support.
-- Scientific constant catalog: mathematics, universal physics, atomic and
-  particle, and chemistry constants.
+- Scientific constant catalog: mathematics, universal physics, atomic and particle, and chemistry constants.
 - User variables with persistence.
 - Classic memory register: M+, M−, MR, MC.
 - Persistent calculation history stored in IndexedDB.
 - Light, dark, and system themes using CSS variables.
-- Enableable CAS-style symbolic operations: simplify, expand, and
-  differentiate.
-- Calculus operations: symbolic and numeric differentiation, definite
-  integrals, symbolic antiderivatives, limits, Taylor series, and finite
-  summations and products.
+- Enableable CAS-style symbolic operations: simplify, expand, and differentiate.
+- Calculus operations: symbolic and numeric differentiation, definite integrals, symbolic antiderivatives, limits, Taylor series, and finite summations and products.
 - Full keyboard navigation and visible focus states.
 - Mouse support that is never required.
 
@@ -43,14 +31,15 @@ enableable CAS-style operations.
 - Dexie for IndexedDB persistence
 - CSS Modules and CSS variables for styling
 - Vitest, Testing Library, and fast-check for testing
+- Playwright for end-to-end testing in a real browser
+- oxfmt for formatting
 
 ## Architecture
 
-The codebase follows a layered architecture with strong separation between
-logic and presentation.
+The codebase follows a layered architecture with strong separation between logic and presentation.
 
 | Layer | Responsibility | Location |
-| ----- | -------------- | -------- |
+| --- | --- | --- |
 | Presentation | React components, React Aria usage, styles, and view models | `src/presentation` |
 | State | Thin Zustand store mapping UI state to session state | `src/state` |
 | Application | Commands, the application controller, and orchestration services | `src/application` |
@@ -73,9 +62,7 @@ npm run dev
 
 ## Documentation
 
-A complete documentation hub ships as an isolated VitePress package in the
-`docs` directory. It covers the user guide, scientific reference, calculus,
-CAS, architecture, design system, and API reference.
+A complete documentation hub ships as an isolated VitePress package in the `docs` directory. It covers the user guide, scientific reference, calculus, CAS, architecture, design system, and API reference.
 
 ```bash
 cd docs
@@ -86,10 +73,12 @@ npm run dev
 ## Verification
 
 ```bash
+npm run format:check
 npm run typecheck
 npm run lint
 npm run test
 npm run build
+npm run test:e2e
 ```
 
 ## Keyboard shortcuts
@@ -106,15 +95,12 @@ npm run build
 - `Ctrl+L` — open the calculus panel
 - `Ctrl+,` — open the settings panel
 
-Digits, operators, parentheses, and function names can be typed directly
-into the expression input.
+Digits, operators, parentheses, and function names can be typed directly into the expression input.
 
 ## Security
 
-- The expression is parsed through the math.js parser, never through
-  `eval` or `new Function`.
-- math.js is wrapped behind an infrastructure gateway with a function
-  allowlist and a controlled scope.
+- The expression is parsed through the math.js parser, never through `eval` or `new Function`.
+- math.js is wrapped behind an infrastructure gateway with a function allowlist and a controlled scope.
 - User input is treated as untrusted.
 
 ## License
