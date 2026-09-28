@@ -4,9 +4,7 @@ test.beforeEach(async ({ context }) => {
     await context.addInitScript(() => localStorage.clear());
 });
 
-test("renders a logarithm with a base subscript in the pretty preview", async ({
-    page,
-}) => {
+test("renders a logarithm with a base subscript in the pretty preview", async ({ page }) => {
     await page.goto("/");
 
     const input = page.getByLabel("Calculator expression input");
