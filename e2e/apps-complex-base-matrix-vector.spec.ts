@@ -9,13 +9,9 @@ async function openApp(page: import("@playwright/test").Page, ariaLabel: string)
     await page.getByRole("button", { name: ariaLabel }).click();
 }
 
-async function enableComplexNumbers(
-    page: import("@playwright/test").Page,
-): Promise<void> {
+async function enableComplexNumbers(page: import("@playwright/test").Page): Promise<void> {
     await page.getByRole("button", { name: "Open settings panel" }).click();
-    await page
-        .getByRole("switch", { name: "Enable complex numbers" })
-        .click({ force: true });
+    await page.getByRole("switch", { name: "Enable complex numbers" }).click({ force: true });
     await page.getByRole("button", { name: "Close", exact: true }).click();
 }
 
