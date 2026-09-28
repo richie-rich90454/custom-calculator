@@ -43,11 +43,12 @@ All commit messages use American English spellings: `behavior`, `color`, `custom
 
 ## Verification before commit
 
-- Format the file (Prettier).
+- Format the file with oxfmt (`npm run format:check` confirms it is clean).
 - Run the relevant tests.
 - Run lint and typecheck.
 
 ```bash
+npm run format:check
 npm run typecheck
 npm run lint
 npm run test
