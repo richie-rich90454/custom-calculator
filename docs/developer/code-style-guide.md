@@ -5,29 +5,40 @@ description: The formatting, linting, and coding standards of the repository.
 
 # Code Style Guide
 
-The repository uses Prettier and ESLint to enforce a consistent style. Rules are configured in `.prettierrc.json` and `eslint.config.js`.
+The repository uses oxfmt and ESLint to enforce a consistent style. Rules are configured in `.oxfmtrc.json` and `eslint.config.js`.
 
 ## Commands
 
 ```bash
+npm run format:check
 npm run lint
 npm run typecheck
 ```
 
-## Prettier
+## Formatting
 
-The Prettier configuration is:
+The repository is formatted exclusively with oxfmt, which covers TypeScript, TSX, JavaScript, JSON, CSS, HTML, and Markdown.
+
+The oxfmt configuration is:
 
 - Semicolons: on
 - Quotes: double
-- Trailing commas: es5
-- Print width: 80
-- Tab width: 2
+- Trailing commas: all
+- Print width: 100
+- Tab width: 4
+- Prose wrap: never
 
-Run Prettier before committing:
+Format a single file or the whole repository:
 
 ```bash
-npx prettier --write <file>
+npx oxfmt --write <file>
+npm run format
+```
+
+Check formatting without writing:
+
+```bash
+npm run format:check
 ```
 
 ## ESLint
