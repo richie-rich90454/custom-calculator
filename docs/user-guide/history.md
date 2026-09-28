@@ -35,13 +35,9 @@ The replay arrows step through previous calculations without opening the panel:
 - **PageUp** (or the **Up** directional-pad key) steps back to older entries.
 - **PageDown** (or the **Down** directional-pad key) steps forward to newer entries.
 
-History is ordered newest first. The first back press restores the newest
-entry; each further back press moves one entry older.
+History is ordered newest first. The first back press restores the newest entry; each further back press moves one entry older.
 
-Once you reach the oldest (or newest) entry, pressing the same direction again
-inserts that boundary entry's text into the current expression instead of
-replacing it. This lets you build a new calculation that reuses an old one —
-multi-replay:
+Once you reach the oldest (or newest) entry, pressing the same direction again inserts that boundary entry's text into the current expression instead of replacing it. This lets you build a new calculation that reuses an old one — multi-replay:
 
 ```
 expression  2+2
@@ -49,8 +45,7 @@ up          2+2   (oldest entry inserted)
 up          2+22+2
 ```
 
-Type a fresh edit into the expression to leave replay mode; the editor returns
-to the live expression.
+Type a fresh edit into the expression to leave replay mode; the editor returns to the live expression.
 
 ## Deleting entries
 
